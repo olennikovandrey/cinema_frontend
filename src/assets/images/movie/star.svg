@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X6 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" height="100%" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 500 500"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#DB9200;stroke-width:2.5}
+    .fil10 {fill:none}
+    .fil0 {fill:url(#id0)}
+    .fil5 {fill:url(#id1)}
+    .fil6 {fill:url(#id2)}
+    .fil1 {fill:url(#id3)}
+    .fil9 {fill:url(#id4)}
+    .fil4 {fill:url(#id5)}
+    .fil2 {fill:url(#id6)}
+    .fil8 {fill:url(#id7)}
+    .fil3 {fill:url(#id8)}
+    .fil7 {fill:url(#id9)}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="384.397" y1="440.926" x2="257.751" y2="367.712">
+   <stop offset="0" style="stop-color:#FFB217"/>
+   <stop offset="1" style="stop-color:#DB9200"/>
+  </linearGradient>
+  <linearGradient id="id1" gradientUnits="userSpaceOnUse" x1="115.602" y1="367.713" x2="242.25" y2="440.925">
+   <stop offset="0" style="stop-color:#DB9200"/>
+   <stop offset="1" style="stop-color:#FFAA00"/>
+  </linearGradient>
+  <linearGradient id="id2" gradientUnits="userSpaceOnUse" x1="113.315" y1="313.401" x2="181.191" y2="449.214">
+   <stop offset="0" style="stop-color:#ED9E00"/>
+   <stop offset="1" style="stop-color:#FFC146"/>
+  </linearGradient>
+  <linearGradient id="id3" gradientUnits="userSpaceOnUse" x1="318.809" y1="313.401" x2="386.685" y2="449.214">
+   <stop offset="0" style="stop-color:#FFB92E"/>
+   <stop offset="1" style="stop-color:#ED9E00"/>
+  </linearGradient>
+  <linearGradient id="id4" gradientUnits="userSpaceOnUse" x1="41.26" y1="202.051" x2="189.624" y2="208.666">
+   <stop offset="0" style="stop-color:#FFC95D"/>
+   <stop offset="1" style="stop-color:#FFE8B9"/>
+  </linearGradient>
+  <linearGradient id="id5" gradientUnits="userSpaceOnUse" x1="310.376" y1="202.051" x2="458.74" y2="208.666">
+   <stop offset="0" style="stop-color:#FFAA00"/>
+   <stop offset="1" style="stop-color:#FFC146"/>
+  </linearGradient>
+  <linearGradient id="id6" gradientUnits="userSpaceOnUse" x1="317.424" y1="283.657" x2="475.922" y2="222.862">
+   <stop offset="0" style="stop-color:#FFAA00"/>
+   <stop offset="1" style="stop-color:#ED9E00"/>
+  </linearGradient>
+  <linearGradient id="id7" gradientUnits="userSpaceOnUse" xlink:href="#id4" x1="279.569" y1="185.69" x2="153.733" y2="64.976">
+  </linearGradient>
+  <linearGradient id="id8" gradientUnits="userSpaceOnUse" x1="220.431" y1="64.976" x2="346.267" y2="185.69">
+   <stop offset="0" style="stop-color:#C88600"/>
+   <stop offset="1" style="stop-color:#FFB217"/>
+  </linearGradient>
+  <linearGradient id="id9" gradientUnits="userSpaceOnUse" x1="182.576" y1="222.862" x2="24.078" y2="283.657">
+   <stop offset="0" style="stop-color:#FFC146"/>
+   <stop offset="1" style="stop-color:#FFB217"/>
+  </linearGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1069843168">
+   <polygon class="fil0" points="392,469 333,388 250,340 250,387 "/>
+   <polygon class="fil1" points="358,308 313,294 333,388 392,469 "/>
+   <polygon class="fil2" points="358,308 313,294 385,229 480,198 "/>
+   <polygon class="fil3" points="289,219 317,181 250,31 250,131 "/>
+   <polygon class="fil4" points="480,198 317,181 289,219 385,229 "/>
+   <polygon class="fil5" points="108,469 167,388 250,340 250,387 "/>
+   <polygon class="fil6" points="142,308 187,294 167,388 108,469 "/>
+   <polygon class="fil7" points="142,308 187,294 115,229 20,198 "/>
+   <polygon class="fil8" points="211,219 183,181 250,31 250,131 "/>
+   <polygon class="fil9" points="20,198 183,181 211,219 115,229 "/>
+   <polygon class="fil10 str0" points="250,131 289,219 385,229 313,294 333,388 250,340 167,388 187,294 115,229 211,219 "/>
+   <polygon class="fil10 str0" points="250,31 317,181 480,198 358,308 392,469 250,387 108,469 142,308 20,198 183,181 "/>
+  </g>
+ </g>
+</svg>

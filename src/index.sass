@@ -1,0 +1,111 @@
+@import url("../src/components/RegisterForm/register-form.sass")
+@import url("../src/components/LoginForm/login-form.sass")
+@import url("../src/components/Movies/movies.sass")
+@import url("../src/components/Header/header.sass")
+@import url("../src/components/Search/search.sass")
+@import url("../src/components/DropDown/dropdown.sass")
+@import url("../src/components/AdminSettings/admin-settings.sass")
+@import url("../src/components/Modal/modal.sass")
+@import url("../src/components/Profile/profile.sass")
+@import url("../src/components/MovieItem/movie.sass")
+@import url("../src/components/Movies/swiper.sass")
+@import url("../src/components/Loader/loader.sass")
+@import url("../src/components/CinemaMain/cinema-main.sass")
+@import url("../src/components/Room/room.sass")
+
+*
+  padding: 0
+  margin: 0
+  box-sizing: border-box
+  font-family: "Roboto", sans-serif
+  color: #000
+  transition: .2s ease
+
+html
+  min-height: 100vh
+  background: linear-gradient(90deg, rgb(12, 1, 40, 1) 5%, rgb(9, 0, 14, 5))
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder
+  opacity: 1
+  transition: 0.2s ease
+
+input:focus::-webkit-input-placeholder,
+textarea:focus::-webkit-input-placeholder
+  opacity: 0
+  transition: 0.2s ease
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active
+  -webkit-box-shadow: 0 0 0 30px #221c26 inset !important
+  -webkit-text-fill-color: #fff !important
+
+textarea,
+div.editable-textarea
+  &::-webkit-scrollbar
+    width: 5px
+    background-color: #f9f9fd
+  &::-webkit-scrollbar-thumb
+    border-radius: 10px
+    background-color: #252525
+  &::-webkit-scrollbar-track
+    box-shadow: inset 0 0 6px #fff
+    border-radius: 5px
+    background-color: #808080
+
+.close-button
+  position: absolute
+  width: 20px
+  height: 20px
+  right: 10px
+  content: url("./assets/images/login_form/close.svg")
+  cursor: pointer
+  transition: .3s
+  &:hover
+    transform: rotate(90deg)
+
+.blur
+  filter: brightness(0.2) blur(2px)
+
+.visible
+  visibility: visible
+  opacity: 1
+
+.hidden
+  visibility: hidden
+  opacity: 0
+
+.home-link
+  position: fixed
+  display: block
+  width: 80%
+  top: 10px
+  padding: 20px
+  left: 50%
+  line-height: 40px
+  font-size: 1.2rem
+  border: 1px solid rgba(121, 121, 121, 0.2)
+  border-radius: 6px
+  background: #000000b9
+  box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
+  transition: .2s
+  transform: translate(-50%)
+  z-index: 2
+  &::after
+    content: ""
+    position: absolute
+    left: 20px
+    top: 50%
+    transform: translateY(-50%)
+    width: 30px
+    height: 30px
+    background: url("./assets/images/movie/home.svg") no-repeat center
+  & a
+    margin-left: 50px
+    text-decoration: none
+    color: #ffffffcc
+    transition: .2s
+    &:hover
+      color: #fff

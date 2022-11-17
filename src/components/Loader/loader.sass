@@ -1,0 +1,30 @@
+.loader-wrapper
+  position: fixed
+  width: 50px
+  height: 50px
+  top: 50%
+  left: 50%
+  transform: translate(0, -50%)
+  z-index: 10
+
+.loader
+  width: 16px
+  height: 16px
+  border-radius: 50%
+  background: #FF3D00
+  position: relative
+  &::before,
+  &::after
+    content: ""
+    position: absolute
+    border-radius: 50%
+    inset: 0
+    background: #fff
+    transform: rotate(0deg) translate(30px)
+    animation: rotate .8s ease infinite
+  &::after
+    animation-delay: .4s
+
+@keyframes rotate
+  100%
+    transform: rotate(360deg) translate(30px)

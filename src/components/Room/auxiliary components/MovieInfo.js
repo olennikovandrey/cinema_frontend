@@ -1,0 +1,31 @@
+import { sessionDate, roomTitle } from "../room.services";
+import PropTypes from "prop-types";
+import React from "react";
+import { Link } from "react-router-dom";
+
+const MovieInfo = ({ movie, room, session }) => {
+  return (
+    <div className="movie-info">
+      <Link to={ `/movies/id/${ movie._id }` }>
+        <img className="movie-info__image" src={ movie.image } alt={ movie.title } />
+      </Link>
+      <div className="movie-info__description">
+        <h1 className="description-movie-title">{ movie.title }</h1>
+        <div className="description-room">
+          <p className="description-room-title">{ room.cinemaTitle } г. Минск / { roomTitle(room) ? "Зал 1" : "Зал 2" }</p>
+        </div>
+        <div className="description-date" data-date={ sessionDate(session) }>
+          <p className="description-date-title">{ session.date } { session.time } <span>{ movie.age }</span></p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MovieInfo;
+
+MovieInfo.propTypes = {
+  movie: PropTypes.object,
+  room: PropTypes.object,
+  session: PropTypes.object,
+};

@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "minLength": 4
+    },
+    "password": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 20
+    },
+    "email": {
+      "type": "string",
+      "pattern": "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+    }
+  },
+  "required": ["firstName", "password", "email"]
+}

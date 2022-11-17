@@ -1,0 +1,85 @@
+.movies-wrapper,
+.no-matches
+  position: relative
+  width: 100%
+  height: 39vh
+  margin-top: 4vh
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  @media only screen and (max-width: 375px)
+    max-height: 500px
+    height: auto
+
+.movie-item
+  height: 355px
+  max-width: 230px
+  width: 100%
+  padding: 10px
+  margin-top: 10px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  border-radius: 10px
+  align-items: center
+  transition: .2s
+  cursor: pointer
+  @media only screen and (max-width: 375px)
+    height: auto
+    max-width: 200px
+    margin: 0
+  @media only screen and (max-width: 320px)
+    max-width: 300px
+  &:hover
+    background: rgba(255, 255, 255, 0.1)
+    box-shadow: 0 0 10px #fff
+
+  & a
+    width: 100%
+    display: flex
+    flex-direction: column
+    text-decoration: none
+  &__image
+    position: relative
+    width: 100%
+    & img
+      height: 280px
+      width: 100%
+      @media only screen and (max-width: 375px)
+        height: auto
+  &__title
+    height: 40px
+    margin-top: 10px
+    font-size: 1.2em
+    color: #fefefe
+    text-align: center
+
+.age,
+.rating
+  position: absolute
+  width: 50px
+  padding: 5px
+  top: 10px
+  border: 1px solid #000
+  border-radius: 4px
+  font-size: 1.3em
+  font-weight: bold
+  text-align: center
+  color: #000
+.age
+  background-color: rgba(255, 255, 255, 0.8)
+  right: 70px
+.rating
+  right: 10px
+  background: rgb(255, 255, 255, 0.8) url("../../assets/images/movie/star.svg") no-repeat center
+
+.no-matches
+  width: 100%
+  & p
+    width: 100%
+    color: #fff
+    font-size: 2rem
+    flex-direction: column
+    text-align: center
+    &:first-child
+      margin: 60px 0 40px

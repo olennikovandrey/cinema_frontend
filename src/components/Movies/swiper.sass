@@ -1,0 +1,72 @@
+.swiper
+  position: relative
+  margin-left: auto
+  margin-right: auto
+  width: 100%
+  height: 100%
+  overflow: hidden
+  list-style: none
+  padding: 0
+  z-index: 1
+  & .swiper-slide
+    height: auto
+
+.swiper-button-next,
+.swiper-button-prev
+  position: absolute
+  top: 50%
+  width: 40px
+  height: 100px
+  display: flex
+  align-items: center
+  justify-content: center
+  border: 1px solid #000
+  border-radius: 6px
+  background: #fff
+  z-index: 2
+  cursor: pointer
+  transform: translateY(-50%)
+
+.swiper-button-next
+  right: 10px
+  @media only screen and (max-width: 425px)
+    right: 0
+  &::after
+    content: url("../../assets/images/movie/arrow.svg")
+    position: absolute
+    transform: rotate(180deg)
+    top: 80px
+    right: 5px
+    width: 5px
+    height: 10px
+  &:hover
+    right: 5px
+
+.swiper-button-prev
+  left: 10px
+  @media only screen and (max-width: 425px)
+    left: 0
+  &::after
+    content: url("../../assets/images/movie/arrow.svg")
+    position: absolute
+    top: 10px
+    width: 30px
+    height: 60px
+  &:hover
+    left: 5px
+
+.swiper-slide
+  display: flex
+  justify-content: center
+  @media only screen and (max-width: 1440px)
+    width: 16% !important
+  @media only screen and (max-width: 1280px)
+    width: 19% !important
+  @media only screen and (max-width: 1024px)
+    width: 25% !important
+  @media only screen and (max-width: 768px)
+    width: 33% !important
+  @media only screen and (max-width: 425px)
+    width: 50% !important
+  @media only screen and (max-width: 320px)
+    width: 100% !important

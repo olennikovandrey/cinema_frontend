@@ -1,0 +1,233 @@
+@import url("./AdminItems/Users/DeleteUser/delete-user.sass")
+@import url("./AdminItems/Movies/AddMovie/add-movie.sass")
+@import url("./AdminItems/Movies/DeleteMovie/delete-movie.sass")
+@import url("./AdminItems/Movies/UpdateMovie/update-movie.sass")
+@import url("./AdminItems/Cinemas/AddCinema/add-cinema.sass")
+@import url("./AdminItems/Cinemas/UpdateCinema/update-cinema.sass")
+
+.admin-settings-wrapper
+  position: relative
+  width: 100%
+  height: 100vh
+  padding: 90px 10% 30px
+  margin: 0 auto
+  display: flex
+  flex-direction: column
+  opacity: 0
+  transition: .2s
+  & h2
+    margin-bottom: 25px
+    text-align: center
+    color: #f5f5f5
+  & h3
+    margin-bottom: 15px
+
+.admin-work-fields
+  height: 100%
+  display: flex
+  justify-content: space-between
+
+.admin-navigation,
+.admin-item
+  padding: 15px
+  height: 100%
+  background-color: #fff
+  border-radius: 6px
+
+.admin-navigation
+  width: 24%
+  overflow-y: scroll
+  &::-webkit-scrollbar
+    width: 5px
+    background-color: #f9f9fd
+  &::-webkit-scrollbar-thumb
+    border-radius: 10px
+    background-color: #252525
+  &::-webkit-scrollbar-track
+    box-shadow: inset 0 0 6px #fff
+    border-radius: 5px
+    background-color: #808080
+
+  &__title
+    margin-bottom: 15px
+    text-align: center
+    color: #000
+
+  &__group
+    margin-top: 10px
+    padding: 10px
+    border: 1px solid #000
+    border-radius: 6px
+    & h4
+      color: #000
+      text-align: center
+      margin-bottom: 10px
+    & nav
+      height: 30px
+      padding-left: 10px
+      line-height: 30px
+      color: #000
+      cursor: pointer
+      transition: .2s
+      &:hover
+        border-radius: 4px
+        background-color: #dedede
+        color: #000
+
+    & .checked
+      border-radius: 4px
+      background-color: #808080
+      color: #fff
+
+.admin-item
+  height: 100%
+  width: 74%
+  &__input
+    width: 100%
+    margin: 0 10px 10px 0
+    display: flex
+    flex-direction: column
+    &:last-child
+      margin: 0 0 10px 0
+    & label
+      margin-bottom: 5px
+      color: #000
+    & b
+      color: red
+      font-weight: bold
+    & input,
+    & span
+      height: 25px
+      line-height: 24px
+      margin-left: 1px
+      padding-left: 10px
+      color: #000
+      font-size: 1em
+      outline: none
+      border-radius: 4px
+      border: 1px solid #000
+      &:focus
+        outline: 1px solid black
+    & textarea,
+    & div.editable-textarea
+      min-width: 100%
+      max-width: 100%
+      width: 100%
+      min-height: 100px
+      max-height: 200px
+      height: 100px
+      padding: 10px
+      border-radius: 4px
+      border: 1px solid #000
+      color: #000
+      font-size: 1em
+
+  & div.editable-textarea
+    overflow-y: scroll
+
+  &__confirm
+    position: absolute
+    width: 30px
+    height: 30px
+    right: 0
+    top: 0
+    background: url("../../assets/images/admin-settings/confirm.svg") center no-repeat
+    cursor: pointer
+    transition: .2s
+    &:hover
+      background: url("../../assets/images/admin-settings/confirm_hover.svg") center no-repeat
+
+.admin-close-button
+  position: absolute
+  width: 20px
+  height: 20px
+  top: 90px
+  right: 130px
+  content: url("../../assets/images/login_form/close.svg")
+  cursor: pointer
+  transition: .3s
+  &:hover
+    transform: rotate(90deg)
+
+.search-input
+  min-height: 50px
+  margin-bottom: 20px
+  padding-left: 15px
+  border-radius: 4px
+  border: 1px solid #000
+  font-size: 1.3em
+
+.delete-items-wrapper
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  align-content: flex-start
+
+.admin-settings-button
+  width: 150px
+  height: 46px
+  margin: 0 auto
+  background-color: #7ef865
+  font-size: 1.2em
+  line-height: 2em
+  color: #000
+  border: 1px solid #000
+  border-radius: 4px
+  cursor: pointer
+  &:hover
+    background-color: #297a18
+    color: #fff
+
+.admin-select-wrapper
+  width: 100%
+  display: flex
+  justify-content: space-between
+
+.admin-select
+  width: 100%
+  display: flex
+  flex-direction: column
+  & b
+    color: red
+  & select
+    height: 35px
+    padding-left: 5px
+    margin-bottom: 10px
+    border-radius: 4px
+    border: 1px solid #000
+    font-size: 1em
+  & .admin-item-confirm
+    top: 60px
+
+.inputs-group
+  position: relative
+  width: 100%
+  padding: 5px 5px 0
+  margin-bottom: 10px
+  display: flex
+  justify-content: space-between
+  border: 2px solid #000
+  border-radius: 4px
+  &__input
+    width: 49%
+
+.session-wrapper
+  width: 100%
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  @media only screen and (max-width: 1024px)
+    flex-direction: column
+  &__session
+    width: 49.5%
+    position: relative
+    padding: 5px 5px 0
+    margin-bottom: 15px
+    border-radius: 4px
+    border: 3px solid #000
+    @media only screen and (max-width: 1024px)
+      width: 100%
+    & p:first-child
+      margin-bottom: 10px
+    & label
+      margin-bottom: 5px

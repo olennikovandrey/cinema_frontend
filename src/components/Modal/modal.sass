@@ -1,0 +1,31 @@
+.modal
+  position: fixed
+  width: 400px
+  height: 150px
+  right: 20px
+  bottom: 20px
+  padding: 15px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  border: 2px solid #000
+  background-color: #fff
+  border-radius: 6px
+  opacity: 0
+  visibility: hidden
+  transition: .3s
+
+  & span
+    height: 64px
+    width: 64px
+
+  & p
+    width: 85%
+    text-align: center
+    color: #000
+
+  &__success
+    background: url("../../assets/images/modal/success.png") center no-repeat
+
+  &__error
+    background: url("../../assets/images/modal/error.svg") center no-repeat

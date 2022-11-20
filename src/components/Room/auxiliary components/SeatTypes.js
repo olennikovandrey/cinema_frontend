@@ -8,11 +8,13 @@ const SeatTypes = () => {
       {
         seatTypes.map(({ title, price, image, description }) =>
           <div className="seat-item" key={ title }>
-            <img className="seat-item__image"src={ image } alt={ title } />
+            <div className="seat-item__image">
+              <img src={ image } alt={ title } />
+            </div>
             <div className="seat-item__description">
               <header>
                 <span>{ title }</span>
-                <span>{ price } BYN</span>
+                <span>{ price }.00 BYN</span>
               </header>
               <span>{ description }</span>
             </div>

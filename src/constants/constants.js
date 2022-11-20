@@ -77,7 +77,8 @@ export const urls = {
   getAllUsers: `${ baseUrl }/admin/users/getallusers`,
   getAllMovies: `${ baseUrl }/movies/all/getallmovies`,
   getAllCinemas: `${ baseUrl }/cinemas/all/getallcinemas`,
-  getAllRooms: `${ baseUrl }/room/getallrooms`
+  getAllRooms: `${ baseUrl }/room/getallrooms`,
+  updateSeat: `${ baseUrl }/room/updateseat`
 };
 
 export const seatTypes = [
@@ -101,6 +102,16 @@ export const seatTypes = [
   },
 ];
 
+export const roomSeatTypes = Object.freeze({
+  sofa: "sofa",
+  armchair: "armchair",
+  armchairLux: "armchairLux"
+});
+
+export const furnitureItemTitle = new Map()
+  .set(roomSeatTypes.sofa, "Sofa")
+  .set(roomSeatTypes.armchair, "Armchair")
+  .set(roomSeatTypes.armchairLux, "Armchair Lux");
 
 export const roomLegend = [
   {

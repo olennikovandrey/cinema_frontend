@@ -18,7 +18,7 @@ const LegendItem = () => {
   );
 };
 
-const Seatings = ({ room }) => {
+const Seatings = ({ room, selectSeatHandler }) => {
   return (
     <>
       <div className="seatings">
@@ -31,10 +31,12 @@ const Seatings = ({ room }) => {
               { row.seats.map(seat =>
                 <div className="furniture" key={ seat._id }>
                   <FurnitureItem
+                    roomId={ room._id }
                     currentSeat={ seat }
                     row={ row.number }
                     price={ row.price }
                     type={ row.seatType }
+                    selectSeatHandler={ selectSeatHandler }
                   />
                 </div>
               ) }
@@ -50,5 +52,6 @@ const Seatings = ({ room }) => {
 export default Seatings;
 
 Seatings.propTypes = {
-  room: PropTypes.object
+  room: PropTypes.object,
+  selectSeatHandler: PropTypes.func
 };

@@ -8,6 +8,6 @@ export const deleteCinemaFetch = async (title) => {
   });
 };
 
-export const getAllCInemasFetch = async () => {
+export const getAllCinemasFetch = async () => {
   return doFetch(urls.getAllCinemas);
 };

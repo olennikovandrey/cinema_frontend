@@ -12,16 +12,17 @@ import { roomSeatTypes, furnitureItemTitle } from "../../../constants/constants"
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-const FurnitureItem = ({ roomId, currentSeat, row, price, type, selectSeatHandler }) => {
+const FurnitureItem = ({ cinemaId, sessionId, currentSeat, row, price, type, selectSeatHandler }) => {
   const { isOccupied, isSelected, place } = currentSeat;
   const [isTooltipVisible, setIsToolTipVisible] = useState(false);
   const [isSeatSelected, setIsSeatSelected] = useState(isSelected);
 
   const updatedSeat = {
-    roomId: roomId,
+    cinemaId,
+    sessionId,
     rowNumber: row,
-    type: type,
-    price: price,
+    type,
+    price,
     seatNumber: place,
     isSelected: !isSeatSelected,
     isOccupied: false
@@ -33,12 +34,12 @@ const FurnitureItem = ({ roomId, currentSeat, row, price, type, selectSeatHandle
   };
 
   const furnitureItem = new Map()
-    .set((!isSeatSelected && !isOccupied && roomSeatTypes.sofa), sofa)
-    .set((!isSeatSelected && !isOccupied && roomSeatTypes.armchair), armchair)
-    .set((!isSeatSelected && !isOccupied && roomSeatTypes.armchairLux), armchairLux)
-    .set((isSeatSelected && !isOccupied && roomSeatTypes.sofa), sofa_selected)
-    .set((isSeatSelected && !isOccupied && roomSeatTypes.armchair), armchair_selected)
-    .set((isSeatSelected && !isOccupied && roomSeatTypes.armchairLux), armchairLux_selected)
+    .set((!isSelected && !isOccupied && roomSeatTypes.sofa), sofa)
+    .set((!isSelected && !isOccupied && roomSeatTypes.armchair), armchair)
+    .set((!isSelected && !isOccupied && roomSeatTypes.armchairLux), armchairLux)
+    .set((isSelected && !isOccupied && roomSeatTypes.sofa), sofa_selected)
+    .set((isSelected && !isOccupied && roomSeatTypes.armchair), armchair_selected)
+    .set((isSelected && !isOccupied && roomSeatTypes.armchairLux), armchairLux_selected)
     .set((isOccupied && roomSeatTypes.sofa), sofa_occupied)
     .set((isOccupied && roomSeatTypes.armchair), armchair_occupied)
     .set((isOccupied && roomSeatTypes.armchairLux), armchairLux_occupied);
@@ -49,11 +50,10 @@ const FurnitureItem = ({ roomId, currentSeat, row, price, type, selectSeatHandle
         isTooltipVisible &&
         <RoomToolTip seatData={ [{
           type: furnitureItemTitle.get(type),
-          place: place,
-          row: row,
-          price: price
-        }] }
-        />
+          place,
+          row,
+          price
+        }] } />
       }
       <img
         className={ `furniture__sofa ${ isOccupied ? "disabled" : "" }` }
@@ -71,7 +71,8 @@ const FurnitureItem = ({ roomId, currentSeat, row, price, type, selectSeatHandle
 export default FurnitureItem;
 
 FurnitureItem.propTypes = {
-  roomId: PropTypes.string,
+  cinemaId: PropTypes.string,
+  sessionId: PropTypes.string,
   currentSeat: PropTypes.object,
   row: PropTypes.number,
   price: PropTypes.number,

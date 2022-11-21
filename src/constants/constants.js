@@ -78,7 +78,8 @@ export const urls = {
   getAllMovies: `${ baseUrl }/movies/all/getallmovies`,
   getAllCinemas: `${ baseUrl }/cinemas/all/getallcinemas`,
   getAllRooms: `${ baseUrl }/room/getallrooms`,
-  updateSeat: `${ baseUrl }/room/updateseat`
+  selectseat: `${ baseUrl }/room/selectseat`,
+  occupiseat: `${ baseUrl }/room/occupiseat`,
 };
 
 export const seatTypes = [

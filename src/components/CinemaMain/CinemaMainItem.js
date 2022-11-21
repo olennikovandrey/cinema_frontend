@@ -30,7 +30,7 @@ const CinemaMain = ({ mainImage }) => {
                     time={ time }
                     movieId={ movieId }
                     roomId={ roomId }
-                    allRooms={ currentCinemaData.rooms }
+                    cinemaRooms={ currentCinemaData.rooms }
                   />
                 </SwiperSlide>
               )

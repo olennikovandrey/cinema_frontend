@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CinemaMainItem from "./CinemaMainItem";
-import { getAllCInemasFetch } from "./cinemaMain.api";
+import { getAllCinemasFetch } from "./cinemaMain.api";
 import { SET_CINEMAS } from "../../store/actions/action-types";
 import vegasCinemaImage from "../../assets/images/cinema/vegas.jpeg";
 import worldScreenCinemaImage from "../../assets/images/cinema/worldScreen.jpg";
@@ -21,7 +21,7 @@ const CinemaMain = () => {
 
   useEffect(() => {
     const getCinemas = async () => {
-      const { allCinemas } = await getAllCInemasFetch();
+      const { allCinemas } = await getAllCinemasFetch();
       dispatch({ type: SET_CINEMAS, payload: allCinemas });
     };
     getCinemas();

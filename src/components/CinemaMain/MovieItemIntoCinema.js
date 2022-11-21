@@ -3,11 +3,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const MovieItemIntoCinema = ({ date, time, movieId, roomId, allRooms, cinemaId }) => {
+const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaId }) => {
   const movies = useSelector(state => state.movies);
-  const getCurrent = (currentId) => ({ _id }) => _id === currentId;
+  const getCurrent = id => ({ _id }) => _id === id;
   const currentMovie = movies.filter(getCurrent(movieId))[0];
-  const currentRoom = allRooms.filter(getCurrent(roomId))[0].title;
+  const currentRoom = cinemaRooms.filter(getCurrent(roomId))[0].title;
   const isFirstRoom = currentRoom.includes("1");
 
   return (
@@ -43,5 +43,5 @@ MovieItemIntoCinema.propTypes = {
   time: PropTypes.string,
   movieId: PropTypes.string,
   roomId: PropTypes.string,
-  allRooms: PropTypes.array
+  cinemaRooms: PropTypes.array
 };

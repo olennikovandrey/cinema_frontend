@@ -18,20 +18,21 @@ const LegendItem = () => {
   );
 };
 
-const Seatings = ({ room, selectSeatHandler }) => {
+const Seatings = ({ cinemaTitle, cinemaId, sessionId, rows, selectSeatHandler }) => {
   return (
     <>
       <div className="seatings">
         <span className="seatings__screen"></span>
-        <span className="seatings__screen-title" name={ room.cinemaTitle }>Экран</span>
+        <span className="seatings__screen-title" name={ cinemaTitle }>Экран</span>
         {
-          room.rows.map(row =>
+          rows.map(row =>
             <div className="seatings__row" key={ row._id }>
               <span className="row-number">{ row.number }</span>
               { row.seats.map(seat =>
                 <div className="furniture" key={ seat._id }>
                   <FurnitureItem
-                    roomId={ room._id }
+                    cinemaId={ cinemaId }
+                    sessionId={ sessionId }
                     currentSeat={ seat }
                     row={ row.number }
                     price={ row.price }
@@ -52,6 +53,9 @@ const Seatings = ({ room, selectSeatHandler }) => {
 export default Seatings;
 
 Seatings.propTypes = {
-  room: PropTypes.object,
+  cinemaTitle: PropTypes.string,
+  sessionId: PropTypes.string,
+  cinemaId: PropTypes.string,
+  rows: PropTypes.array,
   selectSeatHandler: PropTypes.func
 };

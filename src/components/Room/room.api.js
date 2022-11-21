@@ -6,8 +6,15 @@ export const getExactRoomFetch = async (url) => {
 };
 
 export const selectSeatFetch = async (updatedSeat) => {
-  return doFetch(urls.updateSeat, {
+  return doFetch(urls.selectseat, {
     method: "put",
     body: updatedSeat
+  });
+};
+
+export const occupiSeatFetch = async (seatsToBuy) => {
+  return doFetch(urls.occupiseat, {
+    method: "put",
+    body: seatsToBuy
   });
 };

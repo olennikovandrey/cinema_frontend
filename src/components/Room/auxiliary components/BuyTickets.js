@@ -2,19 +2,29 @@ import sofa from "../../../assets/images/room/sofa.svg";
 import armchairLux from "../../../assets/images/room/armchairLux.svg";
 import armchair from "../../../assets/images/room/armchair.svg";
 import { roomSeatTypes } from "../../../constants/constants";
+import { doFetch } from "../../../services/services";
+import { urls } from "../../../constants/constants";
+import { getTotalPrice } from "../room.services";
 import PropTypes from "prop-types";
 import React from "react";
 
-const BuyTickets = ({ selectedSeats, unselectSeat, roomId }) => {
+const BuyTickets = ({ selectedSeats, unselectSeatHandler, sessionId, cinemaId }) => {
   const furnitureItem = new Map()
     .set(roomSeatTypes.sofa, sofa)
     .set(roomSeatTypes.armchair, armchair)
     .set(roomSeatTypes.armchairLux, armchairLux);
 
-  const getTotalPrice = selectedSeats => {
-    const prices = [];
-    selectedSeats.forEach(item => prices.push(item.price));
-    return prices.reduce((acc, price) => acc + price, 0);
+  const seatsToBuy = async () => {
+    const seatsToBuy = selectedSeats;
+    seatsToBuy.forEach(item => item.isOccupied = true);
+
+    await doFetch(urls.occupiseat, {
+      method: "put",
+      body: {
+        sessionId,
+        seatsToBuy,
+      }
+    });
   };
 
   return (
@@ -38,14 +48,14 @@ const BuyTickets = ({ selectedSeats, unselectSeat, roomId }) => {
                   </div>
                   <span className="item-seat-type">Тип места: { ucFirst(type) }</span>
                 </div>
-                <span className="close-button" onClick={ () => unselectSeat({ roomId, rowNumber, seatNumber, isSelected: false }) }></span>
+                <span className="close-button" onClick={ () => unselectSeatHandler({ cinemaId, sessionId, rowNumber, seatNumber, isSelected: false }) }></span>
               </div>
             );
           })
         }
       </div>
       <span className="buy-tickets__total-price">Стоимость: { getTotalPrice(selectedSeats) }.00 BYN</span>
-      <button className="buy-tickets__buy-button">Купить</button>
+      <button className="buy-tickets__buy-button" onClick={ () => seatsToBuy() }>Купить</button>
     </div>
   );
 };
@@ -54,6 +64,7 @@ export default BuyTickets;
 
 BuyTickets.propTypes = {
   selectedSeats: PropTypes.array,
-  unselectSeat: PropTypes.func,
-  roomId: PropTypes.string
+  unselectSeatHandler: PropTypes.func,
+  sessionId: PropTypes.string,
+  cinemaId: PropTypes.string
 };

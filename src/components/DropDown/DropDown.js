@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useOnClickOutside } from "../../hooks/clickOutside";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 const DropDown = ({ stateFunc, optionValues, preClassName, checkedValue }) => {
@@ -18,24 +19,7 @@ const DropDown = ({ stateFunc, optionValues, preClassName, checkedValue }) => {
     setIsVisibe(state => !state);
   };
 
-  /*   useEffect(() => {
-    const dropDown = dropDownWrapper.current;
-    document.addEventListener("click", e => {
-      e.stopImmediatePropagation();
-      if (!e.target.matches(`.dropdown-${ preClassName }, .dropdown-${ preClassName } *`)) {
-        dropDown.dataset.state = "";
-      }
-    });
-
-    return () => {
-      document.removeEventListener("click", e => {
-        e.stopImmediatePropagation();
-        if (!e.target.matches(`.dropdown-${ preClassName }, .dropdown-${ preClassName } *`)) {
-          dropDown.dataset.state = "";
-        }
-      });
-    };
-  }, []); */
+  useOnClickOutside(dropDownWrapper, () => dropDown.dataset.state = "");
 
   const DropDownCheckedValue = ({ children }) => {
     return (
@@ -58,23 +42,21 @@ const DropDown = ({ stateFunc, optionValues, preClassName, checkedValue }) => {
         <DropDownCheckedValue>
           { checkedValue }
         </DropDownCheckedValue>
-        { isVisible &&
-          <div className={ `dropdown-${ preClassName }__content` }>
-            { optionValues.map(({ name, value, criterion }) =>
-              <React.Fragment key={ value }>
-                <input id={ value } className={ `dropdown-${ preClassName }__input` } type="radio" name="singleDropDown" data={ name } />
-                <label
-                  htmlFor={ value }
-                  className={ `dropdown-${ preClassName }__label` }
-                  data-criterion={ criterion }
-                  onClick={ e => handleClick(e) }
-                >
-                  { value }
-                </label>
-              </React.Fragment>
-            ) }
-          </div>
-        }
+        <div className={ `dropdown-${ preClassName }__content` }>
+          { optionValues.map(({ name, value, criterion }) =>
+            <React.Fragment key={ value }>
+              <input id={ value } className={ `dropdown-${ preClassName }__input` } type="radio" name="singleDropDown" data={ name } />
+              <label
+                htmlFor={ value }
+                className={ `dropdown-${ preClassName }__label` }
+                data-criterion={ criterion }
+                onClick={ e => handleClick(e) }
+              >
+                { value }
+              </label>
+            </React.Fragment>
+          ) }
+        </div>
       </div>
     </div>
   );

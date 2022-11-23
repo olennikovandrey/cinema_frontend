@@ -1,6 +1,11 @@
+$maxWidth: 1440
+@mixin adaptiv-font($pcSize, $mobSize)
+  $addSize: $pcSize - $mobSize
+  $maxWidth: $maxWidth - 320
+  font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 280px) / #{$maxWidth}))
+
 .delete-user-wrapper
   height: 100%
-  padding-right: 10px
   display: flex
   flex-direction: column
   align-content: flex-start
@@ -20,7 +25,7 @@
   position: relative
   height: auto
   width: 49%
-  padding: 10px 15px
+  padding: 10px 25px 10px 15px
   margin-bottom: 10px
   display: flex
   flex-direction: column
@@ -29,6 +34,9 @@
   color: #000
   &:hover
     box-shadow: 3px 3px 10px #000
+  @media only screen and (max-width: 768px)
+    width: 100%
+    margin-bottom: 5px
 
   & b
     color: #000
@@ -37,6 +45,7 @@
   &__row
   margin-top: 5px
   color: #000
+  @include adaptiv-font(16, 12)
   &__icon
     position: absolute
     right: 5px
@@ -48,3 +57,6 @@
     cursor: pointer
     &:hover
       background: url("../../../../../assets/images/admin-settings/delete-user_hover.svg")
+    @media only screen and (max-width: 1024px)
+      width: 20px
+      height: 20px

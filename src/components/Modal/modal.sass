@@ -14,10 +14,27 @@
   opacity: 0
   visibility: hidden
   transition: .3s
+  @media only screen and (max-width: 768px)
+    width: 40%
+    height: 100px
+    right: 35px
+    bottom: 24px
+    padding: 10px
+  @media only screen and (max-width: 425px)
+    width: 70%
+    height: 100px
+    right: 25px
+    bottom: 5px
+  @media only screen and (max-width: 320px)
+    width: 90%
+    right: 5px
 
   & span
     height: 64px
     width: 64px
+    @media only screen and (max-width: 768px)
+      width: 50px
+      height: 50px
 
   & p
     width: 85%

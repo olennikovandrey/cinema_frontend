@@ -1,3 +1,9 @@
+$maxWidth: 1440
+@mixin adaptiv-font($pcSize, $mobSize)
+  $addSize: $pcSize - $mobSize
+  $maxWidth: $maxWidth - 320
+  font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 280px) / #{$maxWidth}))
+
 .update-movie-wrapper
   height: 100%
   overflow-y: auto
@@ -18,9 +24,17 @@
     margin-bottom: 10px
     border-radius: 4px
     border: 1px solid #000
-    font-size: 1em
+    @include adaptiv-font(16, 12)
+    @media only screen and (max-width: 1024px)
+      width: 50%
+    @media only screen and (max-width: 768px)
+      width: 98%
+    @media only screen and (max-width: 768px)
+      width: 100%
 
 .update-movie-form
   margin-right: 10px
   display: flex
   flex-direction: column
+  @media only screen and (max-width: 425px)
+    margin: 0

@@ -27,6 +27,23 @@ const NavigationGroup = ({ headline, navigations, checkedAction, handleClick }) 
   </div>;
 };
 
+const NavigationGroupAdaptive = ({ navigationGroups, handleClick }) => {
+  return (
+    <select className="admin-navigation__group-adaptive" onChange={ e => handleClick(e.target.value) }>
+      {navigationGroups.map((item, index) =>
+        <optgroup label={ item.headline } key={ item.headline }>
+          { navigationGroups[index].navigations.map(({ name, title }) =>
+            <option
+              key={ item.name }
+              value={ name }
+            >{ title }</option>
+          ) }
+        </optgroup>
+      ) }
+    </select>
+  );
+};
+
 const settingsField = Object.freeze({
   userList: "userList",
   addCinema: "addCinema",
@@ -68,15 +85,22 @@ const AdminSettings = () => {
               checkedAction={ checkedAction }
               handleClick={ setCheckedAction }/>
           )) }
+          { <NavigationGroupAdaptive
+            navigationGroups={ navigationGroups }
+            checkedAction={ checkedAction }
+            handleClick={ setCheckedAction }
+          />
+          }
+
         </aside>
         <section className="admin-item">
           { adminItemEl.get(checkedAction) }
         </section>
+        <span
+          className="admin-close-button"
+          onClick={ () => dispatch({ type: CHECK_IS_ADMIN_MODAL_OPEN, payload: false }) }
+        ></span>
       </div>
-      <span
-        className="admin-close-button"
-        onClick={ () => dispatch({ type: CHECK_IS_ADMIN_MODAL_OPEN, payload: false }) }
-      ></span>
     </div>
   );
 };
@@ -87,5 +111,10 @@ NavigationGroup.propTypes = {
   headline: PropTypes.string,
   navigations: PropTypes.array,
   checkedAction: PropTypes.string,
+  handleClick: PropTypes.func
+};
+
+NavigationGroupAdaptive.propTypes = {
+  navigationGroups: PropTypes.array,
   handleClick: PropTypes.func
 };

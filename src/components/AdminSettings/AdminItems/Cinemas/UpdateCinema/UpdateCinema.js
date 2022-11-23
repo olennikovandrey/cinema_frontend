@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-debugger */
 import { updateCinemaFetch, getAllCinemasFetch } from "./updateCinema.api";
 import Select from "../../Select";
 import EditableInput from "../../EditableInput";

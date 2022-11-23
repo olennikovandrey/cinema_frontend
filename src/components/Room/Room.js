@@ -22,7 +22,6 @@ const Room = () => {
   const isLoaderOpen = useSelector(state => state.isLoaderOpen);
   const dispatch = useDispatch();
 
-
   const getRoom = async (cinemaId, roomId, movieId) => {
     const url = `${ baseUrl }/room/id/cinemaId=${ cinemaId }&roomId=${ roomId }&movieId=${ movieId }`;
     const { room, movie, session } = await getExactRoomFetch(url);

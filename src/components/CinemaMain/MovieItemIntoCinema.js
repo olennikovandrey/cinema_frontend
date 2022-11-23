@@ -7,8 +7,11 @@ const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaI
   const movies = useSelector(state => state.movies);
   const getCurrent = id => ({ _id }) => _id === id;
   const currentMovie = movies.filter(getCurrent(movieId))[0];
-  const currentRoom = cinemaRooms.filter(getCurrent(roomId))[0].title;
-  const isFirstRoom = currentRoom.includes("1");
+
+  const isFirstRoom = () => {
+    const currentRoomTitle = cinemaRooms.filter(getCurrent(roomId))[0].title;
+    return currentRoomTitle.includes("1");
+  };
 
   return (
     <>

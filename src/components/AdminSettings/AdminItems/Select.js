@@ -1,18 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Select = ({ label, required = true, name, optionValues, defaultValue, stateFunc, width = "100%" }) => {
+const Select = ({ label, required = true, optionValues, defaultValue, stateFunc, width = "100%" }) => {
   return (
     <div className="admin-select" style={ { width: width } }>
       <label>{ label } { required && <b>*</b> }</label>
       <select
         defaultValue={ defaultValue }
-        name={ name }
-        onChange={ e => { stateFunc(e); }}>
+        onChange={ e => stateFunc(e) }>
         {
           optionValues
-            .map(item =>
-              <option key={ item.title } value={ item._id }>{ item.title }</option>
+            .map(({ _id, title, secondValue }) =>
+              <option key={ _id }  value={ `${ _id } ${ secondValue ? secondValue : "" }` }>{ title }</option>
             )
         }
       </select>
@@ -29,5 +28,6 @@ Select.propTypes = {
   name: PropTypes.string,
   defaultValue: PropTypes.string,
   stateFunc: PropTypes.func,
-  optionValues: PropTypes.array
+  optionValues: PropTypes.array,
+  sessions: PropTypes.array
 };

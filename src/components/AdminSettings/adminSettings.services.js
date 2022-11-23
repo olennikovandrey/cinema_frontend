@@ -5,6 +5,13 @@ export const handleBlur = (e, stateFn, stateField) => {
   }));
 }; //addMovie, addCinema
 
+export const handleChange = (e, stateFn, stateField) => {
+  stateFn(prevState => ({
+    ...prevState,
+    [stateField]: e.target.value.split(" ")[0].trim()
+  }));
+}; //updateCinema
+
 export const handleBlurForSeveralValues = (e, stateFn, movieField) => {
   const wordsAmount = e.target.value.split(", ").length;
   stateFn(prevState => ({
@@ -40,6 +47,24 @@ export const handleBlurForEditableInputsGroup = (e, stateFn, [movieField, movieF
     ...prevState,
     [movieField]:  {
       ...prevState[movieField], [movieFieldKey]: e.target.innerText === "" ? prevState : e.target.innerText
+    }
+  }));
+}; //updateMovie
+
+export const handlerChangeForSelect = (e, stateFn, [movieField, movieFieldKey]) => {
+  stateFn(prevState => ({
+    ...prevState,
+    [movieField]:  {
+      ...prevState[movieField], [movieFieldKey]: e.target.value.trim()
+    }
+  }));
+}; //updateMovie
+
+export const handlerChangeForSecondValue = (e, stateFn, [movieField, movieFieldKey]) => {
+  stateFn(prevState => ({
+    ...prevState,
+    [movieField]:  {
+      ...prevState[movieField], [movieFieldKey]: e.target.value.split(" ")[1].trim()
     }
   }));
 }; //updateMovie

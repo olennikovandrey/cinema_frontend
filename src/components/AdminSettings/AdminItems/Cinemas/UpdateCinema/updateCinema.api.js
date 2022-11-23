@@ -2,13 +2,15 @@ import { urls } from "../../../../../constants/constants";
 import { doFetch } from "../../../../../services/services";
 
 export const updateCinemaFetch = async (updatedCinema) => {
-  return doFetch(urls.deleteCinema, {
+  return doFetch(urls.updateCinema, {
     method: "put",
-    body: updatedCinema
+    body: {
+      updatedCinema
+    }
   });
 };
 
-export const getAllCInemasFetch = async () => {
+export const getAllCinemasFetch = async () => {
   return doFetch(urls.getAllCinemas);
 };
 

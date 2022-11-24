@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const HomeLink = ({ scrollValueToChange = 20 }) => {
   const homeLink = useRef(null);
+  const navigate = useNavigate();
+
+  const goBack = () => navigate(-1);
 
   useEffect(() => {
     const backgroundChanger = () => {
@@ -27,7 +30,7 @@ const HomeLink = ({ scrollValueToChange = 20 }) => {
   return (
     <>
       <div className="home-link" ref={ homeLink }>
-        <Link to={ "/" }>На главную страницу</Link>
+        <span onClick={ goBack }>Назад</span>
       </div>
     </>
   );

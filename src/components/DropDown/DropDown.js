@@ -19,7 +19,7 @@ const DropDown = ({ stateFunc, optionValues, preClassName, checkedValue }) => {
     setIsVisibe(state => !state);
   };
 
-  useOnClickOutside(dropDownWrapper, () => dropDown.dataset.state = "");
+  useOnClickOutside(dropDownWrapper, () => setIsVisibe(false));
 
   const DropDownCheckedValue = ({ children }) => {
     return (

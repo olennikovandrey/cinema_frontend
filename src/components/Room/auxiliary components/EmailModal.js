@@ -1,4 +1,4 @@
-import { CHECK_IS_EMAIL_MODAL_OPEN } from "../../../store/actions/action-types";
+import { CHECK_IS_EMAIL_MODAL_OPEN, SET_EMAIL_FOR_TICKETS } from "../../../store/actions/action-types";
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,11 +11,13 @@ const EmailModal = () => {
 
   const handleClick = () => {
     dispatch({ type: CHECK_IS_EMAIL_MODAL_OPEN, payload: false });
+    dispatch({ type: SET_EMAIL_FOR_TICKETS, payload: emailForTickets });
     document.querySelector(".fake-link").firstChild.click();
 
-    /*     if (emailRegExp.test(emailForTickets)) {
+    /* if (emailRegExp.test(emailForTickets)) {
       inputForEmailRef.current.dataset.valid = "";
       dispatch({ type: CHECK_IS_EMAIL_MODAL_OPEN, payload: false });
+      dispatch({ type: SET_EMAIL_FOR_TICKETS, payload: emailForTickets });
       document.querySelector(".fake-link").firstChild.click();
     } else {
       inputForEmailRef.current.dataset.valid = "invalid";
@@ -37,6 +39,7 @@ const EmailModal = () => {
             placeholder="example@mail.com"
             onChange={ e => setEmailForTickets(e.target.value) }
             data-valid=""
+            autoComplete="true"
           />
           <button className="button-pink" onClick={ () => handleClick() }>Подтвердить</button>
         </div>

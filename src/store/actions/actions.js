@@ -14,7 +14,8 @@ import { CHECK_IS_LOGIN_MODAL_OPEN,
   CHECK_IS_LOADER_OPEN,
   SET_RANDOM_MOVIES,
   SET_CASHED_MOVIES,
-  SET_SELECTED_SEATS } from "./action-types";
+  SET_SELECTED_SEATS,
+  SET_EMAIL_FOR_TICKETS } from "./action-types";
 
 export const setIsLoginOpen = (payload) => {
   return {
@@ -129,5 +130,12 @@ export const setIsLoader = (value) => {
   return {
     type: CHECK_IS_LOADER_OPEN,
     value
+  };
+};
+
+export const setEmailForTickets = (email) => {
+  return {
+    type: SET_EMAIL_FOR_TICKETS,
+    email
   };
 };

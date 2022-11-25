@@ -15,7 +15,8 @@ import {
   SET_CURRENT_CINEMA,
   CHECK_IS_LOADER_OPEN,
   SET_CASHED_MOVIES,
-  SET_SELECTED_SEATS
+  SET_SELECTED_SEATS,
+  SET_EMAIL_FOR_TICKETS
 } from "./actions/action-types";
 
 export const initState = {
@@ -27,6 +28,7 @@ export const initState = {
   isAdminModalOpen: false,
   isEmailModalOpen: false,
   isUserAuthorized: false,
+  isLoader: false,
   userData: {},
   movies: [],
   cinemas: [],
@@ -34,7 +36,7 @@ export const initState = {
   randomMovies: [],
   selectedSeats: [],
   currentCinema: "MovieHD",
-  isLoader: false
+  emailForTickets: ""
 };
 
 const reducer = (state = initState, action) => {
@@ -177,6 +179,13 @@ const reducer = (state = initState, action) => {
     return {
       ...state,
       isLoader: action.payload
+    };
+  }
+
+  case SET_EMAIL_FOR_TICKETS: {
+    return {
+      ...state,
+      emailForTickets: action.payload
     };
   }
 

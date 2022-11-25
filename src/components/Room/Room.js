@@ -2,11 +2,12 @@ import Seatings from "./auxiliary components/Seatings";
 import SeatTypes from "./auxiliary components/SeatTypes.js";
 import MovieInfo from "./auxiliary components/MovieInfo.js";
 import { getExactRoomFetch, selectSeatFetch } from "./room.api";
-import BuyTickets from "./auxiliary components/BuyTickets";
+import SelectedSeats from "./auxiliary components/SelectedSeats";
 import { getRows } from "./room.services";
+import EmailModal from "./auxiliary components/EmailModal";
 import { baseUrl } from "../../constants/constants";
-import HomeLink from "../HomeLink/HomeLink";
-import { CHECK_IS_LOADER_OPEN } from "../../store/actions/action-types";
+import GoBack from "../GoBack/GoBack";
+import { CHECK_IS_LOADER_OPEN, SET_SELECTED_SEATS } from "../../store/actions/action-types";
 import Loader from "../Loader/Loader";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -17,9 +18,10 @@ const Room = () => {
   const [movie, setMovie] = useState();
   const [session, setSession] = useState();
   const [rows, setRows] = useState();
-  const [selectedSeats, setSelectedSeats] = useState([]);
   const { cinemaId, roomId, movieId } = useParams();
   const isLoaderOpen = useSelector(state => state.isLoaderOpen);
+  const isEmailModalOpen = useSelector(state => state.isEmailModalOpen);
+  const selectedSeats = useSelector(state => state.selectedSeats);
   const dispatch = useDispatch();
 
   const getRoom = async (cinemaId, roomId, movieId) => {
@@ -45,7 +47,7 @@ const Room = () => {
     const seats = [...selectedSeats];
     const dublicateIndex = seats.findIndex(({ rowNumber, seatNumber }) => rowNumber === seat.rowNumber && seatNumber === seat.seatNumber);
     seats.splice(dublicateIndex, 1);
-    setSelectedSeats(seats);
+    dispatch({ type: SET_SELECTED_SEATS, payload: seats });
     await selectFetch(seat);
   };
 
@@ -60,7 +62,7 @@ const Room = () => {
     } else {
       const seats = [...selectedSeats];
       seat.isSelected && seats.push(seat);
-      setSelectedSeats(seats);
+      dispatch({ type: SET_SELECTED_SEATS, payload: seats });
       await selectFetch(seat);
     }
   };
@@ -71,15 +73,22 @@ const Room = () => {
     dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   }, [cinemaId, roomId, movieId, dispatch]);
 
+  const movieInfo = {
+    room: room,
+    movie: movie,
+    session: session
+  };
+
   return (
     <>
       { isLoaderOpen && <Loader /> }
-      <HomeLink />
+      { isEmailModalOpen && <EmailModal /> }
+      <GoBack />
       {
         room && movie &&
-        <section className="room">
+        <section className={ `room ${ isEmailModalOpen ? "blur" : null }` }>
           <div className="crop" style={ { background: `url(${ movie.crop }) no-repeat 100% / 100%` } }></div>
-          <MovieInfo room={ room } movie={ movie } session={ session } />
+          <MovieInfo movieInfo={ movieInfo } />
           <section className="seatings-types">
             <Seatings
               sessionId={ session._id }
@@ -90,12 +99,11 @@ const Room = () => {
             />
             { !selectedSeats.length ?
               <SeatTypes /> :
-              <BuyTickets
+              <SelectedSeats
                 sessionId={ session._id }
                 cinemaId={ cinemaId }
-                selectedSeats={ selectedSeats }
                 unselectSeatHandler={ unselectSeatHandler }
-
+                movieInfo={ movieInfo }
               />
             }
           </section>

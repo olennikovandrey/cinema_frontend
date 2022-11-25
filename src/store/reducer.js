@@ -4,6 +4,7 @@ import {
   CHECK_IS_SEARCH_MODAL_OPEN,
   CHECK_IS_PROFILE_MODAL_OPEN,
   CHECK_IS_ADMIN_MODAL_OPEN,
+  CHECK_IS_EMAIL_MODAL_OPEN,
   CHECK_IS_USER_AUTHORIZED,
   CHECK_IS_USER_ADMIN,
   SET_MOVIES,
@@ -13,7 +14,8 @@ import {
   SET_USER_PERSONAL_DATA,
   SET_CURRENT_CINEMA,
   CHECK_IS_LOADER_OPEN,
-  SET_CASHED_MOVIES
+  SET_CASHED_MOVIES,
+  SET_SELECTED_SEATS
 } from "./actions/action-types";
 
 export const initState = {
@@ -23,12 +25,14 @@ export const initState = {
   isSearchModalOpen: false,
   isProfileModalOpen: false,
   isAdminModalOpen: false,
+  isEmailModalOpen: false,
   isUserAuthorized: false,
   userData: {},
   movies: [],
   cinemas: [],
   cashedMovies: [],
   randomMovies: [],
+  selectedSeats: [],
   currentCinema: "MovieHD",
   isLoader: false
 };
@@ -84,13 +88,13 @@ const reducer = (state = initState, action) => {
       isProfileModalOpen: false,
       isAdminModalOpen: action.payload,
     };
-    // it seams that it is better to use openModalName here instead all above
-    // if we openModal we use Action - SET_OPENED_MODAL_NAME and pass corresponding name
-    // when we close it - we pass null
+  }
 
-    // and refactor logic, for example in LoginForm component instead thise one:
-    // const isLoginModalOpen = useSelector(state => state.isLoginModalOpen);
-    // we can use const isLoginModalOpen = useSelector(state => state.openModalName) === 'LOGIN_MODAL';
+  case CHECK_IS_EMAIL_MODAL_OPEN: {
+    return {
+      ...state,
+      isEmailModalOpen: action.payload,
+    };
   }
 
   case CHECK_IS_SEARCH_MODAL_OPEN: {
@@ -152,6 +156,13 @@ const reducer = (state = initState, action) => {
     return {
       ...state,
       userData: action.payload,
+    };
+  }
+
+  case SET_SELECTED_SEATS: {
+    return {
+      ...state,
+      selectedSeats: action.payload,
     };
   }
 

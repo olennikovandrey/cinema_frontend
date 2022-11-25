@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MovieInfo = ({ movie, room, session }) => {
+const MovieInfo = ({ movieInfo }) => {
+  const { movie, room, session } = movieInfo;
+
   return (
     <div className="movie-info">
       <Link to={ `/movies/id/${ movie._id }` }>
@@ -25,7 +27,5 @@ const MovieInfo = ({ movie, room, session }) => {
 export default MovieInfo;
 
 MovieInfo.propTypes = {
-  movie: PropTypes.object,
-  room: PropTypes.object,
-  session: PropTypes.object,
+  movieInfo: PropTypes.object
 };

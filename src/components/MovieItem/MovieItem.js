@@ -4,7 +4,7 @@ import { getExactMovieFetch } from "./movieItem.api";
 import { createMarkup } from "../../services/services";
 import { CHECK_IS_LOADER_OPEN } from "../../store/actions/action-types";
 import Loader from "../Loader/Loader";
-import HomeLink from "../HomeLink/HomeLink";
+import GoBack from "../GoBack/GoBack";
 import { baseUrl } from "../../constants/constants";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -35,7 +35,7 @@ const MovieItem = () => {
       { isLoaded && !!movie &&
       <section className="movie">
         <div className="crop" style={ { background: `url(${ movie.crop }) 40% 25%` } }></div>
-        <HomeLink scrollValueToChange="390" />
+        <GoBack scrollValueToChange="390" />
         <div className="description">
           <div className="description__image">
             <img src={ movie.image } alt={ movie.title } />

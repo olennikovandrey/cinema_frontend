@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-const HomeLink = ({ scrollValueToChange = 20 }) => {
+const GoBack = ({ scrollValueToChange = 20 }) => {
   const homeLink = useRef(null);
   const navigate = useNavigate();
 
@@ -29,15 +29,15 @@ const HomeLink = ({ scrollValueToChange = 20 }) => {
 
   return (
     <>
-      <div className="home-link" ref={ homeLink }>
+      <div className="go-back-link" ref={ homeLink }>
         <span onClick={ goBack }>Назад</span>
       </div>
     </>
   );
 };
 
-export default HomeLink;
+export default GoBack;
 
-HomeLink.propTypes = {
+GoBack.propTypes = {
   scrollValueToChange: PropTypes.string
 };

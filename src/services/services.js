@@ -63,3 +63,9 @@ export const doFetch = async (url, { method, headers, body, ...restOptions } = {
   });
   return await res.json();
 };
+
+export const getTotalPrice = selectedSeats => {
+  const prices = [];
+  selectedSeats.forEach(item => prices.push(item.price));
+  return prices.reduce((acc, price) => acc + price, 0);
+};

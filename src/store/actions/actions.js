@@ -3,6 +3,7 @@ import { CHECK_IS_LOGIN_MODAL_OPEN,
   CHECK_IS_SEARCH_MODAL_OPEN,
   CHECK_IS_PROFILE_MODAL_OPEN,
   CHECK_IS_ADMIN_MODAL_OPEN,
+  CHECK_IS_EMAIL_MODAL_OPEN,
   SET_MOVIES,
   SET_CINEMAS,
   CHECK_IS_USER_AUTHORIZED,
@@ -12,7 +13,8 @@ import { CHECK_IS_LOGIN_MODAL_OPEN,
   SET_CURRENT_CINEMA,
   CHECK_IS_LOADER_OPEN,
   SET_RANDOM_MOVIES,
-  SET_CASHED_MOVIES } from "./action-types";
+  SET_CASHED_MOVIES,
+  SET_SELECTED_SEATS } from "./action-types";
 
 export const setIsLoginOpen = (payload) => {
   return {
@@ -42,6 +44,13 @@ export const setIsAdminOpen = (payload) => {
   };
 };
 
+export const setIsEmailModalOpen = (payload) => {
+  return {
+    type: CHECK_IS_EMAIL_MODAL_OPEN,
+    payload
+  };
+};
+
 export const setIsSearchOpen = (payload) => {
   return {
     type: CHECK_IS_SEARCH_MODAL_OPEN,
@@ -60,6 +69,13 @@ export const setCinemas = (cinemas) => {
   return {
     type: SET_CINEMAS,
     cinemas
+  };
+};
+
+export const setSelectedSeats = (selectedSeats) => {
+  return {
+    type: SET_SELECTED_SEATS,
+    selectedSeats
   };
 };
 

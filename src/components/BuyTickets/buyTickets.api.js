@@ -7,8 +7,8 @@ export const massUnselectSeatsFetch = async (selectedSeats) => {
     body: selectedSeats
   });
 };
-export const occupiSeatsFetch = async (selectedSeats) => {
-  return doFetch(urls.occupiseat, {
+export const occupySeatsFetch = async (selectedSeats) => {
+  return doFetch(urls.occupySeat, {
     method: "put",
     body: selectedSeats
   });

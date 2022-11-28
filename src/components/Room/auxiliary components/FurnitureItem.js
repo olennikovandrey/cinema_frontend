@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import RoomToolTip from "./RoomToolTip";
 import sofa from "../../../assets/images/room/sofa.svg";
 import sofa_selected from "../../../assets/images/room/sofa_selected.svg";
@@ -15,7 +16,7 @@ import React, { useState } from "react";
 const FurnitureItem = ({ cinemaId, sessionId, currentSeat, row, price, type, selectSeatHandler }) => {
   const { isOccupied, isSelected, place } = currentSeat;
   const [isTooltipVisible, setIsToolTipVisible] = useState(false);
-  const [isSeatSelected, setIsSeatSelected] = useState(isSelected);
+  const [seatStatus, setSeatStatus] = useState(isOccupied ? "occupied" : isSelected ? "selected" : "default");
 
   const updatedSeat = {
     cinemaId,
@@ -24,25 +25,39 @@ const FurnitureItem = ({ cinemaId, sessionId, currentSeat, row, price, type, sel
     type,
     price,
     seatNumber: place,
-    isSelected: !isSeatSelected,
+    isSelected: seatStatus !== "selected",
     isOccupied: false
   };
 
   const selectHandler = () => {
-    setIsSeatSelected(!isSeatSelected);
+    setSeatStatus(seatStatus === "selected" ? "default" : "selected");
     selectSeatHandler(updatedSeat);
   };
 
-  const furnitureItem = new Map()
-    .set((!isSelected && !isOccupied && roomSeatTypes.sofa), sofa)
-    .set((!isSelected && !isOccupied && roomSeatTypes.armchair), armchair)
-    .set((!isSelected && !isOccupied && roomSeatTypes.armchairLux), armchairLux)
-    .set((isSelected && !isOccupied && roomSeatTypes.sofa), sofa_selected)
-    .set((isSelected && !isOccupied && roomSeatTypes.armchair), armchair_selected)
-    .set((isSelected && !isOccupied && roomSeatTypes.armchairLux), armchairLux_selected)
-    .set((isOccupied && roomSeatTypes.sofa), sofa_occupied)
-    .set((isOccupied && roomSeatTypes.armchair), armchair_occupied)
-    .set((isOccupied && roomSeatTypes.armchairLux), armchairLux_occupied);
+  const occupiedSeatMap = new Map()
+    .set(roomSeatTypes.sofa, sofa_occupied)
+    .set(roomSeatTypes.armchair, armchair_occupied)
+    .set(roomSeatTypes.armchairLux, armchairLux_occupied);
+
+  const selectedSeatMap = new Map()
+    .set(roomSeatTypes.sofa, sofa_selected)
+    .set(roomSeatTypes.armchair, armchair_selected)
+    .set(roomSeatTypes.armchairLux, armchairLux_selected);
+
+  const defaultSeatMap = new Map()
+    .set(roomSeatTypes.sofa, sofa)
+    .set(roomSeatTypes.armchair, armchair)
+    .set(roomSeatTypes.armchairLux, armchairLux);
+
+  const stateMap = new Map()
+    .set("selected", selectedSeatMap)
+    .set("occupied", occupiedSeatMap)
+    .set("default", defaultSeatMap);
+
+  const getFurnitureItem = (state, type) => {
+    const furnitureMapper = stateMap.get(state);
+    return furnitureMapper.get(type);
+  };
 
   return (
     <>
@@ -57,8 +72,8 @@ const FurnitureItem = ({ cinemaId, sessionId, currentSeat, row, price, type, sel
       }
       <img
         className={ `furniture__sofa ${ isOccupied ? "disabled" : "" }` }
-        src={ furnitureItem.get(type) }
-        alt={ furnitureItem.get(type) }
+        src={ getFurnitureItem(seatStatus, type) }
+        alt={ getFurnitureItem(seatStatus, type) }
         width="100%"
         onMouseEnter={ () => setIsToolTipVisible(true) }
         onMouseLeave={ () => setIsToolTipVisible(false) }

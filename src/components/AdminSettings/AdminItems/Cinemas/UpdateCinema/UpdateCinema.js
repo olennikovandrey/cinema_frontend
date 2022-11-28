@@ -29,12 +29,12 @@ const UpdateCinema = () => {
 
   const setCinemaHandler = e => {
     const currentCinemaId = e.target.value.split(" ")[0].trim();
-    const currentSessions = cinemas.filter(item => item._id === currentCinemaId)[0].sessions;
+    const currentSessions = cinemas.find(item => item._id === currentCinemaId).sessions;
     const currentSessionsRoomId = currentSessions[0].roomId;
-    const cinemaRoom = getCinemasRoom.get(currentSessionsRoomId);
+    const cinemaRoom = getCinemasRoom(currentSessionsRoomId);
     const sessions = currentSessions.map(({ _id, movieId, date, time, roomId }) => (
       { _id: _id,
-        title: `${ movies.filter(item => item._id === movieId)[0].title } / ${ date } / ${ time }`,
+        title: `${ movies.find(item => item._id === movieId).title } / ${ date } / ${ time }`,
         secondValue: roomId
       }
     ));

@@ -21,7 +21,7 @@ const Session = ({ setSessionToMainForm }) => {
   };
 
   const setRoomsSelect = roomId => {
-    setSessionData({ ...sessionData, roomId: roomId, rows: getCinemasRoom.get(roomId) });
+    setSessionData({ ...sessionData, roomId: roomId, rows: getCinemasRoom(roomId) });
   };
 
   const addSession = () => {

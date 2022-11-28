@@ -11,7 +11,7 @@ const Select = ({ label, required = true, optionValues, defaultValue, stateFunc,
         {
           optionValues
             .map(({ _id, title, secondValue }) =>
-              <option key={ _id }  value={ `${ _id } ${ secondValue ? secondValue : "" }` }>{ title }</option>
+              <option key={ _id }  value={ `${ _id } ${ secondValue || "" }` }>{ title }</option>
             )
         }
       </select>

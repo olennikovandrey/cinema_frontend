@@ -9,7 +9,7 @@ const Timer = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(timeLeft => timeLeft >= 1 ? timeLeft - 1 : 0);
+      setTimeLeft(timeLeft => Math.max(timeLeft - 1, 0));
     }, 1000);
     return () => {
       clearInterval(interval);

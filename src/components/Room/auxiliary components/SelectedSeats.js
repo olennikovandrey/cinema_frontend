@@ -28,10 +28,10 @@ const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, ed
 
             return (
               <div className="items-wrapper__item" key={ `${ type }-${ rowNumber }-${ seatNumber }` }>
-                <div className="item-image">
+                <div className="item__image">
                   <img src={ furnitureItem.get(type) } alt={ type } />
                 </div>
-                <div className="item-description">
+                <div className="item__description">
                   <div className="item-seat-price">
                     <span className="item-seat">{ rowNumber } ряд / { seatNumber } место</span>
                     <span className="item-price">{ price }.00 BYN</span>

@@ -9,7 +9,7 @@ const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaI
   const currentMovie = movies.filter(getCurrent(movieId))[0];
 
   const isFirstRoom = () => {
-    const currentRoomTitle = cinemaRooms.filter(getCurrent(roomId))[0].title;
+    const currentRoomTitle = cinemaRooms.find(getCurrent(roomId)).title;
     return currentRoomTitle.includes("1");
   };
 

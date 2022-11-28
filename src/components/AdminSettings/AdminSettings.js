@@ -30,11 +30,11 @@ const NavigationGroup = ({ headline, navigations, checkedAction, handleClick }) 
 const NavigationGroupAdaptive = ({ navigationGroups, handleClick }) => {
   return (
     <select className="admin-navigation__group-adaptive" onChange={ e => handleClick(e.target.value) }>
-      {navigationGroups.map((item, index) =>
+      {navigationGroups.map((item) =>
         <optgroup label={ item.headline } key={ item.headline }>
-          { navigationGroups[index].navigations.map(({ name, title }) =>
+          { item.navigations.map(({ name, title }) =>
             <option
-              key={ item.name }
+              key={ item.name + name }
               value={ name }
             >{ title }</option>
           ) }

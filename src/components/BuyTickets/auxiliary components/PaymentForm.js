@@ -1,11 +1,18 @@
 /* eslint-disable no-console */
-import { buyTicketsFetch } from "../buyTickets.api";
+import { buyTicketsFetch, occupySeatsFetch } from "../buyTickets.api";
+import { getTotalPrice } from "../../../services/services";
+import { SET_SELECTED_SEATS, CHECK_IS_LOADER_OPEN } from "../../../store/actions/action-types";
 import React, { useMemo } from "react";
-import { CardElement, useElements, useStripe, CardNumberElement, CardCvcElement, CardExpiryElement } from "@stripe/react-stripe-js";
+import { useElements, useStripe, CardNumberElement, CardCvcElement, CardExpiryElement } from "@stripe/react-stripe-js";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const PaymentForm = () => {
+  const selectedSeats = useSelector(state => state.selectedSeats);
   const stripe = useStripe();
   const elements = useElements();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const useOptions = () => {
     const options = useMemo(
       () => ({
@@ -13,7 +20,7 @@ const PaymentForm = () => {
           base: {
             color: "#ffffff",
             letterSpacing: "0.2em",
-            fontFamily: "OCRB, sans-serif",
+            fontFamily: ", sans-serif",
             fontSize: "20px",
             "::placeholder": {
               color: "#aab7c4"
@@ -32,30 +39,39 @@ const PaymentForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
+    const cardElement = elements.getElement(CardNumberElement);
+    const totalPrice = getTotalPrice(selectedSeats);
+    const twoPagesBefore = -2;
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement)
+      card: cardElement
     });
 
     if(!error) {
       try {
         const { id } = paymentMethod;
-        const { data } = await buyTicketsFetch({ amount: 1000, id });
-
-        if (data.success) {
-          // blabla email
+        const { success, /* message */ } = await buyTicketsFetch({ amount: totalPrice, id });
+        if (success) {
+          occupySeatsFetch(selectedSeats);
+          dispatch({ type: SET_SELECTED_SEATS, payload: [] });
+          dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
+          navigate(twoPagesBefore);
         }
       } catch (e) {
-        console.log("Error", e);
+        dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
+        console.log("Ошибка", e);
       }
     } else {
-      console.log("Error", error.message);
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
+      console.log("Ошибка", error.message);
     }
   };
 
   return (
     <>
-      <form>
+      <form onSubmit={ handleSubmit }>
         <label>
           <span>Card number</span>
           <CardNumberElement options={ options }/>
@@ -70,6 +86,8 @@ const PaymentForm = () => {
             <CardCvcElement options={ options }/>
           </label>
         </div>
+        <button className="button-pink">Купить</button>
+        <div className="card-types"/>
       </form>
     </>
   );

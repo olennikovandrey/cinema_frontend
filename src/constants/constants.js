@@ -133,3 +133,5 @@ export const roomLegend = [
     value: "- выбрано"
   },
 ];
+
+export const STRIPE_PUBLIC_KEY = "pk_test_51M89aKEhipLO19N11C4bASqXiammsBg5B14CmRMVVesr00z2t4itHImZKWAGqseicKtvbHSEG5dcGFETrViww63400dxWVZcYq";

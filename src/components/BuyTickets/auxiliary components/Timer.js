@@ -17,7 +17,7 @@ const Timer = () => {
   }, []);
 
   return (
-    <div className="timer__counter">
+    <div className="timer">
       <span>{ minutes }:{ seconds } на покупку билета</span>
     </div>
   );

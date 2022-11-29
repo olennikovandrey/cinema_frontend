@@ -80,7 +80,8 @@ export const urls = {
   getAllRooms: `${ baseUrl }/room/getallrooms`,
   selectseat: `${ baseUrl }/room/selectseat`,
   massUnselectSeats: `${ baseUrl }/room/massunselectseats`,
-  occupySeat: `${ baseUrl }/room/occupiseat`
+  occupySeat: `${ baseUrl }/room/occupiseat`,
+  buyTickets: `${ baseUrl }/room/payment`
 };
 
 export const seatTypes = [

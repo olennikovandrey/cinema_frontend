@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Timer from "./Timer";
+import Timer from "./auxiliary components/Timer";
 import { massUnselectSeatsFetch, occupySeatsFetch } from "./buyTickets.api";
+import StripeContainer from "./auxiliary components/StripeContainer";
 import GoBack from "../GoBack/GoBack";
 import MovieInfo from "../Room/auxiliary components/MovieInfo";
 import { getTotalPrice } from "../../services/services";
@@ -48,11 +49,8 @@ const BuyTickets = () => {
             <Timer />
           </div>
           <span className="total-price">Стоимость: { getTotalPrice(selectedSeats) }.00 BYN</span>
-          <form>
-
-
-          </form>
-          <button className="button-pink" onClick={ () => buyTickets() }>Купить</button>
+          <StripeContainer />
+          <button className="button-pink" onClick={ buyTickets }>Купить</button>
         </div>
       </div>
     </section>

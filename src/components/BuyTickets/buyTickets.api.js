@@ -13,3 +13,10 @@ export const occupySeatsFetch = async (selectedSeats) => {
     body: selectedSeats
   });
 };
+
+export const buyTicketsFetch = async (paymentData) => {
+  return doFetch(urls.buyTickets, {
+    method: "post",
+    body: paymentData
+  });
+};

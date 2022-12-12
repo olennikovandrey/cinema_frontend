@@ -7,7 +7,7 @@ import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import Search from "../Search/Search";
 import AdminSettings from "../AdminSettings/AdminSettings";
-import { CHECK_IS_USER_AUTHORIZED, CHECK_IS_USER_ADMIN } from "../../store/actions/action-types";
+import { CHECK_IS_USER_AUTHORIZED, CHECK_IS_USER_ADMIN, SET_IS_PAYMENT_SUCCESS } from "../../store/actions/action-types";
 import Profile from "../Profile/Profile";
 import Loader from "../Loader/Loader";
 import { userRole } from "../../constants/constants";
@@ -21,6 +21,7 @@ const Main = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch({ type: SET_IS_PAYMENT_SUCCESS, payload: false });
     async function checkIsAuthorized() {
       try {
         const { isAuth, role } = await checkIsAuthFetch();

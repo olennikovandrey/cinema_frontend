@@ -2,11 +2,14 @@ import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-const GoBack = ({ scrollValueToChange = 20 }) => {
+const GoBack = ({ scrollValueToChange = 20, backValue = "Назад", backSteps = -1, additionalFn = null}) => {
   const homeLink = useRef(null);
   const navigate = useNavigate();
 
-  const goBack = () => navigate(-1);
+  const goBack = () => {
+    navigate(backSteps);
+    additionalFn && additionalFn();
+  };
 
   useEffect(() => {
     const backgroundChanger = () => {
@@ -30,7 +33,7 @@ const GoBack = ({ scrollValueToChange = 20 }) => {
   return (
     <>
       <div className="go-back-link" ref={ homeLink }>
-        <span onClick={ goBack }>Назад</span>
+        <span onClick={ goBack }>{ backValue }</span>
       </div>
     </>
   );
@@ -39,5 +42,11 @@ const GoBack = ({ scrollValueToChange = 20 }) => {
 export default GoBack;
 
 GoBack.propTypes = {
-  scrollValueToChange: PropTypes.string
+  scrollValueToChange: PropTypes.string,
+  backValue: PropTypes.string,
+  backSteps: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  additionalFn: PropTypes.func
 };

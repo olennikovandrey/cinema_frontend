@@ -1,18 +1,16 @@
-/* eslint-disable no-console */
 import { buyTicketsFetch, occupySeatsFetch } from "../buyTickets.api";
 import { getTotalPrice } from "../../../services/services";
-import { SET_SELECTED_SEATS, CHECK_IS_LOADER_OPEN } from "../../../store/actions/action-types";
-import React, { useMemo } from "react";
+import { SET_SELECTED_SEATS, CHECK_IS_LOADER_OPEN, SET_IS_PAYMENT_SUCCESS } from "../../../store/actions/action-types";
+import React, { useMemo, useState } from "react";
 import { useElements, useStripe, CardNumberElement, CardCvcElement, CardExpiryElement } from "@stripe/react-stripe-js";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const PaymentForm = () => {
+  const [errorMessage, setErrorMessage] = useState("");
   const selectedSeats = useSelector(state => state.selectedSeats);
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const useOptions = () => {
     const options = useMemo(
       () => ({
@@ -42,52 +40,56 @@ const PaymentForm = () => {
     dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const cardElement = elements.getElement(CardNumberElement);
     const totalPrice = getTotalPrice(selectedSeats);
-    const twoPagesBefore = -2;
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement
     });
 
+    const errorHandler = () => {
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
+      dispatch({ type: SET_IS_PAYMENT_SUCCESS, payload: false });
+      setErrorMessage(error.message);
+    };
+
     if(!error) {
       try {
         const { id } = paymentMethod;
-        const { success, /* message */ } = await buyTicketsFetch({ amount: totalPrice, id });
+        const { success } = await buyTicketsFetch({ amount: totalPrice, id });
         if (success) {
           occupySeatsFetch(selectedSeats);
           dispatch({ type: SET_SELECTED_SEATS, payload: [] });
           dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
-          navigate(twoPagesBefore);
+          dispatch({ type: SET_IS_PAYMENT_SUCCESS, payload: true });
         }
-      } catch (e) {
-        dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
-        console.log("Ошибка", e);
+      } catch (error) {
+        errorHandler();
       }
     } else {
-      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
-      console.log("Ошибка", error.message);
+      errorHandler();
     }
   };
 
   return (
     <>
-      <form onSubmit={ handleSubmit }>
-        <label>
+      <form onSubmit={ handleSubmit } className="payment-form">
+        { errorMessage && <span className="payment-form__error">{ errorMessage.slice(0, -1) }</span> }
+        <label className="payment-form__number-field">
           <span>Card number</span>
           <CardNumberElement options={ options }/>
         </label>
         <div>
-          <label>
+          <label className="payment-form__date-field">
             <span>Expiration date</span>
             <CardExpiryElement options={ options }/>
           </label>
-          <label>
+          <label  className="payment-form__cvc-field">
             <span>CVC</span>
             <CardCvcElement options={ options }/>
           </label>
         </div>
         <button className="button-pink">Купить</button>
-        <div className="card-types"/>
+        <span className="payment-form__card-types"/>
       </form>
     </>
   );

@@ -16,7 +16,8 @@ import {
   CHECK_IS_LOADER_OPEN,
   SET_CASHED_MOVIES,
   SET_SELECTED_SEATS,
-  SET_EMAIL_FOR_TICKETS
+  SET_EMAIL_FOR_TICKETS,
+  SET_IS_PAYMENT_SUCCESS
 } from "./actions/action-types";
 
 export const initState = {
@@ -29,6 +30,7 @@ export const initState = {
   isEmailModalOpen: false,
   isUserAuthorized: false,
   isLoader: false,
+  isPaymentSuccess: false,
   userData: {},
   movies: [],
   cinemas: [],
@@ -186,6 +188,13 @@ const reducer = (state = initState, action) => {
     return {
       ...state,
       emailForTickets: action.payload
+    };
+  }
+
+  case SET_IS_PAYMENT_SUCCESS: {
+    return {
+      ...state,
+      isPaymentSuccess: action.payload
     };
   }
 

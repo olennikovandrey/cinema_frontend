@@ -15,7 +15,8 @@ import { CHECK_IS_LOGIN_MODAL_OPEN,
   SET_RANDOM_MOVIES,
   SET_CASHED_MOVIES,
   SET_SELECTED_SEATS,
-  SET_EMAIL_FOR_TICKETS } from "./action-types";
+  SET_EMAIL_FOR_TICKETS,
+  SET_IS_PAYMENT_SUCCESS } from "./action-types";
 
 export const setIsLoginOpen = (payload) => {
   return {
@@ -137,5 +138,12 @@ export const setEmailForTickets = (email) => {
   return {
     type: SET_EMAIL_FOR_TICKETS,
     email
+  };
+};
+
+export const setIsPaymentSuccess = (result) => {
+  return {
+    type: SET_IS_PAYMENT_SUCCESS,
+    result
   };
 };

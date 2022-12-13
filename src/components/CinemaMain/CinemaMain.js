@@ -5,7 +5,6 @@ import { SET_CINEMAS } from "../../store/actions/action-types";
 import vegasCinemaImage from "../../assets/images/cinema/vegas.jpeg";
 import worldScreenCinemaImage from "../../assets/images/cinema/worldScreen.jpg";
 import movieHDImage from "../../assets/images/cinema/movieHD.jpg";
-import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -45,7 +44,3 @@ const CinemaMain = () => {
 };
 
 export default CinemaMain;
-
-CinemaMain.propTypes = {
-  movie: PropTypes.object
-};

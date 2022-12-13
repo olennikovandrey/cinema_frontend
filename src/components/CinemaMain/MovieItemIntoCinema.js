@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaId }) => {
-  const movies = useSelector(state => state.movies);
+  const movies = useSelector(state => state.cashedMovies);
   const getCurrent = id => ({ _id }) => _id === id;
   const currentMovie = movies.filter(getCurrent(movieId))[0];
 
@@ -20,11 +20,11 @@ const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaI
         <div className="session-wrapper">
           <Link to={ `/movies/id/${ movieId }` }>
             <div className="session-wrapper__image">
-              <img src={ currentMovie.image } alt={ currentMovie.title } />
+              <img src={ currentMovie.movieInfo.image } alt={ currentMovie.movieInfo.title } />
             </div>
           </Link>
           <div className="session-description">
-            <h2>{ currentMovie.title }</h2>
+            <h2>{ currentMovie.movieInfo.title }</h2>
             <p className="session-description__row">{ date }</p>
             <p className="session-description__row">{ time }</p>
             <p className="session-description__row">{ isFirstRoom ? "Зал 1" : "Зал 2" }</p>

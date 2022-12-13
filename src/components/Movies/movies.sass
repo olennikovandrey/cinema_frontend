@@ -1,3 +1,9 @@
+$maxWidth: 1440
+@mixin adaptiv-font($pcSize, $mobSize)
+  $addSize: $pcSize - $mobSize
+  $maxWidth: $maxWidth - 320
+  font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 280px) / #{$maxWidth}))
+
 .movies-wrapper,
 .no-matches
   position: relative
@@ -47,6 +53,26 @@
       width: 100%
       @media only screen and (max-width: 375px)
         height: auto
+  &__sessions
+    position: absolute
+    width: 95%
+    height: auto
+    bottom: 10px
+    left: 50%
+    display: flex
+    justify-content: space-between
+    align-items: center
+    transform: translate(-50%, 0)
+    z-index: 1
+    & .button-pink
+      background-color: #09000e
+      width: 100%
+      height: auto
+    & .some-buttons
+      width: 96%
+      height: 45px
+      @include adaptiv-font(13, 10)
+
   &__title
     height: 40px
     margin-top: 10px

@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Actor from "./Actor";
 import { getExactMovieFetch } from "./movieItem.api";
+import SessionInfo from "./SessionInfo";
 import { createMarkup } from "../../services/services";
 import { CHECK_IS_LOADER_OPEN } from "../../store/actions/action-types";
 import Loader from "../Loader/Loader";
@@ -12,14 +13,16 @@ import { useDispatch } from "react-redux";
 
 const MovieItem = () => {
   const [movie, setMovie] = useState();
+  const [sessions, setSessions] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const getMovieData = async (id) => {
     const url = `${ baseUrl }/movies/id/id=${ id }`;
-    const movieData = await getExactMovieFetch(url);
-    setMovie(movieData);
+    const { movie, sessions } = await getExactMovieFetch(url);
+    setMovie(movie);
+    setSessions(sessions);
   };
 
   useEffect(() => {
@@ -32,10 +35,21 @@ const MovieItem = () => {
   return (
     <>
       { !isLoaded && <Loader /> }
-      { isLoaded && !!movie &&
+      { isLoaded && movie &&
       <section className="movie">
         <div className="crop" style={ { background: `url(${ movie.crop }) 40% 25%` } }></div>
         <GoBack scrollValueToChange="390" />
+        <div className="sessions-wrapper">
+          {
+            sessions && sessions.map(item =>
+              <SessionInfo
+                key={ item._id }
+                movie={ movie }
+                sessionItem={ item }
+              />
+            )
+          }
+        </div>
         <div className="description">
           <div className="description__image">
             <img src={ movie.image } alt={ movie.title } />

@@ -14,7 +14,7 @@ const MovieInfo = ({ movieInfo }) => {
       <div className="movie-info__description">
         <h1 className="description-movie-title">{ movie.title }</h1>
         <div className="description-room">
-          <p className="description-room-title">{ room.cinemaTitle } г. Минск / { roomTitle(room) ? "Зал 1" : "Зал 2" }</p>
+          <p className="description-room-title">г. Минск, { room.cinemaTitle } / { roomTitle(room) ? "Зал 1" : "Зал 2" }</p>
         </div>
         <div className="description-date" data-date={ sessionDate(session) }>
           <p className="description-date-title">{ session.date } { session.time } <span>{ movie.age }</span></p>

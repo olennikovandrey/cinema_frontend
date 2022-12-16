@@ -7,10 +7,12 @@ export const massUnselectSeatsFetch = async (selectedSeats) => {
     body: selectedSeats
   });
 };
-export const occupySeatsFetch = async (selectedSeats) => {
+
+export const occupySeatsFetch = async (seatsToBuy, email) => {
+  const data = { seatsToBuy, email };
   return doFetch(urls.occupySeat, {
     method: "put",
-    body: selectedSeats
+    body: data
   });
 };
 

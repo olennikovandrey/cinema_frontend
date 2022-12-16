@@ -2,7 +2,7 @@ import RegisterFormItem from "./RegisterFormItem";
 import { registerFetch } from "./registerForm.api";
 import registerSchema from "../../validation/registerSchema.json";
 import { validReset } from "../../services/services";
-import { CHECK_IS_REGISTER_MODAL_OPEN, CHECK_IS_LOGIN_MODAL_OPEN, CHECK_IS_USER_AUTHORIZED } from "../../store/actions/action-types";
+import { CHECK_IS_REGISTER_MODAL_OPEN, CHECK_IS_LOGIN_MODAL_OPEN, CHECK_IS_USER_AUTHORIZED, SET_USER_PERSONAL_DATA } from "../../store/actions/action-types";
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Ajv from "ajv";
@@ -38,6 +38,7 @@ const RegisterForm = () => {
           dispatch({ type: CHECK_IS_LOGIN_MODAL_OPEN, payload: !isLoginModalOpen});
           dispatch({ type: CHECK_IS_REGISTER_MODAL_OPEN, payload: !isRegisterModalOpen });
           dispatch({ type: CHECK_IS_USER_AUTHORIZED });
+          dispatch({ type: SET_USER_PERSONAL_DATA, payload: user });
           setRequestMessage("");
         }
       } catch (e) {

@@ -11,11 +11,16 @@ import { useSelector, useDispatch } from "react-redux";
 
 const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, editable = true }) => {
   const selectedSeats = useSelector(state => state.selectedSeats);
+  const userEmail = useSelector(state => state.userData.email);
   const dispatch = useDispatch();
   const furnitureItem = new Map()
     .set(roomSeatTypes.sofa, sofa)
     .set(roomSeatTypes.armchair, armchair)
     .set(roomSeatTypes.armchairLux, armchairLux);
+
+  const fakeClick = () => {
+    document.querySelector(".fake-link").firstChild.click();
+  };
 
   return (
     <div className={ editable ? "selected-seats" : "selected-seats-in-buy" }>
@@ -49,11 +54,14 @@ const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, ed
       { editable &&
         <>
           <span className="selected-seats__total-price">Стоимость: { getTotalPrice(selectedSeats) }.00 BYN</span>
-          <button className="button-pink" onClick={ () => dispatch({ type: CHECK_IS_EMAIL_MODAL_OPEN, payload: true }) }>
+          <button className="button-pink" onClick={ !userEmail ?
+            () => dispatch({ type: CHECK_IS_EMAIL_MODAL_OPEN, payload: true }) :
+            fakeClick
+          }>
               Перейти к покупке
           </button>
           <span className="fake-link">
-            <Link to="/buytickets" state={ { movieInfo: movieInfo } }>sdfsdf</Link>
+            <Link to="/buytickets" state={ { movieInfo: movieInfo } }>buy</Link>
           </span>
         </>
       }

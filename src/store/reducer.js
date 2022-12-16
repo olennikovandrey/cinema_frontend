@@ -124,7 +124,8 @@ const reducer = (state = initState, action) => {
     return {
       ...state,
       isUserAuthorized: false,
-      isUserAdmin: false
+      isUserAdmin: false,
+      userData: {},
     };
   }
 

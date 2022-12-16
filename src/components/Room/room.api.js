@@ -12,8 +12,8 @@ export const selectSeatFetch = async (updatedSeat) => {
   });
 };
 
-export const occupiSeatFetch = async (seatsToBuy) => {
-  return doFetch(urls.occupiseat, {
+export const occupySeatFetch = async (seatsToBuy) => {
+  return doFetch(urls.occupySeat, {
     method: "put",
     body: seatsToBuy
   });

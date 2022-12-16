@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 const PaymentForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const selectedSeats = useSelector(state => state.selectedSeats);
+  const userEmail = useSelector(state => state.userData.email);
+  const emailForTickets = useSelector(state => state.emailForTickets);
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
@@ -57,7 +59,8 @@ const PaymentForm = () => {
         const { id } = paymentMethod;
         const { success } = await buyTicketsFetch({ amount: totalPrice, id });
         if (success) {
-          occupySeatsFetch(selectedSeats);
+          const email = userEmail ? userEmail : emailForTickets;
+          occupySeatsFetch(selectedSeats, email);
           dispatch({ type: SET_SELECTED_SEATS, payload: [] });
           dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
           dispatch({ type: SET_IS_PAYMENT_SUCCESS, payload: true });

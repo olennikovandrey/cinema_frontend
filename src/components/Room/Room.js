@@ -22,6 +22,7 @@ const Room = () => {
   const isLoaderOpen = useSelector(state => state.isLoaderOpen);
   const isEmailModalOpen = useSelector(state => state.isEmailModalOpen);
   const selectedSeats = useSelector(state => state.selectedSeats);
+  const userEmail = useSelector(state => state.userData.email);
   const dispatch = useDispatch();
 
   const getRoom = async (cinemaId, roomId, movieId) => {
@@ -82,7 +83,7 @@ const Room = () => {
   return (
     <>
       { isLoaderOpen && <Loader /> }
-      { isEmailModalOpen && <EmailModal /> }
+      { isEmailModalOpen && !userEmail && <EmailModal /> }
       <GoBack />
       {
         room && movie &&

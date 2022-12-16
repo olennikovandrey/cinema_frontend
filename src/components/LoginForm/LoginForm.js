@@ -1,7 +1,7 @@
 import { loginFetch } from "./loginForm.api";
 import loginSchema from "../../validation/loginSchema.json";
 import { validReset, showPassword } from "../../services/services";
-import { CHECK_IS_LOGIN_MODAL_OPEN, CHECK_IS_REGISTER_MODAL_OPEN, CHECK_IS_USER_AUTHORIZED, CHECK_IS_USER_ADMIN } from "../../store/actions/action-types";
+import { CHECK_IS_LOGIN_MODAL_OPEN, CHECK_IS_REGISTER_MODAL_OPEN, CHECK_IS_USER_AUTHORIZED, CHECK_IS_USER_ADMIN, SET_USER_PERSONAL_DATA } from "../../store/actions/action-types";
 import { userRole } from "../../constants/constants";
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,6 @@ const LoginForm = () => {
   const [user, setUser] = useState({});
   const [requestMessage, setRequestMessage] = useState("");
   const passwordInputRef = useRef(null);
-
   const isLoginModalOpen = useSelector(state => state.isLoginModalOpen);
   const dispatch = useDispatch();
 
@@ -30,6 +29,7 @@ const LoginForm = () => {
           userType === userRole.admin && dispatch({ type: CHECK_IS_USER_ADMIN });
           dispatch({ type: CHECK_IS_LOGIN_MODAL_OPEN, payload: !isLoginModalOpen });
           dispatch({ type: CHECK_IS_USER_AUTHORIZED });
+          dispatch({ type: SET_USER_PERSONAL_DATA, payload: user });
           setRequestMessage("");
         }
       } catch (e) {

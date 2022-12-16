@@ -10,18 +10,14 @@ const EmailModal = () => {
   const emailRegExp = new RegExp("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
   const handleClick = () => {
-    dispatch({ type: CHECK_IS_EMAIL_MODAL_OPEN, payload: false });
-    dispatch({ type: SET_EMAIL_FOR_TICKETS, payload: emailForTickets });
-    document.querySelector(".fake-link").firstChild.click();
-
-    /* if (emailRegExp.test(emailForTickets)) {
+    if (emailRegExp.test(emailForTickets)) {
       inputForEmailRef.current.dataset.valid = "";
       dispatch({ type: CHECK_IS_EMAIL_MODAL_OPEN, payload: false });
       dispatch({ type: SET_EMAIL_FOR_TICKETS, payload: emailForTickets });
       document.querySelector(".fake-link").firstChild.click();
     } else {
       inputForEmailRef.current.dataset.valid = "invalid";
-    } */
+    }
   };
 
   return (
@@ -45,7 +41,6 @@ const EmailModal = () => {
         </div>
       }
     </>
-
   );
 };
 

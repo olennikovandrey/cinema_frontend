@@ -10,7 +10,7 @@ export const handleChange = (e, stateFn, stateField) => {
     ...prevState,
     [stateField]: e.target.value.split(" ")[0].trim()
   }));
-}; //updateCinema
+}; //updateCinema, addSession
 
 export const handleBlurForSeveralValues = (e, stateFn, movieField) => {
   const wordsAmount = e.target.value.split(", ").length;
@@ -68,3 +68,7 @@ export const handlerChangeForSecondValue = (e, stateFn, [movieField, movieFieldK
     }
   }));
 }; //updateMovie
+
+export const sortedMovies = movies => {
+  return movies.sort((a, b) => a.movieInfo.title.toLowerCase() < b.movieInfo.title.toLowerCase() && -1);
+};

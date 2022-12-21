@@ -5,6 +5,7 @@ import UpdateMovie from "./AdminItems/Movies/UpdateMovie/UpdateMovie";
 import AddCinema from "./AdminItems/Cinemas/AddCinema/AddCinema";
 import DeleteCinema from "./AdminItems/Cinemas/DeleteCinema/DeleteCinema";
 import UpdateCinema from "./AdminItems/Cinemas/UpdateCinema/UpdateCinema";
+import AddSession from "./AdminItems/Sessions/AddSession/AddSession";
 import navigationGroups from "./navigationGroups";
 import { CHECK_IS_ADMIN_MODAL_OPEN } from "../../store/actions/action-types";
 import React, { useState } from "react";
@@ -51,7 +52,8 @@ const settingsField = Object.freeze({
   updateCinema: "updateCinema",
   addMovie: "addMovie",
   deleteMovie: "deleteMovie",
-  updateMovie: "updateMovie"
+  updateMovie: "updateMovie",
+  addSession: "addSession",
 });
 
 const adminItemEl = new Map()
@@ -61,10 +63,11 @@ const adminItemEl = new Map()
   .set(settingsField.deleteCinema, <DeleteCinema />)
   .set(settingsField.addMovie, <AddMovie />)
   .set(settingsField.deleteMovie, <DeleteMovie />)
-  .set(settingsField.updateMovie, <UpdateMovie />);
+  .set(settingsField.updateMovie, <UpdateMovie />)
+  .set(settingsField.addSession, <AddSession /> );
 
 const AdminSettings = () => {
-  const [checkedAction, setCheckedAction] = useState("");
+  const [checkedAction, setCheckedAction] = useState("userList");
 
   const isAdminModalOpen = useSelector(state => state.isAdminModalOpen);
   const dispatch = useDispatch();
@@ -91,11 +94,11 @@ const AdminSettings = () => {
             handleClick={ setCheckedAction }
           />
           }
-
         </aside>
-        <section className="admin-item">
+        { checkedAction && <section className="admin-item">
           { adminItemEl.get(checkedAction) }
         </section>
+        }
         <span
           className="admin-close-button"
           onClick={ () => dispatch({ type: CHECK_IS_ADMIN_MODAL_OPEN, payload: false }) }

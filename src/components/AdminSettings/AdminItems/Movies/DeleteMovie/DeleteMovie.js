@@ -1,6 +1,8 @@
-import { deleteMovieFetch, getAllMoviesFetch } from "./deleteMovie.api";
+import { deleteMovieFetch } from "./deleteMovie.api";
+import { getAllMoviesFetch } from "../../../adminSettings.api";
 import { SET_MOVIES } from "../../../../../store/actions/action-types";
 import Modal from "../../../../Modal/Modal";
+import { sortedMovies } from "../../../adminSettings.services";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -41,15 +43,20 @@ const DeleteMovie = () => {
       />
       <div className="delete-items-wrapper" >
         {
-          movies
-            .filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-            .map(({ _id, image, title,  }) =>
-              <div className="delete-item" style={ { height: "100px", flexDirection: "row", alignItems: "center" } } key={ _id }>
-                <img src={ image } alt={ `${ title } cover` }/>
-                <span className="delete-item__row">{ title }</span>
-                <span className="delete-item__icon" onClick={ () => deleteMovie(title) }></span>
-              </div>
-            )
+          sortedMovies(movies)
+            .filter(({ movieInfo }) => movieInfo.title.toLowerCase().includes(searchValue.toLowerCase()))
+            .map(item => {
+              const { movieInfo } = item;
+              const { _id, image, title }  = movieInfo;
+
+              return (
+                <div className="delete-item" style={ { height: "100px", flexDirection: "row", alignItems: "center" } } key={ _id }>
+                  <img src={ image } alt={ `${ title } cover` }/>
+                  <span className="delete-item__row">{ title }</span>
+                  <span className="delete-item__icon" onClick={ () => deleteMovie(title) }></span>
+                </div>
+              );
+            })
         }
       </div>
       {

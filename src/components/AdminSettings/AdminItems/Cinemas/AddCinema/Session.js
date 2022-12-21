@@ -61,7 +61,7 @@ const Session = ({ setSessionToMainForm }) => {
           />
           <Select
             label="Выберите фильм"
-            optionValues={ movies }
+            optionValues={ movies.map(({ movieInfo }) => movieInfo) }
             stateFunc={ e => setMoviesSelect(e.target.value) }
             width="95%"
           />

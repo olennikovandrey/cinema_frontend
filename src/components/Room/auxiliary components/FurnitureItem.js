@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import RoomToolTip from "./RoomToolTip";
 import sofa from "../../../assets/images/room/sofa.svg";
 import sofa_selected from "../../../assets/images/room/sofa_selected.svg";
@@ -11,7 +10,7 @@ import armchair_selected from "../../../assets/images/room/armchair_selected.svg
 import armchair_occupied from "../../../assets/images/room/armchair_occupied.svg";
 import { roomSeatTypes, furnitureItemTitle } from "../../../constants/constants";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const FurnitureItem = ({ cinemaId, sessionId, currentSeat, row, price, type, selectSeatHandler }) => {
   const { isOccupied, isSelected, place } = currentSeat;
@@ -58,6 +57,11 @@ const FurnitureItem = ({ cinemaId, sessionId, currentSeat, row, price, type, sel
     const furnitureMapper = stateMap.get(state);
     return furnitureMapper.get(type);
   };
+
+  useEffect(() => {
+    const { isOccupied, isSelected } = currentSeat;
+    setSeatStatus(isOccupied ? "occupied" : isSelected ? "selected" : "default");
+  }, [currentSeat]);
 
   return (
     <>

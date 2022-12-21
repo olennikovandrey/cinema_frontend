@@ -66,6 +66,7 @@ export const urls = {
   addCinema: `${ baseUrl }/admin/cinemas/addcinemas`,
   addRoom: `${ baseUrl }/admin/rooms/addrooms`,
   addMovie: `${ baseUrl }/admin/movies/addmovies`,
+  addSession: `${ baseUrl }/admin/sessions/addsessions`,
   updateCinema: `${ baseUrl }/admin/cinemas/updatecinemas`,
   updateRoom: `${ baseUrl }/admin/rooms/updaterooms`,
   updateMovie: `${ baseUrl }/admin/movies/updatemovies`,

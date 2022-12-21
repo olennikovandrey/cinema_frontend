@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { updateCinemaFetch, getAllCinemasFetch } from "./updateCinema.api";
+import { updateCinemaFetch } from "./updateCinema.api";
+import { getAllCinemasFetch } from "../../../adminSettings.api";
 import Select from "../../Select";
 import EditableInput from "../../EditableInput";
 import { handleBlurForEditableInputsGroup, handlerChangeForSelect, handleChange, handlerChangeForSecondValue } from "../../../adminSettings.services";
@@ -21,7 +22,6 @@ const UpdateCinema = () => {
     session: { date: "", time: "", movieId: "", roomId: "", rows: VegasFilmRoom }
   });
   const movies = useSelector(state => state.movies);
-
   const setSessionHandler = e => {
     handleChange(e, setUpdatedCinema, "sessionId");
     handlerChangeForSecondValue(e, setUpdatedCinema, ["session", "roomId"]);
@@ -34,7 +34,7 @@ const UpdateCinema = () => {
     const cinemaRoom = getCinemasRoom(currentSessionsRoomId);
     const sessions = currentSessions.map(({ _id, movieId, date, time, roomId }) => (
       { _id: _id,
-        title: `${ movies.find(item => item._id === movieId).title } / ${ date } / ${ time }`,
+        title: `${ movies.find(item => item._id === movieId).movieInfo.title } / ${ date } / ${ time }`,
         secondValue: roomId
       }
     ));
@@ -72,6 +72,14 @@ const UpdateCinema = () => {
           movieId: movies[0]._id
         }
       });
+
+      const sessions = allCinemas[0].sessions.map(({ _id, movieId, date, time, roomId }) => (
+        { _id: _id,
+          title: `${ movies.find(item => item._id === movieId).movieInfo.title } / ${ date } / ${ time }`,
+          secondValue: roomId
+        }
+      ));
+      setSessions(sessions);
     }
     getAllCinemas();
   }, []);
@@ -122,7 +130,7 @@ const UpdateCinema = () => {
                 <Select
                   label="Выберите фильм"
                   required={ false }
-                  optionValues={ movies }
+                  optionValues={ movies.map(item => item.movieInfo) }
                   defaultValue={ "" }
                   stateFunc={ e => handlerChangeForSelect(e, setUpdatedCinema, ["session", "movieId"]) }
                   name="movieId"

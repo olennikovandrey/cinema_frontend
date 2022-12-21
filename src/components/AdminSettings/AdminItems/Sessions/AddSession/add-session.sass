@@ -1,0 +1,22 @@
+.add-session-wrapper
+  height: 100%
+  overflow-y: auto
+  &::-webkit-scrollbar
+    width: 5px
+    background-color: #f9f9fd
+  &::-webkit-scrollbar-thumb
+    border-radius: 10px
+    background-color: #252525
+  &::-webkit-scrollbar-track
+    box-shadow: inset 0 0 6px #fff
+    border-radius: 5px
+    background-color: #808080
+
+.add-session-form
+  height: auto
+  margin-right: 10px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  @media only screen and (max-width: 425px)
+    margin: 0

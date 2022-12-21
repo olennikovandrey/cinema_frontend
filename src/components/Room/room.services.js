@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 export const sessionDate = (sessionData) => {
   return sessionData.date.split(" ")[0];
 };

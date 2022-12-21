@@ -1,11 +1,11 @@
 import { urls } from "../../../../../constants/constants";
 import { doFetch } from "../../../../../services/services";
 
-export const updateCinemaFetch = async updatedCinema => {
-  return doFetch(urls.updateCinema, {
-    method: "put",
+export const addSessionFetch = async session => {
+  return doFetch(urls.addSession, {
+    method: "post",
     body: {
-      updatedCinema
+      session
     }
   });
 };

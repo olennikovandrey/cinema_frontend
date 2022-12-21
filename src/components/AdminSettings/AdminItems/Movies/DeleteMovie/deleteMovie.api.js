@@ -7,7 +7,3 @@ export const deleteMovieFetch = async (title) => {
     body: { title }
   });
 };
-
-export const getAllMoviesFetch = async () => {
-  return doFetch(urls.getAllMovies);
-};

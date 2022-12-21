@@ -1,4 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { updateMovieFetch, getAllMoviesFetch } from "./updateMovie.api";
+import { getExactMovieInfo } from "./services";
+import { sortedMovies } from "../../../adminSettings.services";
 import { handleChangeForEditableSeveralValues, handleBlurForEditableInput, handleBlurForEditableInputsGroup } from "../../../adminSettings.services";
 import EditableInput from "../../EditableInput";
 import EditableTextarea from "../../EditableTextarea";
@@ -15,11 +18,8 @@ const UpdateMovie = () => {
   const getMovies = async () =>  {
     const moviesData = await getAllMoviesFetch();
     setMovies(moviesData);
+    setSelectedMovie(sortedMovies(moviesData)[0].movieTitle);
   };
-
-  useEffect(() => {
-    getMovies();
-  }, []);
 
   const handlerSubmit = async e => {
     e.preventDefault();
@@ -28,6 +28,10 @@ const UpdateMovie = () => {
     setResponseMessage(message);
     setIsModalOpen(true);
   };
+
+  useEffect(() => {
+    getMovies();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => { setIsModalOpen(false); }, 5000);
@@ -39,19 +43,21 @@ const UpdateMovie = () => {
       <h3>Выберите фильм из списка</h3>
       <select onChange={ e => {
         setSelectedMovie(e.target.value);
-        setChangedMovie({...changedMovie, title: e.target.value});
+        setChangedMovie({ ...changedMovie, title: e.target.value });
       }}>
         {
-          movies.sort((a, b) => a.title.toLowerCase() < b.title.toLowerCase() && -1)
-            .map(({ title }) =>
-              <option key={ title } value={ title }>{ title }</option>
+          sortedMovies(movies)
+            .map(({ movieInfo }) => {
+              const { title } = movieInfo;
+              return <option key={ title } value={ title }>{ title }</option>;
+            }
             )
         }
       </select>
       {
-        movies
-          .filter(item => item.title === selectedMovie)
-          .map(({ _id, country, year, genre, slogan, producer, description, duration, age, rating, image, crop, youtubeIframe }) => {
+        selectedMovie && getExactMovieInfo(movies, selectedMovie)
+          .map(({ movieInfo }) => {
+            const { _id, country, year, genre, slogan, producer, description, duration, age, rating, image, crop, youtubeIframe } = movieInfo;
             const countryStr = country.join(", ");
             const genreStr = genre.join(", ");
             const { name, link } = producer[0];

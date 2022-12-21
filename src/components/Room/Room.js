@@ -47,6 +47,8 @@ const Room = () => {
   const unselectSeatHandler = async (seat) => {
     const seats = [...selectedSeats];
     const dublicateIndex = seats.findIndex(({ rowNumber, seatNumber }) => rowNumber === seat.rowNumber && seatNumber === seat.seatNumber);
+    const rows = getRows(room, session);
+    setRows(rows);
     seats.splice(dublicateIndex, 1);
     dispatch({ type: SET_SELECTED_SEATS, payload: seats });
     await selectFetch(seat);
@@ -103,7 +105,7 @@ const Room = () => {
               <SelectedSeats
                 sessionId={ session._id }
                 cinemaId={ cinemaId }
-                unselectSeatHandler={ unselectSeatHandler }
+                unselectSeatHandler={ selectSeatHandler }
                 movieInfo={ movieInfo }
               />
             }

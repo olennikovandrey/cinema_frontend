@@ -1,0 +1,79 @@
+$maxWidth: 1440
+@mixin adaptiv-font($pcSize, $mobSize)
+  $addSize: $pcSize - $mobSize
+  $maxWidth: $maxWidth - 320
+  font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 280px) / #{$maxWidth}))
+
+section.select-cinema
+  position: relative
+  width: 100%
+  height: auto
+  padding: 0 10%
+  margin-top: 100px
+  display: flex
+  flex-direction: column
+
+  & .crop
+    position: fixed
+    height: 100%
+    width: 100%
+    overflow-y: hidden
+    left: 0
+    top: 80px
+    z-index: -1
+    &::before
+      position: absolute
+      width: 100%
+      content: ""
+      inset: 0
+      background: linear-gradient(180deg, rgb(12, 1, 40, 1) 5%, rgb(0, 0, 0, 0) 30%, rgba(9, 9, 10, 5) 80%, rgb(9, 0, 14, 10))
+    &::after
+      position: absolute
+      width: 100%
+      content: ""
+      inset: 0
+      background: linear-gradient(90deg, rgb(12, 1, 40, 1) 5%, rgb(0, 0, 0, 0) 30%, rgba(9, 9, 10, 1) 90%, rgb(9, 0, 14, 5))
+
+  & .select-cinema__sessions
+    width: 100%
+    padding: 20px 0
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-wrap: wrap
+    & a
+      width: 25%
+      margin: 0 1% 1% 0
+      text-decoration: none
+    &-item,
+    &-item-disabled
+      width: 100%
+      padding: 10px
+      border-radius: 6px
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      background: #00000090
+      box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
+      border: 1px solid rgba(121, 121, 121, 0.2)
+      cursor: pointer
+      &-disabled
+        border: 1px solid #ffffff
+        cursor: not-allowed
+      &-title
+        margin-bottom: 25px
+        text-align: center
+        color: #fefefe
+        font-family: Carattere, sans-serif
+        @include adaptiv-font(40, 14)
+        color: rgba(255, 255, 255)
+      & p
+        margin-bottom: 10px
+        color: #fefefe
+        @include adaptiv-font(20, 12)
+
+    &-item
+      &:hover
+        box-shadow: #d4075435 0px 0px 0px 1px inset
+        border: 1px solid #d40754

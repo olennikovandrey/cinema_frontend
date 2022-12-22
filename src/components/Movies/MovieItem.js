@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 
 const MovieItem = ({ movie }) => {
   const { _id, image, title, age, rating } = movie.movieInfo;
+  const firstSessionDate = movie => { return movie.cinemas[0].session.date; };
+  const firstSessionTime = movie => { return movie.cinemas[0].session.time; };
+  const date = firstSessionDate(movie);
+  const time = firstSessionTime(movie);
+  const newDate = date => { return [date.split(" ")[0], date.split(" ")[1]].join(" "); };
 
   return (
     <Link to={ `/movies/id/${ _id }` }>
@@ -24,17 +29,16 @@ const MovieItem = ({ movie }) => {
           }) :
             <div className="movie-item__sessions">
               {
-                movie.cinemas.map(item => {
-                  const { date, time, roomId, movieId } = item.session;
-                  const newDate = [date.split(" ")[0], date.split(" ")[1]].join(" ");
-
-                  return (
-                    <Link to={ `/room/id/cinemaId=${ item._id }/roomId=${ roomId }/movieId=${ movieId }` } key={ date + time }>
-                      <button className="button-pink some-buttons">{ newDate } { time }</button>
-                    </Link>
-                  );
-                })
+                <>
+                  <Link to={ `/room/id/cinemaId=${ movie.cinemas[0]._id }/roomId=${ movie.cinemas[0].session.roomId }/movieId=${ movie.cinemas[0].session.movieId }` }>
+                    <button className="button-pink some-buttons">{ newDate(date) } { time }</button>
+                  </Link>
+                  <Link to="/selectcinema" state={ { movie: movie } }>
+                    <button className="button-pink some-buttons" style={{ fontSize: "2em" }}>...</button>
+                  </Link>
+                </>
               }
+
             </div>
         }
       </div>

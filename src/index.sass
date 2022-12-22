@@ -13,6 +13,7 @@
 @import url("../src/components/CinemaMain/cinema-main.sass")
 @import url("../src/components/Room/room.sass")
 @import url("../src/components/BuyTickets/buy-tickets.sass")
+@import url("../src/components/SelectCinema/select-cinema.sass")
 
 @font-face
   font-family: "Carattere"
@@ -169,3 +170,17 @@ div.editable-textarea
     text-decoration: none
     @include adaptiv-font(16, 12)
     color: #fefefe
+
+.progress
+  position: relative
+  width: 100%
+  height: 4px
+  background: linear-gradient(to right, #15da03 25%, #fbff00 40%, #d40754 85%)
+  border-radius: 2px
+  &__line
+    position: absolute
+    right: 0
+    height: 4px
+    background: #888888fe
+    border-top-right-radius: 2px
+    border-bottom-right-radius: 2px

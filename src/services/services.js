@@ -69,3 +69,16 @@ export const getTotalPrice = selectedSeats => {
   selectedSeats.forEach(item => prices.push(item.price));
   return prices.reduce((acc, price) => acc + price, 0);
 };
+
+export const totalOccupiedSeats = session => {
+  return session.rows
+    .map(row => row.seats
+      .map(seat => seat.isOccupied)
+      .filter(item => item))
+    .map(item => item.length)
+    .reduce((prev, current) => prev + current, 0);
+};
+
+export const totalSeats = session =>{
+  return session.rows.map(({ seats }) => seats.length).reduce((prev, current) => prev + current, 0);
+};

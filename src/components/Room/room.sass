@@ -125,7 +125,11 @@ section.room
     & .description-movie-title
       margin-bottom: 10px
       color: #fefefe
-      font-size: 1.5em
+      @include adaptiv-font(20, 14)
+    & p
+      margin-bottom: 5px
+      color: #fefefe
+      @include adaptiv-font(16, 12)
     & .description-room
       position: relative
       margin-bottom: 5px

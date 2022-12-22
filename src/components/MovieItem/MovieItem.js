@@ -8,7 +8,7 @@ import Loader from "../Loader/Loader";
 import GoBack from "../GoBack/GoBack";
 import { baseUrl } from "../../constants/constants";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const MovieItem = () => {
@@ -40,13 +40,27 @@ const MovieItem = () => {
         <div className="crop" style={ { background: `url(${ movie.crop }) 40% 25%` } }></div>
         <GoBack scrollValueToChange="390" />
         <div className="sessions-wrapper">
-          {
-            sessions && sessions.map(item =>
-              <SessionInfo
-                key={ item._id }
-                movie={ movie }
-                sessionItem={ item }
-              />
+          { sessions.length > 3 ?
+            <>
+              { sessions.slice(0, 3).map(item =>
+                <React.Fragment key={ item._id + item.sessions._id }>
+                  <SessionInfo
+                    movie={ movie }
+                    sessionItem={ item }
+                  />
+                </React.Fragment>
+              ) }
+              <Link to="/selectcinema" state={ { movie } } className="sessions-wrapper__more">
+                <span>...</span>
+              </Link>
+            </> :
+            sessions.map(item =>
+              <React.Fragment key={ item._id + item.sessions._id }>
+                <SessionInfo
+                  movie={ movie }
+                  sessionItem={ item }
+                />
+              </React.Fragment>
             )
           }
         </div>

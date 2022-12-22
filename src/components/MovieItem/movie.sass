@@ -34,83 +34,112 @@ section.movie
   & .sessions-wrapper
     margin-top: 100px
     display: flex
-    & .session-info
-      position: relative
-      width: 100%
+    &__more
+      width: 10%
       height: auto
-      padding: 10px 20px
-      margin-right: 8px
+      padding: 2px
       border-radius: 6px
       display: flex
       align-items: center
+      justify-content: center
+      background: #00000090
+      box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
+      border: 1px solid rgba(121, 121, 121, 0.2)
+      z-index: 1
+      &:hover
+        box-shadow: #d4075435 0px 0px 0px 1px inset
+        border: 1px solid #d40754
+      & span
+        color: #fefefe
+        font-size: 25px
+    & .session
+      position: relative
+      width: 100%
+      height: auto
+      padding: 10px
+      margin-right: 8px
+      border-radius: 6px
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: space-between
       background: #00000090
       box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
       border: 1px solid rgba(121, 121, 121, 0.2)
       &:last-child
         margin: 0
-      & a
-        min-width: 150px
-        max-width: 250px
-        width: 30%
-      & .button-pink
+      &-info
         width: 100%
-        margin: 0 0 0 30px
-
-      &__description
-        width: 40%
+        margin-bottom: 10px
         display: flex
-        flex-direction: column
-        justify-content: center
-        & .description-movie-title
-          margin-bottom: 10px
-          color: #fefefe
-          font-size: 1.5em
-        & .description-room
-          position: relative
-          margin-bottom: 5px
-          &::before
-            position: absolute
-            content: ""
-            width: 25px
-            height: 25px
-            left: 0
-            top: 50%
-            transform: translateY(-50%)
-            background: url("../../assets/images/room/location.svg") no-repeat center
-          & .description-room-title
-            margin-left: 30px
-            color: #fefefe
+        align-items: center
+        justify-content: space-between
+        & a
+          min-width: 140px
+          max-width: 250px
+          width: 25%
+        & .button-pink
+          width: 100%
+          margin: 0
+        & .not-active
+          background-color: #d40754
+          cursor: not-allowed
 
-        & .description-date
-          position: relative
-          &::before
-            position: absolute
-            padding-top: 4px
-            display: flex
-            justify-content: center
-            align-items: center
-            content: attr(data-date)
-            width: 25px
-            height: 25px
-            left: 0
-            top: 50%
-            transform: translateY(-50%)
+        &__description
+          width: 60%
+          display: flex
+          flex-direction: column
+          justify-content: center
+          & .description-movie-title
+            margin-bottom: 10px
             color: #fefefe
-            font-size: 12px
-            background: url("../../assets/images/room/calendar.svg") no-repeat center
-          & .description-date-title
-            margin-left: 30px
-            color: #fefefe
-            & span
-              display: inline-block
-              height: 35px
-              width: 35px
-              line-height: 31px
+            font-size: 1.5em
+          & .description-room
+            position: relative
+            margin-bottom: 5px
+            &::before
+              position: absolute
+              content: ""
+              width: 25px
+              height: 25px
+              left: 0
+              top: 50%
+              transform: translateY(-50%)
+              background: url("../../assets/images/room/location.svg") no-repeat center
+            & .description-room-title
               margin-left: 30px
-              text-align: center
-              border: 2px solid #fefefe
-              border-radius: 50%
               color: #fefefe
+
+          & .description-date
+            position: relative
+            &::before
+              position: absolute
+              padding-top: 4px
+              display: flex
+              justify-content: center
+              align-items: center
+              content: attr(data-date)
+              width: 25px
+              height: 25px
+              left: 0
+              top: 50%
+              transform: translateY(-50%)
+              color: #fefefe
+              font-size: 12px
+              background: url("../../assets/images/room/calendar.svg") no-repeat center
+            & .description-date-title
+              margin-left: 30px
+              color: #fefefe
+              & span
+                display: inline-block
+                height: 35px
+                width: 35px
+                line-height: 31px
+                margin-left: 30px
+                text-align: center
+                border: 2px solid #fefefe
+                border-radius: 50%
+                color: #fefefe
 
   .description
     position: relative

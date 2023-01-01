@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { updateCinemaFetch } from "./updateCinema.api";
+import { updateSessionFetch } from "./updateSession.api";
+import { getSessionsForUpdateSession } from "../sessions.services";
 import { getAllCinemasFetch } from "../../../adminSettings.api";
 import Select from "../../Select";
 import EditableInput from "../../EditableInput";
@@ -7,24 +8,27 @@ import { handleBlurForEditableInputsGroup, handlerChangeForSelect, handleChange,
 import { getCinemasRoom } from "../../../adminSettings.constants";
 import Modal from "../../../../Modal/Modal";
 import { VegasFilmRoom } from "../../../../../constants/VegasFilm.room";
+import updateSessionSchema from "../../../../../validation/adminPanel/updateSessionSchema.json";
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
+import Ajv from "ajv";
 
-const UpdateCinema = () => {
+const UpdateSession = () => {
   const [cinemas, setCinemas] = useState([]);
   const [sessions, setSessions] = useState([]);
   const [responseMessage, setResponseMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCinemaId, setSelectedCinemaId] = useState("");
-  const [updatedCinema, setUpdatedCinema] = useState({
+  const [updatedSession, setUpdatedSession] = useState({
     cinemaId: "",
     sessionId: "",
     session: { date: "", time: "", movieId: "", roomId: "", rows: VegasFilmRoom }
   });
   const movies = useSelector(state => state.movies);
+
   const setSessionHandler = e => {
-    handleChange(e, setUpdatedCinema, "sessionId");
-    handlerChangeForSecondValue(e, setUpdatedCinema, ["session", "roomId"]);
+    handleChange(e, setUpdatedSession, "sessionId");
+    handlerChangeForSecondValue(e, setUpdatedSession, ["session", "roomId"]);
   };
 
   const setCinemaHandler = e => {
@@ -40,14 +44,14 @@ const UpdateCinema = () => {
     ));
 
     setSessions(sessions);
-    setUpdatedCinema({
-      ...updatedCinema,
+    setUpdatedSession({
+      ...updatedSession,
       cinemaId: currentCinemaId,
-      session: { ...updatedCinema.session, rows: cinemaRoom } });
+      session: { ...updatedSession.session, rows: cinemaRoom } });
   };
 
-  const updateCinemaHandler = async () => {
-    const { message, cinemas } = await updateCinemaFetch(updatedCinema);
+  const updateSessionHandler = async () => {
+    const { message, cinemas } = await updateSessionFetch(updatedSession);
     setResponseMessage(message);
     setCinemas(cinemas);
     setIsModalOpen(true);
@@ -55,7 +59,15 @@ const UpdateCinema = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    updateCinemaHandler();
+    const ajv = new Ajv({ allErrors: true });
+    const validate = ajv.compile(updateSessionSchema);
+
+    if (validate(updatedSession)) {
+      updateSessionHandler();
+    } else {
+      setResponseMessage("Проверьте правильность введенных Вами данных");
+      setIsModalOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -63,22 +75,17 @@ const UpdateCinema = () => {
       const { allCinemas } = await getAllCinemasFetch();
       setCinemas(allCinemas);
       setSelectedCinemaId(allCinemas[0]._id);
-      setUpdatedCinema({
-        ...updatedCinema,
+      setUpdatedSession({
+        ...updatedSession,
         cinemaId: allCinemas[0]._id,
         sessionId: allCinemas[0].sessions[0]._id,
         session: {
-          ...updatedCinema.session,
+          ...updatedSession.session,
           movieId: movies[0]._id
         }
       });
 
-      const sessions = allCinemas[0].sessions.map(({ _id, movieId, date, time, roomId }) => (
-        { _id: _id,
-          title: `${ movies.find(item => item._id === movieId).movieInfo.title } / ${ date } / ${ time }`,
-          secondValue: roomId
-        }
-      ));
+      const sessions = getSessionsForUpdateSession(allCinemas, movies);
       setSessions(sessions);
     }
     getAllCinemas();
@@ -90,7 +97,7 @@ const UpdateCinema = () => {
   }, [isModalOpen]);
 
   return (
-    <div className="update-cinema-wrapper">
+    <div className="update-session-wrapper">
       { cinemas &&
         <Select
           label="Выберите кинотеатр из списка"
@@ -109,7 +116,7 @@ const UpdateCinema = () => {
             stateFunc={ e => setSessionHandler(e) }
             width="50%"
           />
-          <form className="update-cinema-form" onSubmit={ e => handleSubmit(e) }>
+          <form className="update-session-form" onSubmit={ e => handleSubmit(e) }>
             <div className="session-wrapper">
               <div className="session-wrapper__session">
                 <p>Изменить на:</p>
@@ -118,13 +125,13 @@ const UpdateCinema = () => {
                     label: "Дата",
                     required: false,
                     value: "",
-                    onBlur: e => handleBlurForEditableInputsGroup( e, setUpdatedCinema, ["session", "date"] )
+                    onBlur: e => handleBlurForEditableInputsGroup( e, setUpdatedSession, ["session", "date"] )
                   },
                   {
                     label: "Время",
                     required: false,
                     value: "",
-                    onBlur: e => handleBlurForEditableInputsGroup( e, setUpdatedCinema, ["session", "time"] )
+                    onBlur: e => handleBlurForEditableInputsGroup( e, setUpdatedSession, ["session", "time"] )
                   }] }
                 />
                 <Select
@@ -132,7 +139,7 @@ const UpdateCinema = () => {
                   required={ false }
                   optionValues={ movies.map(item => item.movieInfo) }
                   defaultValue={ "" }
-                  stateFunc={ e => handlerChangeForSelect(e, setUpdatedCinema, ["session", "movieId"]) }
+                  stateFunc={ e => handlerChangeForSelect(e, setUpdatedSession, ["session", "movieId"]) }
                   name="movieId"
                 />
               </div>
@@ -148,4 +155,4 @@ const UpdateCinema = () => {
   );
 };
 
-export default UpdateCinema;
+export default UpdateSession;

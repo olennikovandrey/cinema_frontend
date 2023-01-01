@@ -9,9 +9,10 @@ import { getTotalPrice } from "../../services/services";
 import SelectedSeats from "../Room/auxiliary components/SelectedSeats";
 import { SET_SELECTED_SEATS } from "../../store/actions/action-types";
 import Loader from "../Loader/Loader";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { io } from "socket.io-client";
 
 const BuyTickets = () => {
   const selectedSeats = useSelector(state => state.selectedSeats);
@@ -24,15 +25,21 @@ const BuyTickets = () => {
   const { movie } = movieInfo;
   const prevPage = -1;
   const fiveMinutes = 5 * 60;
+  const socket = useRef();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       massUnselectSeatsFetch(selectedSeats);
+
       dispatch({ type: SET_SELECTED_SEATS, payload: [] });
       navigate(prevPage);
     }, fiveMinutes * 1000);
     return () => { clearTimeout(timer); };
   }, []);
+
+  /*   useEffect(() => {
+    socket.current.on("mass unselect event");
+  }, []); */
 
   return (
     <>

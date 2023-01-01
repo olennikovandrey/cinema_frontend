@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "cinemaId": {
+      "type": "string",
+      "minLength": 24,
+      "maxLength": 24
+    },
+    "session": {
+      "type": "object",
+      "properties": {
+        "date": {
+        "type": "string",
+        "pattern": "^[0-9]{1,2}\\s[а-яА-я]{3,8}\\s20[0-9]{2}\\sг\\."
+        },
+        "movieId": {
+          "type": "string",
+          "minLength": 24,
+          "maxLength": 24
+        },
+        "roomId": {
+          "type": "string",
+          "minLength": 24,
+          "maxLength": 24
+        },
+        "rows": {
+          "type": "array"
+        },
+        "time": {
+          "type": "string",
+          "pattern": "^[0-2]{1}[0-9]{1}\\.[0-5]{1}[0-9]{1}"
+        }
+      },
+      "required": ["date", "movieId", "roomId", "rows", "time"]
+    },
+    "sessionId": {
+      "type": "string",
+      "minLength": 24,
+      "maxLength": 24
+    }
+  },
+  "required": ["cinemaId", "session", "sessionId"]
+}

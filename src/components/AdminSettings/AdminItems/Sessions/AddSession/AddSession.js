@@ -7,7 +7,9 @@ import { getCinemasRoom } from "../../../adminSettings.constants";
 import Modal from "../../../../Modal/Modal";
 import { getAllCinemasFetch, getAllMoviesFetch } from "../../../adminSettings.api";
 import Select from "../../Select";
+import addSessionSchema from "../../../../../validation/adminPanel/addSessionSchema.json";
 import React, { useState, useEffect } from "react";
+import Ajv from "ajv";
 
 const AddSession = () => {
   const [cinemas, setCinemas] = useState([]);
@@ -41,7 +43,15 @@ const AddSession = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    addSessionHandler(session);
+    const ajv = new Ajv({ allErrors: true });
+    const validate = ajv.compile(addSessionSchema);
+
+    if (validate(session)) {
+      addSessionHandler(session);
+    } else {
+      setResponseMessage("Проверьте правильность введенных Вами данных");
+      setIsModalOpen(true);
+    }
   };
 
   useEffect(() => {

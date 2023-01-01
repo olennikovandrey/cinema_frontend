@@ -4,8 +4,9 @@ import DeleteMovie from "./AdminItems/Movies/DeleteMovie/DeleteMovie";
 import UpdateMovie from "./AdminItems/Movies/UpdateMovie/UpdateMovie";
 import AddCinema from "./AdminItems/Cinemas/AddCinema/AddCinema";
 import DeleteCinema from "./AdminItems/Cinemas/DeleteCinema/DeleteCinema";
-import UpdateCinema from "./AdminItems/Cinemas/UpdateCinema/UpdateCinema";
 import AddSession from "./AdminItems/Sessions/AddSession/AddSession";
+import UpdateSession from "./AdminItems/Sessions/UpdateSession/UpdateSession";
+import DeleteSession from "./AdminItems/Sessions/DeleteSession/DeleteSession";
 import navigationGroups from "./navigationGroups";
 import { CHECK_IS_ADMIN_MODAL_OPEN } from "../../store/actions/action-types";
 import React, { useState } from "react";
@@ -31,7 +32,7 @@ const NavigationGroup = ({ headline, navigations, checkedAction, handleClick }) 
 const NavigationGroupAdaptive = ({ navigationGroups, handleClick }) => {
   return (
     <select className="admin-navigation__group-adaptive" onChange={ e => handleClick(e.target.value) }>
-      {navigationGroups.map((item) =>
+      { navigationGroups.map((item) =>
         <optgroup label={ item.headline } key={ item.headline }>
           { item.navigations.map(({ name, title }) =>
             <option
@@ -49,22 +50,24 @@ const settingsField = Object.freeze({
   userList: "userList",
   addCinema: "addCinema",
   deleteCinema: "deleteCinema",
-  updateCinema: "updateCinema",
   addMovie: "addMovie",
   deleteMovie: "deleteMovie",
   updateMovie: "updateMovie",
   addSession: "addSession",
+  updateSession: "updateSession",
+  deleteSession: "deleteSession",
 });
 
 const adminItemEl = new Map()
   .set(settingsField.userList, <DeleteUser />)
   .set(settingsField.addCinema, <AddCinema />)
-  .set(settingsField.updateCinema, <UpdateCinema />)
   .set(settingsField.deleteCinema, <DeleteCinema />)
   .set(settingsField.addMovie, <AddMovie />)
   .set(settingsField.deleteMovie, <DeleteMovie />)
   .set(settingsField.updateMovie, <UpdateMovie />)
-  .set(settingsField.addSession, <AddSession /> );
+  .set(settingsField.addSession, <AddSession /> )
+  .set(settingsField.updateSession, <UpdateSession /> )
+  .set(settingsField.deleteSession, <DeleteSession /> );
 
 const AdminSettings = () => {
   const [checkedAction, setCheckedAction] = useState("userList");

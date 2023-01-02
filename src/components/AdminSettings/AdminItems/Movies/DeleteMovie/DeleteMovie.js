@@ -2,7 +2,7 @@ import { deleteMovieFetch } from "./deleteMovie.api";
 import { getAllMoviesFetch } from "../../../adminSettings.api";
 import { SET_MOVIES } from "../../../../../store/actions/action-types";
 import Modal from "../../../../Modal/Modal";
-import { sortedMovies } from "../../../adminSettings.services";
+import { sortMovies } from "../../../adminSettings.services";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -43,7 +43,7 @@ const DeleteMovie = () => {
       />
       <div className="delete-items-wrapper" >
         {
-          sortedMovies(movies)
+          sortMovies(movies)
             .filter(({ movieInfo }) => movieInfo.title.toLowerCase().includes(searchValue.toLowerCase()))
             .map(item => {
               const { movieInfo } = item;

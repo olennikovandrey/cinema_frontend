@@ -2,7 +2,7 @@
 import { addSessionFetch } from "./addSession.api";
 import { getCinemaRooms } from "./addSession.services";
 import Input from "../../Input";
-import { handleBlur, handleChange, sortedMovies } from "../../../adminSettings.services";
+import { handleBlur, handleChange, setCorrectDate, sortMovies } from "../../../adminSettings.services";
 import { getCinemasRoom } from "../../../adminSettings.constants";
 import Modal from "../../../../Modal/Modal";
 import { getAllCinemasFetch, getAllMoviesFetch } from "../../../adminSettings.api";
@@ -58,7 +58,7 @@ const AddSession = () => {
     async function getAllCinemas() {
       const { allCinemas } = await getAllCinemasFetch();
       const movies = await getAllMoviesFetch();
-      const sorted = sortedMovies(movies);
+      const sorted = sortMovies(movies);
       const firstCinemaId = allCinemas[0]._id;
       const firstRoomId = allCinemas[0].rooms[0]._id;
       const firstMovieId = sorted[0].movieInfo._id;
@@ -101,15 +101,15 @@ const AddSession = () => {
           />
           <Select
             label="Выберите фильм"
-            optionValues={ sortedMovies(movies).map(({ movieInfo }) => movieInfo) }
+            optionValues={ sortMovies(movies).map(({ movieInfo }) => movieInfo) }
             stateFunc={ e => handleChange(e, setSession, "movieId") }
             width={ screenWidth < 426 ? "100%" : "50%" }
           />
           <Input
             inputConfigs={ [{
               label: "Дата",
-              placeholder: "27 декабря 2022 г.",
-              onBlur: e => handleBlur(e, setSession, "date")
+              inputType: "date",
+              onBlur: e => setCorrectDate(e, setSession, "date")
             },
             {
               label: "Время",

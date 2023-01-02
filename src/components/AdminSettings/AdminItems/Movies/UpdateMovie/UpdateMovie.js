@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { updateMovieFetch, getAllMoviesFetch } from "./updateMovie.api";
 import { getExactMovieInfo } from "./services";
-import { sortedMovies } from "../../../adminSettings.services";
+import { sortMovies } from "../../../adminSettings.services";
 import { handleChangeForEditableSeveralValues, handleBlurForEditableInput, handleBlurForEditableInputsGroup } from "../../../adminSettings.services";
 import EditableInput from "../../EditableInput";
 import EditableTextarea from "../../EditableTextarea";
@@ -18,7 +18,7 @@ const UpdateMovie = () => {
   const getMovies = async () =>  {
     const moviesData = await getAllMoviesFetch();
     setMovies(moviesData);
-    setSelectedMovie(sortedMovies(moviesData)[0].movieTitle);
+    setSelectedMovie(sortMovies(moviesData)[0].movieTitle);
   };
 
   const handlerSubmit = async e => {
@@ -46,7 +46,7 @@ const UpdateMovie = () => {
         setChangedMovie({ ...changedMovie, title: e.target.value });
       }}>
         {
-          sortedMovies(movies)
+          sortMovies(movies)
             .map(({ movieInfo }) => {
               const { title } = movieInfo;
               return <option key={ title } value={ title }>{ title }</option>;

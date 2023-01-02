@@ -14,4 +14,4 @@ export const getSessionsForDeleteSession = (cinemas, cinemaId, movies) => {
       title: `${ movies.find(item => item._id === movieId).movieInfo.title } / ${ date } / ${ time }`,
     }
   ));
-}
+};

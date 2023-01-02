@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SingleInput = ({ label, required = true, onBlur, placeholder, additionalClassNames = [] }) => {
+const SingleInput = ({ label, required = true, onBlur, placeholder, additionalClassNames = [], inputType = "text" }) => {
   const className = ["admin-item__input", ...additionalClassNames].join(" ");
   return <div className={ className }>
     <label>{ label } { required && <b>*</b> }</label>
     <input
-      type="text"
+      type={ inputType }
       onBlur={ onBlur }
       placeholder={ placeholder }
     />
@@ -45,5 +45,6 @@ SingleInput.propTypes = {
   required: PropTypes.bool,
   onBlur: PropTypes.func,
   placeholder: PropTypes.string,
+  inputType: PropTypes.string,
   additionalClassNames: PropTypes.array
 };

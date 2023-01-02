@@ -3,8 +3,8 @@ import { updateSessionFetch } from "./updateSession.api";
 import { getSessionsForUpdateSession } from "../sessions.services";
 import { getAllCinemasFetch } from "../../../adminSettings.api";
 import Select from "../../Select";
-import EditableInput from "../../EditableInput";
-import { handleBlurForEditableInputsGroup, handlerChangeForSelect, handleChange, handlerChangeForSecondValue } from "../../../adminSettings.services";
+import Input from "../../Input";
+import { setCorrectDateForInputGroups, handleBlurForInputsGroup, handlerChangeForSelect, handleChange, handlerChangeForSecondValue } from "../../../adminSettings.services";
 import { getCinemasRoom } from "../../../adminSettings.constants";
 import Modal from "../../../../Modal/Modal";
 import { VegasFilmRoom } from "../../../../../constants/VegasFilm.room";
@@ -47,7 +47,7 @@ const UpdateSession = () => {
     setUpdatedSession({
       ...updatedSession,
       cinemaId: currentCinemaId,
-      session: { ...updatedSession.session, rows: cinemaRoom } });
+      session: { ...updatedSession.session, rows: cinemaRoom, roomId: currentSessionsRoomId } });
   };
 
   const updateSessionHandler = async () => {
@@ -81,7 +81,8 @@ const UpdateSession = () => {
         sessionId: allCinemas[0].sessions[0]._id,
         session: {
           ...updatedSession.session,
-          movieId: movies[0]._id
+          movieId: movies[0]._id,
+          roomId: allCinemas[0].sessions[0].roomId
         }
       });
 
@@ -120,18 +121,15 @@ const UpdateSession = () => {
             <div className="session-wrapper">
               <div className="session-wrapper__session">
                 <p>Изменить на:</p>
-                <EditableInput
+                <Input
                   inputConfigs={ [{
                     label: "Дата",
-                    required: false,
-                    value: "",
-                    onBlur: e => handleBlurForEditableInputsGroup( e, setUpdatedSession, ["session", "date"] )
+                    inputType: "date",
+                    onBlur: e => setCorrectDateForInputGroups(e, setUpdatedSession, ["session", "date"])
                   },
                   {
                     label: "Время",
-                    required: false,
-                    value: "",
-                    onBlur: e => handleBlurForEditableInputsGroup( e, setUpdatedSession, ["session", "time"] )
+                    onBlur: e => handleBlurForInputsGroup( e, setUpdatedSession, ["session", "time"] )
                   }] }
                 />
                 <Select

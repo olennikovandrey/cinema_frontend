@@ -22,7 +22,7 @@ const MovieItem = ({ movie }) => {
             return (
               <div className="movie-item__sessions" key={ item._id }>
                 <Link to={ `/room/id/cinemaId=${ item._id }/roomId=${ roomId }/movieId=${ movieId }` }>
-                  <button className="button-pink">{ date } { time }</button>
+                  <button className="button-pink">{ date }<br/> { time }</button>
                 </Link>
               </div>
             );

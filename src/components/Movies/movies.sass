@@ -13,6 +13,9 @@ $maxWidth: 1440
   display: flex
   flex-wrap: wrap
   justify-content: center
+  @media only screen and (max-width: 425px)
+    height: 43vh
+    margin-top: 10px
   @media only screen and (max-width: 375px)
     max-height: 500px
     height: auto
@@ -28,7 +31,6 @@ $maxWidth: 1440
   justify-content: center
   border-radius: 10px
   align-items: center
-  transition: .2s
   cursor: pointer
   @media only screen and (max-width: 375px)
     height: auto
@@ -36,9 +38,6 @@ $maxWidth: 1440
     margin: 0
   @media only screen and (max-width: 320px)
     max-width: 300px
-  &:hover
-    background: rgba(255, 255, 255, 0.1)
-    box-shadow: 0 0 10px #fff
 
   & a
     width: 100%
@@ -51,6 +50,10 @@ $maxWidth: 1440
     & img
       height: 280px
       width: 100%
+      border-radius: 10px
+      transition: .2s
+      &:hover
+        box-shadow: 0 0 20px #fff
       @media only screen and (max-width: 375px)
         height: auto
   &__sessions
@@ -78,6 +81,9 @@ $maxWidth: 1440
     font-size: 1.2em
     color: #fefefe
     text-align: center
+    transition: .2s
+    &:hover
+      text-shadow: 0 0 10px #d40754
 
 .age,
 .rating

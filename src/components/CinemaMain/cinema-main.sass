@@ -10,9 +10,10 @@ $maxWidth: 1440
   height: 45vh
   padding: 0 10px
   margin-top: 100px
+  overflow: hidden
   @media only screen and (max-width: 768px)
     height: auto
-    padding: 0
+    margin-top: 80px
 
 .cinema-item
   width: 100%
@@ -96,7 +97,7 @@ $maxWidth: 1440
         & .session-description-adaptive
           display: none
           position: absolute
-          bottom: 14px
+          bottom: 0
           left: 50%
           transform: translate(-50%)
           width: 95%
@@ -134,6 +135,7 @@ $maxWidth: 1440
             display: block
       &__image
         width: 100%
+        margin: 0 0 10px
         & img
           width: 100%
           border-radius: 10px
@@ -148,9 +150,9 @@ $maxWidth: 1440
         @media only screen and (max-width: 320px)
           display: none
         & h2
-          margin-bottom: 40px
+          margin-bottom: 20px
           text-align: center
-          @include adaptiv-font(45, 25)
+          @include adaptiv-font(40, 25)
           color: #fefefe
         &__row
           color: #fefefe
@@ -162,7 +164,7 @@ $maxWidth: 1440
           & button
             width: 50%
             height: 40px
-            margin-top: 60px
+            margin-top: 40px
             font-size: 1em
             color: #fefefe
             border: 2px solid #d40754

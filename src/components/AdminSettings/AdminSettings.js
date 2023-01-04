@@ -32,8 +32,8 @@ const NavigationGroup = ({ headline, navigations, checkedAction, handleClick }) 
 const NavigationGroupAdaptive = ({ navigationGroups, handleClick }) => {
   return (
     <select className="admin-navigation__group-adaptive" onChange={ e => handleClick(e.target.value) }>
-      { navigationGroups.map((item) =>
-        <optgroup label={ item.headline } key={ item.headline }>
+      { navigationGroups.map((item, index) =>
+        <optgroup label={ item.headline } key={ item.headline + index }>
           { item.navigations.map(({ name, title }) =>
             <option
               key={ item.name + name }
@@ -83,14 +83,17 @@ const AdminSettings = () => {
       <div className="admin-work-fields">
         <aside className="admin-navigation">
           <h3 className="admin-navigation__title">Выберите действие</h3>
-          { navigationGroups.map(({ headline, navigations }) => (
-            <NavigationGroup
-              key={ headline }
-              headline={ headline }
-              navigations={ navigations }
-              checkedAction={ checkedAction }
-              handleClick={ setCheckedAction }/>
-          )) }
+          { navigationGroups.map((item, index) => {
+            const { headline, navigations } = item;
+            return (
+              <NavigationGroup
+                key={ headline + index }
+                headline={ headline }
+                navigations={ navigations }
+                checkedAction={ checkedAction }
+                handleClick={ setCheckedAction }/>
+            );
+          }) }
           { <NavigationGroupAdaptive
             navigationGroups={ navigationGroups }
             checkedAction={ checkedAction }

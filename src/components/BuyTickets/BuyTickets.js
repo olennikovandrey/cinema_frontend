@@ -38,7 +38,9 @@ const BuyTickets = () => {
   }, []);
 
   /*   useEffect(() => {
-    socket.current.on("mass unselect event");
+    socket.current.on("connect", () => {
+      console.log(socket.id);
+    });
   }, []); */
 
   return (

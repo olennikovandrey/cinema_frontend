@@ -14,8 +14,6 @@ const SuccessPaymentPage = () => {
   return (
     <section className="success-page">
       <GoBack
-        backValue="Вернуться на главную"
-        backSteps={ "/" }
         additionalFn={ clearIsPaymentSuccess }
       />
       <div className="success-page__content">

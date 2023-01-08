@@ -11,14 +11,6 @@ const navigationGroups = [
     ],
   },
   {
-    headline: "Кинозалы",
-    navigations: [
-      { name: "addRoom", title: "Добавить кинозал" },
-      { name: "updateRoom", title: "Редактировать кинозал" },
-      { name: "deleteRoom", title: "Удалить кинозал" }
-    ],
-  },
-  {
     headline: "Фильмы",
     navigations: [
       { name: "addMovie", title: "Добавить фильм" },

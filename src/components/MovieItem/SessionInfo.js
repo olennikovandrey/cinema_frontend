@@ -4,9 +4,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const SessionInfo = ({ movie, sessionItem }) => {
-  const { title, sessions, _id } = sessionItem;
-  const { date, time, roomId, movieId } = sessions;
-  const occupiedPersent = totalOccupiedSeats(sessions) / totalSeats(sessions) * 100;
+  const { title, session, _id } = sessionItem;
+  const { date, time, roomId, movieId } = session;
+  const occupiedPersent = totalOccupiedSeats(session) / totalSeats(session) * 100;
   const isFull = occupiedPersent === 100;
 
   const sessionDate = date => {

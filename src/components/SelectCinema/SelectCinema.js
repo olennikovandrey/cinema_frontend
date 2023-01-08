@@ -9,7 +9,6 @@ const SelectCinema = () => {
   const location = useLocation();
   const { movie } = location.state;
   const { movieInfo, cinemas } = movie;
-  // const existingCinemas = new Set(cinemas.map(({ title }) => title));
 
   return (
     <section className="select-cinema">

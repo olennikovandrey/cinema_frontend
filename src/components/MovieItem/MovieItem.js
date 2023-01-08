@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 
 const MovieItem = () => {
   const [movie, setMovie] = useState();
+  const [movieInfo, setMovieInfo] = useState();
   const [sessions, setSessions] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
@@ -20,9 +21,12 @@ const MovieItem = () => {
 
   const getMovieData = async (id) => {
     const url = `${ baseUrl }/movies/id/id=${ id }`;
-    const { movie, sessions } = await getExactMovieFetch(url);
-    setMovie(movie);
-    setSessions(sessions);
+    const { movie } = await getExactMovieFetch(url);
+    const { movieInfo, cinemas} = movie[0];
+
+    setMovie(movie[0]);
+    setMovieInfo(movieInfo);
+    setSessions(cinemas);
   };
 
   useEffect(() => {
@@ -35,17 +39,17 @@ const MovieItem = () => {
   return (
     <>
       { !isLoaded && <Loader /> }
-      { isLoaded && movie &&
+      { isLoaded && movie && sessions &&
       <section className="movie">
-        <div className="crop" style={ { background: `url(${ movie.crop }) 40% 25%` } }></div>
+        <div className="crop" style={ { background: `url(${ movieInfo.crop }) 40% 25%` } }></div>
         <GoBack scrollValueToChange="390" />
         <div className="sessions-wrapper">
           { sessions.length > 3 ?
             <>
               { sessions.slice(0, 3).map(item =>
-                <React.Fragment key={ item._id + item.sessions._id }>
+                <React.Fragment key={ item._id + item.session._id }>
                   <SessionInfo
-                    movie={ movie }
+                    movie={ movieInfo }
                     sessionItem={ item }
                   />
                 </React.Fragment>
@@ -55,9 +59,9 @@ const MovieItem = () => {
               </Link>
             </> :
             sessions.map(item =>
-              <React.Fragment key={ item._id + item.sessions._id }>
+              <React.Fragment key={ item._id + item.session._id }>
                 <SessionInfo
-                  movie={ movie }
+                  movie={ movieInfo }
                   sessionItem={ item }
                 />
               </React.Fragment>
@@ -66,30 +70,30 @@ const MovieItem = () => {
         </div>
         <div className="description">
           <div className="description__image">
-            <img src={ movie.image } alt={ movie.title } />
+            <img src={ movieInfo.image } alt={ movieInfo.title } />
           </div>
           <div className="description__title-container">
-            <h1 className="description__title">{ movie.title } </h1>
-            <p className="description__age"> { movie.age }</p>
+            <h1 className="description__title">{ movieInfo.title } </h1>
+            <p className="description__age"> { movieInfo.age }</p>
           </div>
-          <span className="description__row"><b>Жанр:</b> { movie.genre.join(", ") }</span>
-          <span className="description__row"><b>Страна производства:</b> { movie.country.join(", ") }</span>
-          <span className="description__row"><b>Год выпуска:</b> { movie.year }</span>
-          <span className="description__row"><b>Слоган:</b> { movie.slogan }</span>
-          <span className="description__row"><b>Длительность:</b> { movie.duration }</span>
-          <span className="description__row"><b>Рейтинг:</b> { movie.rating }</span>
+          <span className="description__row"><b>Жанр:</b> { movieInfo.genre.join(", ") }</span>
+          <span className="description__row"><b>Страна производства:</b> { movieInfo.country.join(", ") }</span>
+          <span className="description__row"><b>Год выпуска:</b> { movieInfo.year }</span>
+          <span className="description__row"><b>Слоган:</b> { movieInfo.slogan }</span>
+          <span className="description__row"><b>Длительность:</b> { movieInfo.duration }</span>
+          <span className="description__row"><b>Рейтинг:</b> { movieInfo.rating }</span>
           <span className="description__row"><b>Продюссер:</b>
-            <a href={ movie.producer[0].link }> { movie.producer[0].name }</a></span>
-          <span className="description__content"><b>Описание:</b> { movie.description }</span>
+            <a href={ movieInfo.producer[0].link }> { movieInfo.producer[0].name }</a></span>
+          <span className="description__content"><b>Описание:</b> { movieInfo.description }</span>
           <div className="trailer-actors">
             <div
               className="trailer-actors__trailer"
-              dangerouslySetInnerHTML={ createMarkup(movie.youtubeIframe) }>
+              dangerouslySetInnerHTML={ createMarkup(movieInfo.youtubeIframe) }>
             </div>
             <div className="trailer-actors__actors">
               <p>В главных ролях:</p>
               {
-                movie.actors.map(item =>
+                movieInfo.actors.map(item =>
                   <Actor key={ item.name } actor={ item } />
                 )
               }

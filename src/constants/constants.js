@@ -57,6 +57,14 @@ export const moviesIntoCinemaSwiperSettings = {
   centeredSlides: true
 };
 
+export const selectCinemasSwiperSettings = {
+  slidesPerView: 4,
+  mousewheel: true,
+  navigation: true,
+  effect: "cube",
+  keyboard: true
+};
+
 export const baseUrl = "http://localhost:4000";
 
 export const urls = {

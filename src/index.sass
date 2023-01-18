@@ -117,7 +117,8 @@ input[type="date"]
   cursor: pointer
   transition: .3s
   &:hover
-    transform: rotate(90deg)
+    transform: rotate(90deg) scale(1.15)
+    filter: drop-shadow(0 0 10px #d40754)
 
 .blur
   filter: brightness(0.2) blur(2px)
@@ -133,11 +134,12 @@ input[type="date"]
 
 .go-back-link
   position: fixed
-  display: block
+  display: flex
   width: 80%
   top: 10px
   padding: 20px
   left: 50%
+  align-items: center
   line-height: 40px
   font-size: 1.2rem
   border: 1px solid rgba(121, 121, 121, 0.2)
@@ -149,17 +151,14 @@ input[type="date"]
   z-index: 2
   & .go-home
     content: ""
-    position: absolute
-    left: 20px
-    top: 50%
-    transform: translateY(-50%)
+    margin-right: 20px
     width: 30px
     height: 30px
     background: url("./assets/images/movie/home.svg") no-repeat center
     &:hover
-      filter: drop-shadow( 0 0 10px #d40754)
+      filter: drop-shadow(0 0 10px #d40754)
+      transform: scale(1.15)
   & span
-    margin-left: 50px
     text-decoration: none
     color: #ffffffcc
     transition: .2s
@@ -167,6 +166,7 @@ input[type="date"]
     &:hover
       color: #fff
       text-shadow: 0 0 10px #d40754
+      transform: scale(1.15)
 
 .button-pink
   width: 250px

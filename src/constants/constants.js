@@ -1,6 +1,7 @@
 import sofa from "../assets/images/room/sofa.svg";
 import sofa_occupied from "../assets/images/room/sofa_occupied.svg";
 import sofa_selected from "../assets/images/room/sofa_selected.svg";
+import sofa_selected_by_another from "../assets/images/room/sofa_selected_by_another_user.svg";
 import armchair from "../assets/images/room/armchair.svg";
 import armchairLux from "../assets/images/room/armchairLux.svg";
 
@@ -130,17 +131,22 @@ export const roomLegend = [
   {
     image: sofa,
     alt: "free_seat",
-    value: "- свободно"
+    value: "свободно"
   },
   {
     image: sofa_occupied,
     alt: "occupied",
-    value: "- занято"
+    value: "занято"
   },
   {
     image: sofa_selected,
     alt: "selected",
-    value: "- выбрано"
+    value: "выбрано"
+  },
+  {
+    image: sofa_selected_by_another,
+    alt: "selected_by_another",
+    value: "выбрано другим пользователем"
   },
 ];
 

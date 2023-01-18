@@ -1,9 +1,10 @@
+import SocketModal from "./SocketModal";
 import { sessionDate, roomTitle } from "../room.services";
 import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MovieInfo = ({ movieInfo }) => {
+const MovieInfo = ({ movieInfo, isSocketModalOpen, socketMsg, getRoom }) => {
   const { movie, room, session } = movieInfo;
 
   return (
@@ -20,6 +21,11 @@ const MovieInfo = ({ movieInfo }) => {
           <p className="description-date-title">{ session.date } { session.time } <span>{ movie.age }</span></p>
         </div>
       </div>
+      <SocketModal
+        socketMsg={ socketMsg }
+        isSocketModalOpen={ isSocketModalOpen }
+        getRoom={ getRoom }
+      />
     </div>
   );
 };
@@ -27,5 +33,8 @@ const MovieInfo = ({ movieInfo }) => {
 export default MovieInfo;
 
 MovieInfo.propTypes = {
-  movieInfo: PropTypes.object
+  movieInfo: PropTypes.object,
+  isSocketModalOpen: PropTypes.bool,
+  socketMsg: PropTypes.string,
+  getRoom: PropTypes.func
 };

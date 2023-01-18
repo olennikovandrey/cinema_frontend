@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, editable = true }) => {
   const selectedSeats = useSelector(state => state.selectedSeats);
   const userEmail = useSelector(state => state.userData.email);
+  const userId = useSelector(state => state.userId);
   const dispatch = useDispatch();
   const furnitureItem = new Map()
     .set(roomSeatTypes.sofa, sofa)
@@ -44,7 +45,7 @@ const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, ed
                   <span className="item-seat-type">Тип места: { ucFirst(type) }</span>
                 </div>
                 { editable &&
-                  <span className="close-button" onClick={ () => unselectSeatHandler({ cinemaId, sessionId, rowNumber, seatNumber, isSelected: false }) }></span>
+                  <span className="close-button" onClick={ () => unselectSeatHandler({ cinemaId, sessionId, rowNumber, seatNumber, isSelected: false, userId }) }></span>
                 }
               </div>
             );

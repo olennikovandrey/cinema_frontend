@@ -17,7 +17,8 @@ import {
   SET_CASHED_MOVIES,
   SET_SELECTED_SEATS,
   SET_EMAIL_FOR_TICKETS,
-  SET_IS_PAYMENT_SUCCESS
+  SET_IS_PAYMENT_SUCCESS,
+  SET_USER_ID
 } from "./actions/action-types";
 
 export const initState = {
@@ -38,7 +39,8 @@ export const initState = {
   randomMovies: [],
   selectedSeats: [],
   currentCinema: "MovieHD",
-  emailForTickets: ""
+  emailForTickets: "",
+  userId: ""
 };
 
 const reducer = (state = initState, action) => {
@@ -196,6 +198,13 @@ const reducer = (state = initState, action) => {
     return {
       ...state,
       isPaymentSuccess: action.payload
+    };
+  }
+
+  case SET_USER_ID: {
+    return {
+      ...state,
+      userId: action.payload
     };
   }
 

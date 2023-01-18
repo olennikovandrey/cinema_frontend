@@ -16,7 +16,8 @@ import { CHECK_IS_LOGIN_MODAL_OPEN,
   SET_CASHED_MOVIES,
   SET_SELECTED_SEATS,
   SET_EMAIL_FOR_TICKETS,
-  SET_IS_PAYMENT_SUCCESS } from "./action-types";
+  SET_IS_PAYMENT_SUCCESS,
+  SET_USER_ID } from "./action-types";
 
 export const setIsLoginOpen = (payload) => {
   return {
@@ -145,5 +146,12 @@ export const setIsPaymentSuccess = (result) => {
   return {
     type: SET_IS_PAYMENT_SUCCESS,
     result
+  };
+};
+
+export const setSocketID = (id) => {
+  return {
+    type: SET_USER_ID,
+    id
   };
 };

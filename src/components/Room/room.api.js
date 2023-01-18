@@ -18,3 +18,10 @@ export const occupySeatFetch = async (seatsToBuy) => {
     body: seatsToBuy
   });
 };
+
+export const massUnselectSeatsFetch = async (selectedSeats) => {
+  return doFetch(urls.massUnselectSeats, {
+    method: "put",
+    body: selectedSeats
+  });
+};

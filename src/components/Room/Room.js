@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-console */
 import Seatings from "./auxiliary components/Seatings";
 import SeatTypes from "./auxiliary components/SeatTypes.js";
 import MovieInfo from "./auxiliary components/MovieInfo.js";
@@ -46,6 +45,7 @@ const Room = () => {
     setRoom(room);
     setMovie(movie);
     setSession(session);
+    socket.emit("joinTheRoom", session._id);
   };
 
   const selectFetch = async seat => {
@@ -108,11 +108,6 @@ const Room = () => {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => { setIsSocketModalOpen(false); }, 30000);
-    return () => { clearTimeout(timer); };
-  }, [isSocketModalOpen]);
-
-  useEffect(() => {
     return () => {
       if (selectedSeats.length > 0) {
         massUnselectSeatsFetch(selectedSeats);
@@ -129,9 +124,10 @@ const Room = () => {
       {
         room && movie &&
         <section className={ `room ${ isEmailModalOpen ? "blur" : null }` }>
-          <div className="crop" style={ { background: `url(${ movie.crop }) no-repeat 100% / 100%` } }></div>
+          <div className="crop" style={ { background: `url(${ movie.crop }) no-repeat 100% / 100%` } } />
           <MovieInfo
             movieInfo={ movieInfo }
+            setIsSocketModalOpen={ setIsSocketModalOpen }
             isSocketModalOpen={ isSocketModalOpen }
             socketMsg={ socketMsg }
             getRoom={ getRoom }

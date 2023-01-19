@@ -42,7 +42,7 @@ const MovieItem = () => {
       { isLoaded && movie && sessions &&
       <section className="movie">
         <div className="crop" style={ { background: `url(${ movieInfo.crop }) 40% 25%` } }></div>
-        <GoBack scrollValueToChange="390" />
+        <GoBack scrollValueToChange="450" />
         <div className="sessions-wrapper">
           { sessions.length > 3 ?
             <>

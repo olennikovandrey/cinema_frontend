@@ -40,13 +40,13 @@ const SelectCinema = () => {
 
   return (
     <section className="select-cinema">
-      <div className="crop" style={ { background: `url(${ movieInfo.crop }) 40% 25%` } }></div>
+      <div className="crop" style={ { background: `url(${ movieInfo.crop }) 40% 25%` } } />
       <GoBack />
       <MovieInfo movie={ movie }/>
       <div className="select-cinema__sessions">
         {
           sessions.map(({ sessions, title, _id }) =>
-            <div className="session" key={ _id }>
+            <div className="session" key={ _id + title }>
               <h3 className="session__title">{ title }</h3>
               <div className="sessions-wrapper">
                 {
@@ -59,9 +59,10 @@ const SelectCinema = () => {
                           const config = { isFull, item, occupiedPercent };
 
                           return (
-                            <SwiperSlide key={ item._id + item.roomId}>
+                            <SwiperSlide key={ item._id + item.date + item.time }>
                               {
-                                isFull ? <SessionItem config={ config } /> :
+                                isFull ?
+                                  <SessionItem config={ config } /> :
                                   <Link to={ `/room/id/cinemaId=${ _id }/roomId=${ item.roomId }/movieId=${ item.movieId }` }>
                                     <SessionItem config={ config } />
                                   </Link>

@@ -28,7 +28,6 @@ const BuyTickets = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       massUnselectSeatsFetch(selectedSeats);
-
       dispatch({ type: SET_SELECTED_SEATS, payload: [] });
       navigate(prevPage);
     }, fiveMinutes * 1000);

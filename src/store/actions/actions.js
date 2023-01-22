@@ -17,79 +17,80 @@ import { CHECK_IS_LOGIN_MODAL_OPEN,
   SET_SELECTED_SEATS,
   SET_EMAIL_FOR_TICKETS,
   SET_IS_PAYMENT_SUCCESS,
-  SET_USER_ID } from "./action-types";
+  SET_USER_ID,
+  SET_CURRENT_SESSION_ID } from "./action-types";
 
-export const setIsLoginOpen = (payload) => {
+export const setIsLoginOpen = payload => {
   return {
     type: CHECK_IS_LOGIN_MODAL_OPEN,
     payload
   };
 };
 
-export const setIsRegisterOpen = (payload) => {
+export const setIsRegisterOpen = payload => {
   return {
     type: CHECK_IS_REGISTER_MODAL_OPEN,
     payload
   };
 };
 
-export const setIsProfileOpen = (payload) => {
+export const setIsProfileOpen = payload => {
   return {
     type: CHECK_IS_PROFILE_MODAL_OPEN,
     payload
   };
 };
 
-export const setIsAdminOpen = (payload) => {
+export const setIsAdminOpen = payload => {
   return {
     type: CHECK_IS_ADMIN_MODAL_OPEN,
     payload
   };
 };
 
-export const setIsEmailModalOpen = (payload) => {
+export const setIsEmailModalOpen = payload => {
   return {
     type: CHECK_IS_EMAIL_MODAL_OPEN,
     payload
   };
 };
 
-export const setIsSearchOpen = (payload) => {
+export const setIsSearchOpen = payload => {
   return {
     type: CHECK_IS_SEARCH_MODAL_OPEN,
     payload
   };
 };
 
-export const setMovies = (movies) => {
+export const setMovies = movies => {
   return {
     type: SET_MOVIES,
     movies
   };
 };
 
-export const setCinemas = (cinemas) => {
+export const setCinemas = cinemas => {
   return {
     type: SET_CINEMAS,
     cinemas
   };
 };
 
-export const setSelectedSeats = (selectedSeats) => {
+export const setSelectedSeats = selectedSeats => {
   return {
     type: SET_SELECTED_SEATS,
     selectedSeats
   };
 };
 
-export const setRandomMovies = (randomMovies) => {
+export const setRandomMovies = randomMovies => {
   return {
     type: SET_RANDOM_MOVIES,
     randomMovies
   };
 };
 
-export const setCashedMovies = (cashedMovies) => {
+export const setCashedMovies = cashedMovies => {
   return {
     type: SET_CASHED_MOVIES,
     cashedMovies
@@ -108,7 +109,7 @@ export const setIsUserLeft = () => {
   };
 };
 
-export const setIsUserAdmin = (payload) => {
+export const setIsUserAdmin = payload => {
   return {
     type: CHECK_IS_USER_ADMIN,
     payload
@@ -121,37 +122,44 @@ export const setUserPersonalData = () => {
   };
 };
 
-export const setCurrentCity = (city) => {
+export const setCurrentCity = city => {
   return {
     type: SET_CURRENT_CINEMA,
     city
   };
 };
 
-export const setIsLoader = (value) => {
+export const setIsLoader = value => {
   return {
     type: CHECK_IS_LOADER_OPEN,
     value
   };
 };
 
-export const setEmailForTickets = (email) => {
+export const setEmailForTickets = email => {
   return {
     type: SET_EMAIL_FOR_TICKETS,
     email
   };
 };
 
-export const setIsPaymentSuccess = (result) => {
+export const setIsPaymentSuccess = result => {
   return {
     type: SET_IS_PAYMENT_SUCCESS,
     result
   };
 };
 
-export const setSocketID = (id) => {
+export const setSocketID = id => {
   return {
     type: SET_USER_ID,
+    id
+  };
+};
+
+export const setCurrentSessionID = id => {
+  return {
+    type: SET_CURRENT_SESSION_ID,
     id
   };
 };

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MovieInfo = ({ movieInfo, setIsSocketModalOpen, isSocketModalOpen, socketMsg, getRoom }) => {
+const MovieInfo = ({ movieInfo, isInfoModalOpen }) => {
   const { movie, room, session } = movieInfo;
 
   return (
@@ -22,10 +22,7 @@ const MovieInfo = ({ movieInfo, setIsSocketModalOpen, isSocketModalOpen, socketM
         </div>
       </div>
       <SocketModal
-        socketMsg={ socketMsg }
-        setIsSocketModalOpen={ setIsSocketModalOpen }
-        isSocketModalOpen={ isSocketModalOpen }
-        getRoom={ getRoom }
+        isInfoModalOpen={ isInfoModalOpen }
       />
     </div>
   );
@@ -35,7 +32,7 @@ export default MovieInfo;
 
 MovieInfo.propTypes = {
   movieInfo: PropTypes.object,
-  isSocketModalOpen: PropTypes.bool,
+  isInfoModalOpen: PropTypes.bool,
   socketMsg: PropTypes.string,
   getRoom: PropTypes.func,
   setIsSocketModalOpen: PropTypes.func

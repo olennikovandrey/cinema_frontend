@@ -2,13 +2,13 @@
 import Seatings from "./auxiliary components/Seatings";
 import SeatTypes from "./auxiliary components/SeatTypes.js";
 import MovieInfo from "./auxiliary components/MovieInfo.js";
-import { getExactRoomFetch, selectSeatFetch, massUnselectSeatsFetch } from "./room.api";
+import { getExactRoomFetch, selectSeatFetch } from "./room.api";
 import SelectedSeats from "./auxiliary components/SelectedSeats";
 import { getRows } from "./room.services";
 import EmailModal from "./auxiliary components/EmailModal";
 import { baseUrl } from "../../constants/constants";
 import GoBack from "../GoBack/GoBack";
-import { CHECK_IS_LOADER_OPEN, SET_SELECTED_SEATS, SET_USER_ID } from "../../store/actions/action-types";
+import { CHECK_IS_LOADER_OPEN, SET_SELECTED_SEATS, SET_USER_ID, SET_CURRENT_SESSION_ID } from "../../store/actions/action-types";
 import Loader from "../Loader/Loader";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -22,8 +22,6 @@ const Room = () => {
   const [movie, setMovie] = useState();
   const [session, setSession] = useState();
   const [rows, setRows] = useState();
-  const [isSocketModalOpen, setIsSocketModalOpen] = useState(false);
-  const [socketMsg, setSocketMsg] = useState("");
   const { cinemaId, roomId, movieId } = useParams();
   const isLoaderOpen = useSelector(state => state.isLoaderOpen);
   const isEmailModalOpen = useSelector(state => state.isEmailModalOpen);
@@ -31,13 +29,9 @@ const Room = () => {
   const userEmail = useSelector(state => state.userData.email);
   const dispatch = useDispatch();
 
-  const movieInfo = {
-    room,
-    movie,
-    session
-  };
+  const movieInfo = { room, movie, session };
 
-  const getRoom = async (cinemaId, roomId, movieId) => {
+  const getRoom = async () => {
     const url = `${ baseUrl }/room/id/cinemaId=${ cinemaId }&roomId=${ roomId }&movieId=${ movieId }`;
     const { room, movie, session } = await getExactRoomFetch(url);
     const rows = getRows(room, session);
@@ -45,6 +39,7 @@ const Room = () => {
     setRoom(room);
     setMovie(movie);
     setSession(session);
+    dispatch({ type: SET_CURRENT_SESSION_ID, payload: session._id });
     socket.emit("joinTheRoom", session._id);
   };
 
@@ -57,18 +52,7 @@ const Room = () => {
     dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   };
 
-  const unselectSeatHandler = async seat => {
-    const seats = [...selectedSeats];
-    const dublicateIndex = seats.findIndex(({ rowNumber, seatNumber }) => rowNumber === seat.rowNumber && seatNumber === seat.seatNumber);
-    const rows = getRows(room, session);
-    setRows(rows);
-    seats.splice(dublicateIndex, 1);
-    dispatch({ type: SET_SELECTED_SEATS, payload: seats });
-    await selectFetch(seat);
-    socket.emit("seat select event", seat);
-  };
-
-  const selectSeatHandler = async (seat) => {
+  const selectSeatHandler = async seat => {
     const isSeatAlreadySelected = selectedSeats.some(item =>
       item.rowNumber === seat.rowNumber && item.seatNumber === seat.seatNumber
     );
@@ -81,38 +65,43 @@ const Room = () => {
       seat.isSelected && seats.push(seat);
       dispatch({ type: SET_SELECTED_SEATS, payload: seats });
       await selectFetch(seat);
-      socket.emit("seat select event", seat);
+      socket.emit("seatSelect", seat, roomId, movieId, cinemaId);
     }
   };
 
-  useEffect(() => {
-    socket.on("seat select event", socketMsg => {
-      setIsSocketModalOpen(true);
-      setSocketMsg(socketMsg);
-    });
-  }, []);
+  const unselectSeatHandler = async seat => {
+    const seats = [...selectedSeats];
+    const dublicateIndex = seats.findIndex(({ rowNumber, seatNumber }) => rowNumber === seat.rowNumber && seatNumber === seat.seatNumber);
+    const rows = getRows(room, session);
+    setRows(rows);
+    seats.splice(dublicateIndex, 1);
+    dispatch({ type: SET_SELECTED_SEATS, payload: seats });
+    await selectFetch(seat);
+    socket.emit("seatUnselect", seat, roomId, movieId, cinemaId);
+  };
 
   useEffect(() => {
     dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
-    getRoom(cinemaId, roomId, movieId);
+    getRoom();
     dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
-  }, []);
 
-  useEffect(() => {
     socket.on("connect", () => {
       dispatch({ type: SET_USER_ID, payload: socket.id });
     });
+
+    socket.on("seatSelect", (room, session) => {
+      const rows = getRows(room, session);
+      setSession(session);
+      setRows(rows);
+    });
+
+    socket.on("clearSelectedSeats", () => {
+      dispatch({ type: SET_SELECTED_SEATS, payload: [] });
+    });
+
     return () => {
       socket.off("connect");
-    };
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (selectedSeats.length > 0) {
-        massUnselectSeatsFetch(selectedSeats);
-        dispatch({ type: SET_SELECTED_SEATS, payload: [] });
-      }
+      socket.emit("leaveTheRoom");
     };
   }, []);
 
@@ -127,10 +116,7 @@ const Room = () => {
           <div className="crop" style={ { background: `url(${ movie.crop }) no-repeat 100% / 100%` } } />
           <MovieInfo
             movieInfo={ movieInfo }
-            setIsSocketModalOpen={ setIsSocketModalOpen }
-            isSocketModalOpen={ isSocketModalOpen }
-            socketMsg={ socketMsg }
-            getRoom={ getRoom }
+            isInfoModalOpen={ true }
           />
           <section className="seatings-types">
             <Seatings

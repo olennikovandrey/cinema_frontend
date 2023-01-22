@@ -1,20 +1,12 @@
-import reloadImg from "../../../assets/images/room/reload.svg";
 import React from "react";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
 
-const SocketModal = ({ socketMsg, setIsSocketModalOpen, isSocketModalOpen, getRoom }) => {
-  const { cinemaId, roomId, movieId } = useParams();
-
-  const handleClick = () => {
-    getRoom(cinemaId, roomId, movieId);
-    setIsSocketModalOpen(false);
-  };
+const SocketModal = ({ isInfoModalOpen = false }) => {
+  const message = "Текущая информация о наличии свободных мест обновляется автоматически. Одно место может быть забронировано не более чем на пять минут";
 
   return (
-    <div className={ `socket-modal ${ isSocketModalOpen ? "visible" : "hidden" }` }>
-      <p>{ socketMsg }</p>
-      <img src={ reloadImg } alt="reload" onClick={ handleClick }/>
+    <div className={ `socket-modal ${ isInfoModalOpen ? "visible" : "hidden" }` }>
+      <p>{ message }</p>
     </div>
   );
 };
@@ -22,8 +14,5 @@ const SocketModal = ({ socketMsg, setIsSocketModalOpen, isSocketModalOpen, getRo
 export default SocketModal;
 
 SocketModal.propTypes = {
-  socketMsg: PropTypes.string,
-  isSocketModalOpen: PropTypes.bool,
-  getRoom: PropTypes.func,
-  setIsSocketModalOpen: PropTypes.func
+  isInfoModalOpen: PropTypes.bool
 };

@@ -18,7 +18,8 @@ import {
   SET_SELECTED_SEATS,
   SET_EMAIL_FOR_TICKETS,
   SET_IS_PAYMENT_SUCCESS,
-  SET_USER_ID
+  SET_USER_ID,
+  SET_CURRENT_SESSION_ID
 } from "./actions/action-types";
 
 export const initState = {
@@ -205,6 +206,16 @@ const reducer = (state = initState, action) => {
     return {
       ...state,
       userId: action.payload
+    };
+  }
+
+  case SET_CURRENT_SESSION_ID: {
+    return {
+      ...state,
+      userData: {
+        ...state.userData,
+        currentSessionId: action.payload
+      }
     };
   }
 

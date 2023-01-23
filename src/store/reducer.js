@@ -19,7 +19,8 @@ import {
   SET_EMAIL_FOR_TICKETS,
   SET_IS_PAYMENT_SUCCESS,
   SET_USER_ID,
-  SET_CURRENT_SESSION_ID
+  SET_CURRENT_SESSION_ID,
+  CLEAR_SEAT_FROM_SOCKET
 } from "./actions/action-types";
 
 export const initState = {
@@ -168,16 +169,47 @@ const reducer = (state = initState, action) => {
   }
 
   case SET_SELECTED_SEATS: {
-    return {
-      ...state,
-      selectedSeats: action.payload,
-    };
+    const seat = action.payload;
+    const isSeatAlreadySelected = state.selectedSeats.find(item =>
+      item.sessionId === seat.sessionId && item.rowNumber === seat.rowNumber && item.seatNumber === seat.seatNumber
+    );
+
+    if (isSeatAlreadySelected) {
+      const newSeats = state.selectedSeats;
+      const dublicateIndex = newSeats.findIndex(({ rowNumber, seatNumber, sessionId }) => rowNumber === seat.rowNumber && seatNumber === seat.seatNumber && sessionId === seat.sessionId);
+      newSeats.splice(dublicateIndex, 1);
+
+      return {
+        ...state,
+        selectedSeats: newSeats,
+      };
+    } else {
+      const newSeats = state.selectedSeats;
+      newSeats.push(seat);
+
+      return {
+        ...state,
+        selectedSeats: newSeats,
+      };
+    }
   }
 
   case SET_CURRENT_CINEMA: {
     return {
       ...state,
       currentCinema: action.payload,
+    };
+  }
+
+  case CLEAR_SEAT_FROM_SOCKET: {
+    const { sessionId, rowNumber, seatNumber } = action.payload;
+    const newSeats = state.selectedSeats.filter(item =>
+      item.sessionId !== sessionId && item.rowNumber !== rowNumber && item.seatNumber !== seatNumber
+    );
+
+    return {
+      ...state,
+      selectedSeats: newSeats,
     };
   }
 

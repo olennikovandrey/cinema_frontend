@@ -13,6 +13,7 @@ const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, ed
   const selectedSeats = useSelector(state => state.selectedSeats);
   const userEmail = useSelector(state => state.userData.email);
   const userId = useSelector(state => state.userId);
+  const propsSessionId = sessionId;
   const dispatch = useDispatch();
   const furnitureItem = new Map()
     .set(roomSeatTypes.sofa, sofa)
@@ -28,28 +29,30 @@ const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, ed
       <h2>Выбранные места</h2>
       <div className="items-wrapper">
         {
-          selectedSeats.map(item => {
-            const { rowNumber, type, price, seatNumber } = item;
-            const ucFirst = word => word[0].toUpperCase() + word.slice(1);
+          selectedSeats
+            .filter(({ sessionId }) => sessionId === propsSessionId)
+            .map(item => {
+              const { rowNumber, type, price, seatNumber } = item;
+              const ucFirst = word => word[0].toUpperCase() + word.slice(1);
 
-            return (
-              <div className="items-wrapper__item" key={ `${ type }-${ rowNumber }-${ seatNumber }` }>
-                <div className="item__image">
-                  <img src={ furnitureItem.get(type) } alt={ type } />
-                </div>
-                <div className="item__description">
-                  <div className="item-seat-price">
-                    <span className="item-seat">{ rowNumber } ряд / { seatNumber } место</span>
-                    <span className="item-price">{ price }.00 BYN</span>
+              return (
+                <div className="items-wrapper__item" key={ `${ type }-${ rowNumber }-${ seatNumber }` }>
+                  <div className="item__image">
+                    <img src={ furnitureItem.get(type) } alt={ type } />
                   </div>
-                  <span className="item-seat-type">Тип места: { ucFirst(type) }</span>
-                </div>
-                { editable &&
+                  <div className="item__description">
+                    <div className="item-seat-price">
+                      <span className="item-seat">{ rowNumber } ряд / { seatNumber } место</span>
+                      <span className="item-price">{ price }.00 BYN</span>
+                    </div>
+                    <span className="item-seat-type">Тип места: { ucFirst(type) }</span>
+                  </div>
+                  { editable &&
                   <span className="close-button" onClick={ () => unselectSeatHandler({ cinemaId, sessionId, rowNumber, seatNumber, isSelected: false, userId }) }></span>
-                }
-              </div>
-            );
-          })
+                  }
+                </div>
+              );
+            })
         }
       </div>
       { editable &&

@@ -8,7 +8,7 @@ import { getRows } from "./room.services";
 import EmailModal from "./auxiliary components/EmailModal";
 import { baseUrl } from "../../constants/constants";
 import GoBack from "../GoBack/GoBack";
-import { CHECK_IS_LOADER_OPEN, SET_SELECTED_SEATS, SET_USER_ID, SET_CURRENT_SESSION_ID } from "../../store/actions/action-types";
+import { CHECK_IS_LOADER_OPEN, SET_SELECTED_SEATS, SET_USER_ID, SET_CURRENT_SESSION_ID, CLEAR_SEAT_FROM_SOCKET } from "../../store/actions/action-types";
 import Loader from "../Loader/Loader";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -27,6 +27,7 @@ const Room = () => {
   const isEmailModalOpen = useSelector(state => state.isEmailModalOpen);
   const selectedSeats = useSelector(state => state.selectedSeats);
   const userEmail = useSelector(state => state.userData.email);
+  const currentSessionId = useSelector(state => state.userData.currentSessionId);
   const dispatch = useDispatch();
 
   const movieInfo = { room, movie, session };
@@ -53,31 +54,18 @@ const Room = () => {
   };
 
   const selectSeatHandler = async seat => {
-    const isSeatAlreadySelected = selectedSeats.some(item =>
-      item.rowNumber === seat.rowNumber && item.seatNumber === seat.seatNumber
+    await selectFetch(seat);
+    dispatch({ type: SET_SELECTED_SEATS, payload: seat });
+    const { sessionId } = seat;
+    const isSeatAlreadySelected = selectedSeats.find(item =>
+      item.sessionId === sessionId && item.rowNumber === seat.rowNumber && item.seatNumber === seat.seatNumber
     );
 
     if (isSeatAlreadySelected) {
-      unselectSeatHandler(seat);
-      return;
-    } else {
-      const seats = [...selectedSeats];
-      seat.isSelected && seats.push(seat);
-      dispatch({ type: SET_SELECTED_SEATS, payload: seats });
-      await selectFetch(seat);
       socket.emit("seatSelect", seat, roomId, movieId, cinemaId);
+    } else {
+      socket.emit("seatUnselect", seat, roomId, movieId, cinemaId);
     }
-  };
-
-  const unselectSeatHandler = async seat => {
-    const seats = [...selectedSeats];
-    const dublicateIndex = seats.findIndex(({ rowNumber, seatNumber }) => rowNumber === seat.rowNumber && seatNumber === seat.seatNumber);
-    const rows = getRows(room, session);
-    setRows(rows);
-    seats.splice(dublicateIndex, 1);
-    dispatch({ type: SET_SELECTED_SEATS, payload: seats });
-    await selectFetch(seat);
-    socket.emit("seatUnselect", seat, roomId, movieId, cinemaId);
   };
 
   useEffect(() => {
@@ -95,8 +83,8 @@ const Room = () => {
       setRows(rows);
     });
 
-    socket.on("clearSelectedSeats", () => {
-      dispatch({ type: SET_SELECTED_SEATS, payload: [] });
+    socket.on("clearSelectedSeat", ({ sessionId, rowNumber, seatNumber }) => {
+      dispatch({ type: CLEAR_SEAT_FROM_SOCKET, payload: { sessionId, rowNumber, seatNumber } });
     });
 
     return () => {
@@ -126,14 +114,14 @@ const Room = () => {
               cinemaId={ cinemaId }
               selectSeatHandler={ selectSeatHandler }
             />
-            { !selectedSeats.length ?
-              <SeatTypes /> :
+            { selectedSeats.some(item => item.sessionId === currentSessionId) ?
               <SelectedSeats
                 sessionId={ session._id }
                 cinemaId={ cinemaId }
                 unselectSeatHandler={ selectSeatHandler }
                 movieInfo={ movieInfo }
-              />
+              /> :
+              <SeatTypes />
             }
           </section>
         </section>

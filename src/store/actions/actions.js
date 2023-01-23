@@ -18,7 +18,8 @@ import { CHECK_IS_LOGIN_MODAL_OPEN,
   SET_EMAIL_FOR_TICKETS,
   SET_IS_PAYMENT_SUCCESS,
   SET_USER_ID,
-  SET_CURRENT_SESSION_ID } from "./action-types";
+  SET_CURRENT_SESSION_ID,
+  CLEAR_SEAT_FROM_SOCKET } from "./action-types";
 
 export const setIsLoginOpen = payload => {
   return {
@@ -161,5 +162,12 @@ export const setCurrentSessionID = id => {
   return {
     type: SET_CURRENT_SESSION_ID,
     id
+  };
+};
+
+export const clearSeatFromSocket = seatData => {
+  return {
+    type: CLEAR_SEAT_FROM_SOCKET,
+    seatData
   };
 };

@@ -17,6 +17,7 @@ const BuyTickets = () => {
   const selectedSeats = useSelector(state => state.selectedSeats);
   const isLoaderOpen = useSelector(state => state.isLoader);
   const isPaymentSuccess = useSelector(state => state.isPaymentSuccess);
+  const sessionId = useSelector(state => state.userData.currentSessionId);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const BuyTickets = () => {
           <GoBack />
           <MovieInfo movieInfo={ movieInfo } />
           <div className="buy-tickets__fields">
-            <SelectedSeats editable={ false } />
+            <SelectedSeats editable={ false } sessionId={ sessionId }/>
             <div className="pay-field">
               <Timer timerValue={ fiveMinutes } />
               <span className="total-price">Стоимость: { getTotalPrice(selectedSeats) }.00 BYN</span>

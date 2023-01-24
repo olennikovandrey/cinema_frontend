@@ -1,6 +1,6 @@
 import { buyTicketsFetch, occupySeatsFetch } from "../buyTickets.api";
 import { getTotalPrice } from "../../../services/services";
-import { SET_SELECTED_SEATS, CHECK_IS_LOADER_OPEN, SET_IS_PAYMENT_SUCCESS } from "../../../store/actions/action-types";
+import { CLEAR_SEATS_AFTER_BUY, CHECK_IS_LOADER_OPEN, SET_IS_PAYMENT_SUCCESS } from "../../../store/actions/action-types";
 import React, { useMemo, useState } from "react";
 import { useElements, useStripe, CardNumberElement, CardCvcElement, CardExpiryElement } from "@stripe/react-stripe-js";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ const PaymentForm = () => {
   const selectedSeats = useSelector(state => state.selectedSeats);
   const userEmail = useSelector(state => state.userData.email);
   const emailForTickets = useSelector(state => state.emailForTickets);
+  const currentSessionId = useSelector(state => state.userData.currentSessionId);
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
@@ -41,7 +42,8 @@ const PaymentForm = () => {
     e.preventDefault();
     dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const cardElement = elements.getElement(CardNumberElement);
-    const totalPrice = getTotalPrice(selectedSeats);
+    const seatsToBuy = selectedSeats.filter(item => item.sessionId === currentSessionId);
+    const totalPrice = getTotalPrice(seatsToBuy);
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -60,8 +62,8 @@ const PaymentForm = () => {
         const { success } = await buyTicketsFetch({ amount: totalPrice, id });
         if (success) {
           const email = userEmail ? userEmail : emailForTickets;
-          occupySeatsFetch(selectedSeats, email);
-          dispatch({ type: SET_SELECTED_SEATS, payload: [] });
+          occupySeatsFetch(seatsToBuy, email);
+          dispatch({ type: CLEAR_SEATS_AFTER_BUY, payload: seatsToBuy });
           dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
           dispatch({ type: SET_IS_PAYMENT_SUCCESS, payload: true });
         }

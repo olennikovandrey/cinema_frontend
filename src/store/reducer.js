@@ -20,7 +20,8 @@ import {
   SET_IS_PAYMENT_SUCCESS,
   SET_USER_ID,
   SET_CURRENT_SESSION_ID,
-  CLEAR_SEAT_FROM_SOCKET
+  CLEAR_SEAT_FROM_SOCKET,
+  CLEAR_SEATS_AFTER_BUY
 } from "./actions/action-types";
 
 export const initState = {
@@ -206,6 +207,16 @@ const reducer = (state = initState, action) => {
     const newSeats = state.selectedSeats.filter(item =>
       item.sessionId !== sessionId && item.rowNumber !== rowNumber && item.seatNumber !== seatNumber
     );
+
+    return {
+      ...state,
+      selectedSeats: newSeats,
+    };
+  }
+
+  case CLEAR_SEATS_AFTER_BUY: {
+    const seatsToBuy = action.payload;
+    const newSeats = state.selectedSeats.filter(item => !seatsToBuy.includes(item));
 
     return {
       ...state,

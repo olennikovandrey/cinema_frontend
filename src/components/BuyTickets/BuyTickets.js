@@ -17,7 +17,8 @@ const BuyTickets = () => {
   const selectedSeats = useSelector(state => state.selectedSeats);
   const isLoaderOpen = useSelector(state => state.isLoader);
   const isPaymentSuccess = useSelector(state => state.isPaymentSuccess);
-  const sessionId = useSelector(state => state.userData.currentSessionId);
+  const currentSessionId = useSelector(state => state.userData.currentSessionId);
+  const seatsToBuy = selectedSeats.filter(item => item.sessionId === currentSessionId);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const BuyTickets = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      massUnselectSeatsFetch(selectedSeats);
+      massUnselectSeatsFetch(seatsToBuy);
       dispatch({ type: SET_SELECTED_SEATS, payload: [] });
       navigate(prevPage);
     }, fiveMinutes * 1000);
@@ -44,10 +45,10 @@ const BuyTickets = () => {
           <GoBack />
           <MovieInfo movieInfo={ movieInfo } />
           <div className="buy-tickets__fields">
-            <SelectedSeats editable={ false } sessionId={ sessionId }/>
+            <SelectedSeats editable={ false } sessionId={ currentSessionId }/>
             <div className="pay-field">
               <Timer timerValue={ fiveMinutes } />
-              <span className="total-price">Стоимость: { getTotalPrice(selectedSeats) }.00 BYN</span>
+              <span className="total-price">Стоимость: { getTotalPrice(seatsToBuy) }.00 BYN</span>
               <StripeContainer />
             </div>
           </div>

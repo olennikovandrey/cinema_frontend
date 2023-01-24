@@ -19,7 +19,8 @@ import { CHECK_IS_LOGIN_MODAL_OPEN,
   SET_IS_PAYMENT_SUCCESS,
   SET_USER_ID,
   SET_CURRENT_SESSION_ID,
-  CLEAR_SEAT_FROM_SOCKET } from "./action-types";
+  CLEAR_SEAT_FROM_SOCKET,
+  CLEAR_SEATS_AFTER_BUY } from "./action-types";
 
 export const setIsLoginOpen = payload => {
   return {
@@ -168,6 +169,13 @@ export const setCurrentSessionID = id => {
 export const clearSeatFromSocket = seatData => {
   return {
     type: CLEAR_SEAT_FROM_SOCKET,
+    seatData
+  };
+};
+
+export const clearSeatsAfterBuy= seatData => {
+  return {
+    type: CLEAR_SEATS_AFTER_BUY,
     seatData
   };
 };

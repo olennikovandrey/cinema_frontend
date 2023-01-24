@@ -12,7 +12,9 @@ import { useSelector, useDispatch } from "react-redux";
 const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, editable = true }) => {
   const selectedSeats = useSelector(state => state.selectedSeats);
   const userEmail = useSelector(state => state.userData.email);
+  const currentSessionId = useSelector(state => state.userData.currentSessionId);
   const userId = useSelector(state => state.userId);
+  const seatsToBuy = selectedSeats.filter(item => item.sessionId === currentSessionId);
   const propsSessionId = sessionId;
   const dispatch = useDispatch();
   const furnitureItem = new Map()
@@ -57,7 +59,7 @@ const SelectedSeats = ({ unselectSeatHandler, sessionId, cinemaId, movieInfo, ed
       </div>
       { editable &&
         <>
-          <span className="selected-seats__total-price">Стоимость: { getTotalPrice(selectedSeats) }.00 BYN</span>
+          <span className="selected-seats__total-price">Стоимость: { getTotalPrice(seatsToBuy) }.00 BYN</span>
           <button className="button-pink" onClick={ !userEmail ?
             () => dispatch({ type: CHECK_IS_EMAIL_MODAL_OPEN, payload: true }) :
             fakeClick

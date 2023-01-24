@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaId }) => {
+const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaId, sessionId }) => {
   const movies = useSelector(state => state.cashedMovies);
   const getCurrent = id => ({ _id }) => _id === id;
   const currentMovie = movies.filter(getCurrent(movieId))[0];
@@ -37,7 +37,7 @@ const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaI
             <p className="session-description__row">{ date }</p>
             <p className="session-description__row">{ time }</p>
             <p className="session-description__row">{ isFirstRoom ? "Зал 1" : "Зал 2" }</p>
-            <Link to={ `/room/id/cinemaId=${ cinemaId }/roomId=${ roomId }/movieId=${ movieId }` }>
+            <Link to={ `/room/id/cinemaId=${ cinemaId }/roomId=${ roomId }/movieId=${ movieId }/sessionId=${ sessionId }` }>
               <button>Купить билет</button>
             </Link>
           </div>
@@ -55,5 +55,6 @@ MovieItemIntoCinema.propTypes = {
   time: PropTypes.string,
   movieId: PropTypes.string,
   roomId: PropTypes.string,
+  sessionId: PropTypes.string,
   cinemaRooms: PropTypes.array
 };

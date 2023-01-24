@@ -25,6 +25,7 @@ const CinemaMain = ({ mainImage }) => {
               currentCinemaData && currentCinemaData.sessions.map(({ _id, date, time, movieId, roomId }) =>
                 <SwiperSlide key={ _id }>
                   <MovieItemIntoCinema
+                    sessionId={ _id }
                     cinemaId={ currentCinemaData._id }
                     date={ date }
                     time={ time }

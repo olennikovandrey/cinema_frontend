@@ -24,7 +24,7 @@ const SessionInfo = ({ movie, sessionItem }) => {
             <p className="description-date-title">{ date } { time }<span>{ movie.age }</span></p>
           </div>
         </div>
-        <Link to={ `/room/id/cinemaId=${ _id }/roomId=${ roomId }/movieId=${ movieId }` }>
+        <Link to={ `/room/id/cinemaId=${ _id }/roomId=${ roomId }/movieId=${ movieId }/sessionId=${ session._id }` }>
           <button className={ isFull ? "button-pink not-active" : "button-pink" }>{ isFull ? "Мест нет" : "Купить билет" }</button>
         </Link>
       </div>

@@ -6,8 +6,10 @@ const MovieItem = ({ movie }) => {
   const { _id, image, title, age, rating } = movie.movieInfo;
   const firstSessionDate = movie => { return movie.cinemas[0].session.date; };
   const firstSessionTime = movie => { return movie.cinemas[0].session.time; };
+  const firstSessionId = movie => { return movie.cinemas[0].session._id; };
   const date = firstSessionDate(movie);
   const time = firstSessionTime(movie);
+  const sessionId = firstSessionId(movie);
   const newDate = date => { return [date.split(" ")[0], date.split(" ")[1]].join(" "); };
 
   return (
@@ -21,7 +23,7 @@ const MovieItem = ({ movie }) => {
             const { date, time, roomId, movieId } = item.session;
             return (
               <div className="movie-item__sessions" key={ item._id }>
-                <Link to={ `/room/id/cinemaId=${ item._id }/roomId=${ roomId }/movieId=${ movieId }` }>
+                <Link to={ `/room/id/cinemaId=${ item._id }/roomId=${ roomId }/movieId=${ movieId }/sessionId=${ sessionId }` }>
                   <button className="button-pink">{ date }<br/> { time }</button>
                 </Link>
               </div>
@@ -30,7 +32,7 @@ const MovieItem = ({ movie }) => {
             <div className="movie-item__sessions">
               {
                 <>
-                  <Link to={ `/room/id/cinemaId=${ movie.cinemas[0]._id }/roomId=${ movie.cinemas[0].session.roomId }/movieId=${ movie.cinemas[0].session.movieId }` }>
+                  <Link to={ `/room/id/cinemaId=${ movie.cinemas[0]._id }/roomId=${ movie.cinemas[0].session.roomId }/movieId=${ movie.cinemas[0].session.movieId }/sessionId=${ sessionId }` }>
                     <button className="button-pink some-buttons">{ newDate(date) } { time }</button>
                   </Link>
                   <Link to="/selectcinema" state={ { movie: movie } }>
@@ -38,7 +40,6 @@ const MovieItem = ({ movie }) => {
                   </Link>
                 </>
               }
-
             </div>
         }
       </div>

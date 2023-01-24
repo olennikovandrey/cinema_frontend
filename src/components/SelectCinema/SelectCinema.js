@@ -63,8 +63,8 @@ const SelectCinema = () => {
                               {
                                 isFull ?
                                   <SessionItem config={ config } /> :
-                                  <Link to={ `/room/id/cinemaId=${ _id }/roomId=${ item.roomId }/movieId=${ item.movieId }` }>
-                                    <SessionItem config={ config } />
+                                  <Link to={ `/room/id/cinemaId=${ _id }/roomId=${ item.roomId }/movieId=${ item.movieId }/sessionId=${ item._id }` }>
+                                    <SessionItem config={ config } key={ item._id + item.date }/>
                                   </Link>
                               }
                             </SwiperSlide>
@@ -81,9 +81,9 @@ const SelectCinema = () => {
                       return (
                         <>
                           {
-                            isFull ? <SessionItem config={ config } /> :
-                              <Link  className="single-link" to={ `/room/id/cinemaId=${ _id }/roomId=${ item.roomId }/movieId=${ item.movieId }` }>
-                                <SessionItem config={ config } />
+                            isFull ? <SessionItem config={ config }  key={ item._id + item.date + item.time }/> :
+                              <Link  className="single-link" to={ `/room/id/cinemaId=${ _id }/roomId=${ item.roomId }/movieId=${ item.movieId }/sessionId=${ item._id }` }  key={ item._id + item.date + item.time }>
+                                <SessionItem config={ config } key={ item._id + item.date }/>
                               </Link>
                           }
                         </>

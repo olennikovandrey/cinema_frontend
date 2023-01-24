@@ -22,18 +22,17 @@ const Room = () => {
   const [movie, setMovie] = useState();
   const [session, setSession] = useState();
   const [rows, setRows] = useState();
-  const { cinemaId, roomId, movieId } = useParams();
+  const { cinemaId, roomId, movieId, sessionId } = useParams();
   const isLoaderOpen = useSelector(state => state.isLoaderOpen);
   const isEmailModalOpen = useSelector(state => state.isEmailModalOpen);
   const selectedSeats = useSelector(state => state.selectedSeats);
   const userEmail = useSelector(state => state.userData.email);
-  const currentSessionId = useSelector(state => state.userData.currentSessionId);
   const dispatch = useDispatch();
 
   const movieInfo = { room, movie, session };
 
   const getRoom = async () => {
-    const url = `${ baseUrl }/room/id/cinemaId=${ cinemaId }&roomId=${ roomId }&movieId=${ movieId }`;
+    const url = `${ baseUrl }/room/id/cinemaId=${ cinemaId }&roomId=${ roomId }&movieId=${ movieId }&sessionId=${ sessionId }`;
     const { room, movie, session } = await getExactRoomFetch(url);
     const rows = getRows(room, session);
     setRows(rows);
@@ -114,7 +113,7 @@ const Room = () => {
               cinemaId={ cinemaId }
               selectSeatHandler={ selectSeatHandler }
             />
-            { selectedSeats.some(item => item.sessionId === currentSessionId) ?
+            { selectedSeats.some(item => item.sessionId === sessionId) ?
               <SelectedSeats
                 sessionId={ session._id }
                 cinemaId={ cinemaId }

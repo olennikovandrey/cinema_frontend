@@ -19,8 +19,10 @@ const SessionItem = ({ config }) => {
   return (
     <>
       <div className={ !isFull ? "session__item" : "session__item-disabled" }>
-        <p>{ item.date }</p>
-        <p>{ isFull ? "Свободных мест нет" : item.time }</p>
+        <div>
+          <p>{ item.date }</p>
+          <p>{ isFull ? "Свободных мест нет" : item.time }</p>
+        </div>
         <div className="progress">
           <div className="progress__line" style={ { width: `${ 100 - occupiedPercent }%` } }></div>
         </div>

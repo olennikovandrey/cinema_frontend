@@ -46,6 +46,10 @@ section.room
   background: #00000090
   box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
   border: 1px solid rgba(121, 121, 121, 0.2)
+  @media only screen and (max-width: 425px)
+    margin-bottom: 3px
+    padding: 5px
+    height: auto
   & a, &__image
     width: 60px
     margin-right: 20px
@@ -61,11 +65,11 @@ section.room
     & .description-movie-title
       margin-bottom: 10px
       color: #fefefe
-      @include adaptiv-font(20, 14)
+      @include adaptiv-font(20, 16)
     & p
       margin-bottom: 5px
       color: #fefefe
-      @include adaptiv-font(16, 12)
+      @include adaptiv-font(18, 15)
     & .description-room
       position: relative
       margin-bottom: 5px

@@ -12,6 +12,10 @@ section.select-cinema
   margin-top: 80px
   display: flex
   flex-direction: column
+  @media only screen and (max-width: 1024px)
+    padding: 0 2%
+  @media only screen and (max-width: 425px)
+    margin-top: 75px
 
   & .crop
     position: fixed
@@ -52,18 +56,30 @@ section.select-cinema
       background: #00000090
       box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
       border: 1px solid rgba(121, 121, 121, 0.2)
+      @media only screen and (max-width: 425px)
+        height: auto
+        padding: 5px 0
+        margin-bottom: 5px
+        flex-direction: column
       &__title
         width: 20%
         text-align: center
         color: #fefefe
         font-family: Carattere, sans-serif
-        @include adaptiv-font(40, 14)
+        @include adaptiv-font(40, 30)
         color: rgba(255, 255, 255)
+        @media only screen and (max-width: 425px)
+          width: 100%
       & .sessions-wrapper
         width: 80%
         height: 100%
         display: flex
         justify-content: flex-start
+        @media only screen and (max-width: 425px)
+          width: 100%
+          height: auto
+          padding: 0 5px
+          flex-direction: column
         & a,
         & .single-link
           height: 100%
@@ -72,6 +88,11 @@ section.select-cinema
           text-decoration: none
         & .single-link
           width: calc(25% - 10px)
+          @media only screen and (max-width: 425px)
+            width: 100%
+            margin-bottom: 3px
+            &:last-child
+              margin: 0
     & .session__item,
     & .session__item-disabled
       width: 100%
@@ -86,18 +107,33 @@ section.select-cinema
       box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
       border: 1px solid rgba(121, 121, 121, 0.2)
       cursor: pointer
+      & > div
+        @media only screen and (max-width: 425px)
+          display: flex
+          justify-content: center
+        & > p
+          margin-left: 5px
       &-disabled
         width: calc(25% - 10px)
         margin-right: 10px
         border: 1px solid #ffffff
         cursor: not-allowed
+        @media only screen and (max-width: 425px)
+          width: 100%
+          margin: 0
+          & > div
+            flex-direction: column
+            & > p
+              margin: 0 0 5px
       & p
         margin-bottom: 10px
         color: #fefefe
         text-align: center
-        @include adaptiv-font(18, 12)
+        @include adaptiv-font(18, 16)
         &:last-of-type
           height: 40%
+        @media only screen and (max-width: 425px)
+          margin-bottom: 10px
 
     & .session__item
       &:hover

@@ -203,10 +203,12 @@ const reducer = (state = initState, action) => {
   }
 
   case CLEAR_SEAT_FROM_SOCKET: {
-    const { sessionId, rowNumber, seatNumber } = action.payload;
-    const newSeats = state.selectedSeats.filter(item =>
-      item.sessionId !== sessionId && item.rowNumber !== rowNumber && item.seatNumber !== seatNumber
-    );
+    const newSeats = state.selectedSeats.filter(item => {
+      const seatItem = { sessionId: item.sessionId, rowNumber: item.rowNumber, seatNumber: item.seatNumber };
+      return (
+        JSON.stringify(seatItem) !== JSON.stringify(action.payload)
+      );
+    });
 
     return {
       ...state,

@@ -18,8 +18,9 @@ const MovieItem = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
+  const screenWidth = window.innerWidth;
 
-  const getMovieData = async (id) => {
+  const getMovieData = async id => {
     const url = `${ baseUrl }/movies/id/id=${ id }`;
     const { movie } = await getExactMovieFetch(url);
     const { movieInfo, cinemas} = movie[0];
@@ -46,14 +47,17 @@ const MovieItem = () => {
         <div className="sessions-wrapper">
           { sessions.length > 3 ?
             <>
-              { sessions.slice(0, 3).map(item =>
-                <React.Fragment key={ item._id + item.session._id }>
-                  <SessionInfo
-                    movie={ movieInfo }
-                    sessionItem={ item }
-                  />
-                </React.Fragment>
-              ) }
+              { sessions
+                .slice(0, screenWidth <= 425 ? 1 : screenWidth <= 1024 ? 2 : 3)
+                .map(item =>
+                  <React.Fragment key={ item._id + item.session._id }>
+                    <SessionInfo
+                      movie={ movieInfo }
+                      sessionItem={ item }
+                    />
+                  </React.Fragment>
+                )
+              }
               <Link to="/selectcinema" state={ { movie } } className="sessions-wrapper__more">
                 <span>...</span>
               </Link>

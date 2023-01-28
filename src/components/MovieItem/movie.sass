@@ -1,3 +1,9 @@
+$maxWidth: 1440
+@mixin adaptiv-font($pcSize, $mobSize)
+  $addSize: $pcSize - $mobSize
+  $maxWidth: $maxWidth - 320
+  font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 280px) / #{$maxWidth}))
+
 section.movie
   position: relative
   width: 100%
@@ -6,11 +12,13 @@ section.movie
   margin-bottom: 10px
   display: flex
   flex-direction: column
+  @media only screen and (max-width: 1024px)
+    padding: 0 2%
+
   & b
-    font-weith: bold
     text-decoration: underline
     color: #fff
-    font-size: 1.3rem
+    @include adaptiv-font(20, 14)
 
   & .crop
     position: fixed
@@ -75,13 +83,22 @@ section.movie
         display: flex
         align-items: center
         justify-content: space-between
+        @media only screen and (max-width: 320px)
+          flex-direction: column
         & a
-          min-width: 140px
+          min-width: 110px
           max-width: 250px
           width: 25%
+          @media only screen and (max-width: 1024px)
+            width: 20%
+          @media only screen and (max-width: 320px)
+            max-width: 100%
+            width: 100%
         & .button-pink
           width: 100%
           margin: 0
+          @media only screen and (max-width: 320px)
+            height: 35px
         & .not-active
           background-color: #d40754
           cursor: not-allowed
@@ -91,6 +108,9 @@ section.movie
           display: flex
           flex-direction: column
           justify-content: center
+          @media only screen and (max-width: 320px)
+            width: 100%
+            margin-bottom: 5px
           & .description-movie-title
             margin-bottom: 10px
             color: #fefefe
@@ -98,6 +118,10 @@ section.movie
           & .description-room
             position: relative
             margin-bottom: 5px
+            @media only screen and (max-width: 1024px)
+              margin-bottom: 15px
+            @media only screen and (max-width: 320px)
+              margin-bottom: 5px
             &::before
               position: absolute
               content: ""
@@ -107,12 +131,18 @@ section.movie
               top: 50%
               transform: translateY(-50%)
               background: url("../../assets/images/room/location.svg") no-repeat center
+              @media only screen and (max-width: 320px)
+                width: 15px
+                height: 15px
             & .description-room-title
               margin-left: 30px
+              @include adaptiv-font(16, 14)
               color: #fefefe
 
           & .description-date
             position: relative
+            @media only screen and (max-width: 1024px)
+              margin-bottom: 5px
             &::before
               position: absolute
               padding-top: 4px
@@ -128,8 +158,13 @@ section.movie
               color: #fefefe
               font-size: 12px
               background: url("../../assets/images/room/calendar.svg") no-repeat center
+              @media only screen and (max-width: 320px)
+                width: 15px
+                height: 15px
+                font-size: 8px
             & .description-date-title
               margin-left: 30px
+              @include adaptiv-font(16, 14)
               color: #fefefe
               & span
                 display: inline-block
@@ -141,6 +176,8 @@ section.movie
                 border: 2px solid #fefefe
                 border-radius: 50%
                 color: #fefefe
+                @media only screen and (max-width: 1024px)
+                  display: none
 
   .description
     position: relative
@@ -153,34 +190,62 @@ section.movie
     padding: 20px
     background: rgba(0, 0, 0, 0.8)
     box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
-
+    @media only screen and (max-width: 768px)
+      padding: 10px
+      margin-top: 40px
+      background: rgba(0, 0, 0, 0.5)
+    @media only screen and (max-width: 425px)
+      margin-top: 20px
     &__image
       position: absolute
       border-radius: 12px
       overflow: hidden
       width: 300px
-      height: 450px
       top: -85px
       right: 50px
-      box-shadow: 0 0 10px #686868
+      box-shadow: 0 0 15px #686868
+      @media only screen and (max-width: 1024px)
+        width: 200px
+        top: -20px
+        right: 10px
+        @media only screen and (max-width: 425px)
+          width: 19%
+          top: -10px
+          right: 10px
+          box-shadow: 0 0 15px #c2c2c2
+          border-radius: 4px
       & img
-        width: 300px
-        height: 450px
-
-    &__title
-      margin-bottom: 15px
-      color: #fff
-      font-size: 3.5em
+        width: 100%
 
     &__title-container
       max-width: 80%
       display: flex
+      align-items: center
+      margin-bottom: 15px
+      @media only screen and (max-width: 425px)
+        width: 77%
+    &__title
+      color: #fff
+      @include adaptiv-font(50, 20)
+    &__age
+      margin-left: 30px
+      color: #a3a3a3
+      @include adaptiv-font(45, 16)
+      @media only screen and (max-width: 425px)
+        margin-left: 15px
 
     &__row
       width: 80%
       margin-bottom: 15px
       color: #fff
-      font-size: 1.4rem
+      @include adaptiv-font(20, 13)
+      @media only screen and (max-width: 1024px)
+        margin-bottom: 8px
+      @media only screen and (max-width: 768px)
+        width: 70%
+      @media only screen and (max-width: 425px)
+        width: 80%
+        margin-bottom: 4px
       & a
         width: 85%
         height: 35px
@@ -189,54 +254,90 @@ section.movie
         text-decoration: none
         cursor: pointer
         transition: .2s
+        @media only screen and (max-width: 425px)
+          line-height: 0
         &:hover
           text-shadow: 0 0 10px #d40754
-
-    &__age
-      margin-left: 30px
-      color: #a3a3a3
-      font-size: 3.5em
 
     &__content
       width: 100%
       margin-bottom: 15px
       color: #fff
-      font-size: 1.3em
+      @include adaptiv-font(20, 13)
+      @media only screen and (max-width: 425px)
+        margin-bottom: 5px
 
 .trailer-actors
   width: 100%
   height: 500px
   margin-top: 50px
   display: flex
-  justify-content: center
+  justify-content: space-between
+  @media only screen and (max-width: 1024px)
+    margin-top: 20px
+  @media only screen and (max-width: 768px)
+    height: auto
+  @media only screen and (max-width: 425px)
+    flex-direction: column
+    margin-top: 0
   &__trailer
-    width: 60%
+    width: 80%
     margin-right: 80px
+    @media only screen and (max-width: 1024px)
+      width: 75%
+      margin-right: 30px
+    @media only screen and (max-width: 768px)
+      & iframe
+        height: 330px !important
+    @media only screen and (max-width: 320px)
+      & iframe
+        height: 230px !important
+    @media only screen and (max-width: 425px)
+      width: 100%
+      margin-right: 0
   &__actors
     width: 20%
     display: flex
     flex-direction: column
+    @media only screen and (max-width: 768px)
+      width: 25%
+    @media only screen and (max-width: 425px)
+      width: 100%
+      justify-content: space-between
+      flex-direction: row
+      flex-wrap: wrap
     & p
       margin-bottom: 15px
       color: #fefefe
-      font-size: 1.4em
+      @include adaptiv-font(20, 14)
+      @media only screen and (max-width: 425px)
+        display: block
+        width: 100%
+        text-align: center
     & a
-      display: block
+      display: flex
+      align-items: center
       width: 85%
       height: 35px
-      line-height: 35px
       color: #fefefe
-      font-size: 1.3em
+      @include adaptiv-font(20, 13)
       text-decoration: none
       cursor: pointer
       transition: .2s
       &:hover
         text-shadow: 0 0 10px #d40754
+      @media only screen and (max-width: 1024px)
+        height: 25px
+      @media only screen and (max-width: 768px)
+        height: auto
 
 .actor
   position: relative
   display: flex
   align-items: center
+  @media only screen and (max-width: 425px)
+    width: 47%
+    margin-right: 2px
   &__photo-icon
     width: 15%
     height: 30px
@@ -256,7 +357,15 @@ section.movie
   visibility: hidden
   opacity: 0
   background-color: #424242
-  transition: opacity .2s ease
   z-index: 2
+  @media only screen and (max-width: 1024px)
+    top: -200px
+    right: 30px
+    height: 200px
+  @media only screen and (max-width: 320px)
+    top: -195px
+    right: 15px
   & img
     height: 290px
+    @media only screen and (max-width: 1024px)
+      height: 190px

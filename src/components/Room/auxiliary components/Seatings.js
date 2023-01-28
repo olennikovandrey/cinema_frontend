@@ -20,33 +20,31 @@ const LegendItem = () => {
 
 const Seatings = ({ cinemaTitle, cinemaId, sessionId, rows, selectSeatHandler }) => {
   return (
-    <>
-      <div className="seatings">
-        <span className="seatings__screen"></span>
-        <span className="seatings__screen-title" name={ cinemaTitle }>Экран</span>
-        {
-          rows.map(row =>
-            <div className="seatings__row" key={ row._id }>
-              <span className="row-number">{ row.number }</span>
-              { row.seats.map(seat =>
-                <div className="furniture" key={ seat._id }>
-                  <FurnitureItem
-                    cinemaId={ cinemaId }
-                    sessionId={ sessionId }
-                    currentSeat={ seat }
-                    row={ row.number }
-                    price={ row.price }
-                    type={ row.seatType }
-                    selectSeatHandler={ selectSeatHandler }
-                  />
-                </div>
-              ) }
-            </div>
-          )
-        }
-        <LegendItem />
-      </div>
-    </>
+    <div className="seatings">
+      <span className="seatings__screen"></span>
+      <span className="seatings__screen-title" name={ cinemaTitle }>Экран</span>
+      {
+        rows.map(row =>
+          <div className="seatings__row" key={ row._id }>
+            <span className="row-number">{ row.number }</span>
+            { row.seats.map(seat =>
+              <div className="furniture" key={ seat._id }>
+                <FurnitureItem
+                  cinemaId={ cinemaId }
+                  sessionId={ sessionId }
+                  currentSeat={ seat }
+                  row={ row.number }
+                  price={ row.price }
+                  type={ row.seatType }
+                  selectSeatHandler={ selectSeatHandler }
+                />
+              </div>
+            ) }
+          </div>
+        )
+      }
+      <LegendItem />
+    </div>
   );
 };
 

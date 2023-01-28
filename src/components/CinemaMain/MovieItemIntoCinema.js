@@ -18,20 +18,21 @@ const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaI
       {
         currentMovie &&
         <div className="session-wrapper">
-          <Link to={ `/movies/id/${ movieId }` }>
-            <div className="session-wrapper__image">
+          <div className="session-wrapper__image">
+            <Link to={ `/movies/id/${ movieId }` }>
               <img src={ currentMovie.movieInfo.image } alt={ currentMovie.movieInfo.title } />
+            </Link>
+            <div className="session-description-adaptive">
               <h2>{ currentMovie.movieInfo.title }</h2>
-              <div className="session-description-adaptive">
-                <p className="session-description-adaptive__row">{ date }</p>
-                <p className="session-description-adaptive__row">{ time }</p>
-                <p className="session-description-adaptive__row">{ isFirstRoom ? "Зал 1" : "Зал 2" }</p>
-                <Link to={ `/room/id/cinemaId=${ cinemaId }/roomId=${ roomId }/movieId=${ movieId }` }>
-                  <button>Купить билет</button>
-                </Link>
-              </div>
+              <p className="session-description-adaptive__row">{ date }</p>
+              <p className="session-description-adaptive__row">{ time }</p>
+              <p className="session-description-adaptive__row">{ isFirstRoom ? "Зал 1" : "Зал 2" }</p>
+              <Link to={ `/room/id/cinemaId=${ cinemaId }/roomId=${ roomId }/movieId=${ movieId }` }>
+                <button>Купить билет</button>
+              </Link>
             </div>
-          </Link>
+          </div>
+
           <div className="session-description">
             <h2>{ currentMovie.movieInfo.title }</h2>
             <p className="session-description__row">{ date }</p>

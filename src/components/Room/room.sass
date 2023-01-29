@@ -11,28 +11,8 @@ section.room
   padding: 80px 10% 10px
   display: flex
   flex-direction: column
-
-  .crop
-    position: fixed
-    height: 100vh
-    width: 100%
-    left: 0
-    top: 10%
-    z-index: -1
-    &::before
-      position: absolute
-      width: 100%
-      content: ""
-      inset: 0
-      z-index: -1
-      background: linear-gradient(180deg, rgb(12, 1, 40, 1) 15%, rgb(0, 0, 0, 0) 40%, rgba(9, 9, 10, 5) 82%, rgb(9, 0, 14, 10))
-    &::after
-      position: absolute
-      width: 100%
-      content: ""
-      inset: 0
-      z-index: -1
-      background: linear-gradient(90deg, rgb(12, 1, 40, 1) 10%, rgb(0, 0, 0, 0) 30%, rgba(9, 9, 10, 1) 90%, rgb(9, 0, 14, 5))
+  @media only screen and (max-width: 1024px)
+    padding: 65px 2% 5px
 
 .movie-info
   position: relative
@@ -46,14 +26,17 @@ section.room
   background: #00000090
   box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
   border: 1px solid rgba(121, 121, 121, 0.2)
-  @media only screen and (max-width: 425px)
-    margin-bottom: 3px
+  @media only screen and (max-width: 768px)
+    margin-bottom: 5px
     padding: 5px
   & a, &__image
     height: 100%
-    margin-right: 20px
     border-radius: 6px
+      height: auto
   &__image
+    margin-right: 20px
+    @media only screen and (max-width: 320px)
+      margin-right: 10px
     &:hover
       box-shadow: 0 0 5px #fff
 
@@ -65,13 +48,16 @@ section.room
       margin-bottom: 10px
       color: #fefefe
       @include adaptiv-font(20, 16)
+      @media only screen and (max-width: 375px)
+        text-align: center
     & p
-      margin-bottom: 5px
       color: #fefefe
-      @include adaptiv-font(18, 15)
+      @include adaptiv-font(18, 14)
     & .description-room
       position: relative
       margin-bottom: 5px
+      @media only screen and (max-width: 375px)
+        margin-bottom: 15px
       &::before
         position: absolute
         content: ""
@@ -115,6 +101,9 @@ section.room
           border: 2px solid #fefefe
           border-radius: 50%
           color: #fefefe
+          @include adaptiv-font(16, 14)
+          @media only screen and (max-width: 375px)
+            display: none
 
 .room-tooltip
   position: absolute
@@ -172,6 +161,10 @@ section.room
     background: #00000090
     box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
     border: 1px solid rgba(121, 121, 121, 0.2)
+    @media only screen and (max-width: 768px)
+      width: 100%
+      margin-bottom: 10px
+      padding: 10px 10px 0
     & h2
       @include adaptiv-font(30, 16)
       color: #fff
@@ -180,6 +173,8 @@ section.room
       padding: 5px 0 15px
       display: flex
       border-bottom: 1px solid rgba(121, 121, 121, 0.2)
+      @media only screen and (max-width: 768px)
+        padding: 5px
       &:last-child
         border-bottom: none
       &__image
@@ -189,17 +184,31 @@ section.room
         display: flex
         align-items: center
         justify-content: center
+        @media only screen and (max-width: 768px)
+          width: 12%
         & img
-          height: 100%
+          height: 65px
+          @media only screen and (max-width: 1024px)
+            height: 45px
+          @media only screen and (max-width: 425px)
+            height: 30px
+          @media only screen and (max-width: 375px)
+            height: 25px
+          @media only screen and (max-width: 320px)
+            height: 20px
       &__description
         width: 80%
         display: flex
         flex-direction: column
+        @media only screen and (max-width: 768px)
+          width: 88%
         & header
           margin-bottom: 15px
           display: flex
           align-items: center
           justify-content: space-between
+          @media only screen and (max-width: 768px)
+            margin-bottom: 5px
           & span
             line-height: 25px
             @include adaptiv-font(20, 16)
@@ -208,6 +217,9 @@ section.room
         & span
           @include adaptiv-font(16, 10)
           color: #fff
+
+    & .button-pink
+      line-height: 40px
 
   & .seatings
     width: 60%
@@ -220,6 +232,10 @@ section.room
     box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
     border: 1px solid rgba(121, 121, 121, 0.2)
     border-radius: 6px
+    @media only screen and (max-width: 768px)
+      width: 100%
+      margin: 0 0 5px
+      padding: 10px 10px 10px 30px
     &__row
       position: relative
       width: 100%
@@ -230,7 +246,7 @@ section.room
       & .row-number
         position: absolute
         left: -20px
-        font-size: 1.5em
+        @include adaptiv-font(24, 14)
         color: #fff
       & .furniture
         position: relative
@@ -248,6 +264,8 @@ section.room
       border-radius: 2px
       content: ""
       background-color: #fff
+      @media only screen and (max-width: 375px)
+        margin-bottom: 5px
     &__screen-title
       position: relative
       display: inline-block
@@ -255,6 +273,10 @@ section.room
       height: 100px
       text-align: center
       color: #fff
+      @media only screen and (max-width: 768px)
+        height: 70px
+      @media only screen and (max-width: 425px)
+        height: 60px
       &::before
         position: absolute
         top: 10%
@@ -262,8 +284,12 @@ section.room
         transform: translate(-50%, 10%)
         content: attr(name)
         font-family: Carattere, sans-serif
-        font-size: 80px
+        @include adaptiv-font(80, 35)
         color: #ffffff48
+        @media only screen and (max-width: 768px)
+          top: 20%
+        @media only screen and (max-width: 375px)
+          top: 25%
 
     & .legend
       width: 100%
@@ -271,14 +297,26 @@ section.room
       display: flex
       justify-content: flex-start
       align-items: center
-      & img
-        width: 10%
-      & span
-        display: block
-        width: auto
-        margin-right: 20px
-        color: #fff
-        @include adaptiv-font(16, 12)
+      @media only screen and (max-width: 425px)
+        margin: 0
+        flex-direction: column
+        align-items: flex-start
+      &__item
+        display: flex
+        align-items: center
+        & img
+          width: 35%
+          margin-right: 10px
+          @media only screen and (max-width: 425px)
+            width: 15%
+        & span
+          display: block
+          width: auto
+          margin-right: 20px
+          color: #fff
+          @include adaptiv-font(16, 12)
+          @media only screen and (max-width: 425px)
+            display: inline-block
 
   .selected-seats
     height: 100%
@@ -296,7 +334,7 @@ section.room
         background-color: #252525
       &::-webkit-scrollbar-thumb
         border-radius: 10px
-        background-color: #f9f9fd
+        background-color: #d40754
       &::-webkit-scrollbar-track
         border-radius: 5px
         background-color: #252525
@@ -307,9 +345,17 @@ section.room
         display: flex
         align-items: center
         border-bottom: 1px solid rgba(121, 121, 121, 0.2)
+        @media only screen and (max-width: 768px)
+          padding: 10px 0
+        @media only screen and (max-width: 425px)
+          padding: 5px 0
         &:last-child
           border-bottom: none
           margin-bottom: 20px
+          @media only screen and (max-width: 425px)
+            margin-bottom: 10px
+          @media only screen and (max-width: 375px)
+            margin: 0
         & .item__image
           height: 50px
           width: 30%
@@ -317,6 +363,10 @@ section.room
           display: flex
           align-items: center
           justify-content: center
+          @media only screen and (max-width: 425px)
+            height: 30px
+            width: 20%
+            margin-right: 15px
           & img
             height: 100%
         & .item__description
@@ -331,18 +381,25 @@ section.room
             justify-content: space-between
             & .item-seat
               color: #fefefe
+              @include adaptiv-font(16, 13)
             & .item-price
               font-weight: bold
-              font-size: 1.2em
+              @include adaptiv-font(20, 15)
               color: #fefefe
           & .item-seat-type
-            font-size: .9em
+            @include adaptiv-font(14, 12)
             color: #c0c0c0
         & .close-button
           width: 15px
           height: 15px
           right: 20px
           top: 18px
+          @media only screen and (max-width: 768px)
+            top: 10px
+            right: 5px
+          @media only screen and (max-width: 425px)
+            top: 5px
+            right: 5px
 
     &__total-price
       display: inline-block
@@ -351,6 +408,15 @@ section.room
       @include adaptiv-font(20, 14)
       color: #fefefe
       text-align: end
+      @media only screen and (max-width: 425px)
+        margin-top: 10px
+
+.seatings-types
+  @media only screen and (max-width: 768px)
+    flex-direction: column
+    height: auto
+  @media only screen and (max-width: 425px)
+    margin-bottom: 5px
 
 .email-modal
   position: absolute
@@ -370,11 +436,20 @@ section.room
   background: linear-gradient(30deg, #520623 0%, rgb(9, 0, 14, 5))
   box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
   border: 1px solid rgba(121, 121, 121, 0.2)
+  @media only screen and (max-width: 1024px)
+    width: 60%
+  @media only screen and (max-width: 768px)
+    width: 80%
+  @media only screen and (max-width: 425px)
+    width: 96%
+    height: auto
   & span
     display: block
     height: 50px
     @include adaptiv-font(17, 14)
     color: #fff
+    @media only screen and (max-width: 425px)
+      text-align: center
   & .close-button
     top: 0
     right: 15px
@@ -385,13 +460,17 @@ section.room
     margin-bottom: 60px
     border: 1px solid #000
     border-radius: 4px
-    font-size: 1.4em
+    @include adaptiv-font(20, 14)
     letter-spacing: 1px
     color: #fff
     background: #000000b9
     box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
     outline: none
     transition: .2s
+    @media only screen and (max-width: 1024px)
+      margin-bottom: 40px
+    @media only screen and (max-width: 425px)
+      margin-bottom: 20px
     &[data-valid="invalid"]
       box-shadow: 0 0 8px #ff0000
 
@@ -409,6 +488,8 @@ section.room
   align-items: center
   border-radius: 6px
   border: 1px solid rgba(121, 121, 121, 0.7)
+  @media only screen and (max-width: 650px)
+    display: none
   & p
     width: 100%
     color: #fefefe

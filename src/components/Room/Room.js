@@ -99,8 +99,8 @@ const Room = () => {
       <GoBack />
       {
         room && movie &&
-        <section className={ `room ${ isEmailModalOpen ? "blur" : null }` }>
-          <div className="crop" style={ { background: `url(${ movie.crop }) no-repeat 100% / 100%` } } />
+        <section className={ `room ${ isEmailModalOpen ? "blur" : "" }` }>
+          <div className="crop" style={ { background: `url(${ movie.crop }) no-repeat` } }></div>
           <MovieInfo
             movieInfo={ movieInfo }
             isInfoModalOpen={ true }

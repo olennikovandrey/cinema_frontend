@@ -27,7 +27,7 @@ const MovieItemIntoCinema = ({ date, time, movieId, roomId, cinemaRooms, cinemaI
               <p className="session-description-adaptive__row">{ date }</p>
               <p className="session-description-adaptive__row">{ time }</p>
               <p className="session-description-adaptive__row">{ isFirstRoom ? "Зал 1" : "Зал 2" }</p>
-              <Link to={ `/room/id/cinemaId=${ cinemaId }/roomId=${ roomId }/movieId=${ movieId }` }>
+              <Link to={ `/room/id/cinemaId=${ cinemaId }/roomId=${ roomId }/movieId=${ movieId }/sessionId=${ sessionId }` }>
                 <button>Купить билет</button>
               </Link>
             </div>

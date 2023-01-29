@@ -41,7 +41,7 @@ const BuyTickets = () => {
       { isPaymentSuccess ?
         <SuccessPaymentPage /> :
         <section className="buy-tickets">
-          <div className="crop" style={ { background: `url(${ movie.crop }) no-repeat 100% / 100%` } } />
+          <div className="crop" style={ { background: `url(${ movie.crop }) no-repeat` } } />
           <GoBack />
           <MovieInfo movieInfo={ movieInfo } />
           <div className="buy-tickets__fields">

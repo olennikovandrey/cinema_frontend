@@ -8,10 +8,10 @@ const LegendItem = () => {
     <div className="legend">
       {
         roomLegend.map(({ image, value, alt }) =>
-          <React.Fragment key={ value }>
+          <div className="legend__item" key={ value }>
             <img src={ image } alt={ alt } />
             <span>{ value }</span>
-          </React.Fragment>
+          </div>
         )
       }
     </div>

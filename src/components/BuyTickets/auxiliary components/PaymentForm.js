@@ -93,9 +93,9 @@ const PaymentForm = () => {
             <CardCvcElement options={ options }/>
           </label>
         </div>
-        <button className="button-pink">Купить</button>
         <span className="payment-form__card-types"/>
       </form>
+      <button className="button-pink">Купить</button>
     </>
   );
 };

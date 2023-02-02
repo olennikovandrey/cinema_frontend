@@ -32,6 +32,7 @@ const Room = () => {
   const movieInfo = { room, movie, session };
 
   const getRoom = async () => {
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const url = `${ baseUrl }/room/id/cinemaId=${ cinemaId }&roomId=${ roomId }&movieId=${ movieId }&sessionId=${ sessionId }`;
     const { room, movie, session } = await getExactRoomFetch(url);
     const rows = getRows(room, session);
@@ -41,6 +42,7 @@ const Room = () => {
     setSession(session);
     dispatch({ type: SET_CURRENT_SESSION_ID, payload: session._id });
     socket.emit("joinTheRoom", session._id);
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   };
 
   const selectFetch = async seat => {
@@ -68,18 +70,16 @@ const Room = () => {
   };
 
   useEffect(() => {
-    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     getRoom();
-    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
 
     if (!userId) {
-      const socket = io(`wss://${ baseWebSocketUrl }`);
+      const socket = io(baseWebSocketUrl);
       socket.on("connect", () => {
         dispatch({ type: SET_USER_ID, payload: socket.id });
       });
     }
 
-    socket.on("seatSelect", (room, session) => {
+    socket.on("newRoomData", (room, session) => {
       const rows = getRows(room, session);
       setSession(session);
       setRows(rows);

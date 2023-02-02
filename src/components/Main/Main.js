@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 
-export const socket = io(`wss://${ baseWebSocketUrl }`);
+export const socket = io(baseWebSocketUrl);
 
 const Main = () => {
   const isAdminModalOpen = useSelector(state => state.isAdminModalOpen);

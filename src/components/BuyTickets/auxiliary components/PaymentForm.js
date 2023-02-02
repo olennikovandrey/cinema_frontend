@@ -77,7 +77,7 @@ const PaymentForm = () => {
 
   return (
     <>
-      <form onSubmit={ handleSubmit } className="payment-form">
+      <form className="payment-form">
         { errorMessage && <span className="payment-form__error">{ errorMessage.slice(0, -1) }</span> }
         <label className="payment-form__number-field">
           <span>Card number</span>
@@ -95,7 +95,7 @@ const PaymentForm = () => {
         </div>
         <span className="payment-form__card-types"/>
       </form>
-      <button className="button-pink">Купить</button>
+      <button className="button-pink" onClick={ e => handleSubmit(e) }>Купить</button>
     </>
   );
 };

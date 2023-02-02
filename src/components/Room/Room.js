@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
 
-const socket = io("wss://just-cinema.herokuapp.com");
+const socket = io("ws://just-cinema.herokuapp.com");
 
 const Room = () => {
   const [room, setRoom] = useState();

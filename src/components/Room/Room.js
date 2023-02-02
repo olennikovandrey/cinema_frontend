@@ -6,16 +6,15 @@ import { getExactRoomFetch, selectSeatFetch } from "./room.api";
 import SelectedSeats from "./auxiliary components/SelectedSeats";
 import { getRows } from "./room.services";
 import EmailModal from "./auxiliary components/EmailModal";
-import { baseUrl } from "../../constants/constants";
+import { baseUrl, baseWebSocketUrl } from "../../constants/constants";
 import GoBack from "../GoBack/GoBack";
-import { CHECK_IS_LOADER_OPEN, SET_SELECTED_SEATS, SET_USER_ID, SET_CURRENT_SESSION_ID, CLEAR_SEAT_FROM_SOCKET } from "../../store/actions/action-types";
+import { CHECK_IS_LOADER_OPEN, SET_SELECTED_SEATS, SET_CURRENT_SESSION_ID, CLEAR_SEAT_FROM_SOCKET, SET_USER_ID } from "../../store/actions/action-types";
 import Loader from "../Loader/Loader";
+import { socket } from "../Main/Main";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
-
-const socket = io("ws://just-cinema.herokuapp.com");
 
 const Room = () => {
   const [room, setRoom] = useState();
@@ -27,6 +26,7 @@ const Room = () => {
   const isEmailModalOpen = useSelector(state => state.isEmailModalOpen);
   const selectedSeats = useSelector(state => state.selectedSeats);
   const userEmail = useSelector(state => state.userData.email);
+  const userId = useSelector(state => state.userId);
   const dispatch = useDispatch();
 
   const movieInfo = { room, movie, session };
@@ -72,9 +72,12 @@ const Room = () => {
     getRoom();
     dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
 
-    socket.on("connect", () => {
-      dispatch({ type: SET_USER_ID, payload: socket.id });
-    });
+    if (!userId) {
+      const socket = io(`wss://${ baseWebSocketUrl }`);
+      socket.on("connect", () => {
+        dispatch({ type: SET_USER_ID, payload: socket.id });
+      });
+    }
 
     socket.on("seatSelect", (room, session) => {
       const rows = getRows(room, session);

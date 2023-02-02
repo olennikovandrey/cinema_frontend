@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const BuyTickets = () => {
   const selectedSeats = useSelector(state => state.selectedSeats);
-  const isLoaderOpen = useSelector(state => state.isLoader);
+  const isLoaderOpen = useSelector(state => state.isLoaderOpen);
   const isPaymentSuccess = useSelector(state => state.isPaymentSuccess);
   const currentSessionId = useSelector(state => state.userData.currentSessionId);
   const seatsToBuy = selectedSeats.filter(item => item.sessionId === currentSessionId);

@@ -33,7 +33,7 @@ export const initState = {
   isAdminModalOpen: false,
   isEmailModalOpen: false,
   isUserAuthorized: false,
-  isLoader: false,
+  isLoaderOpen: false,
   isPaymentSuccess: false,
   userData: {},
   movies: [],
@@ -229,7 +229,7 @@ const reducer = (state = initState, action) => {
   case CHECK_IS_LOADER_OPEN: {
     return {
       ...state,
-      isLoader: action.payload
+      isLoaderOpen: action.payload
     };
   }
 

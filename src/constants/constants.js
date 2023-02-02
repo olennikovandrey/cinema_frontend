@@ -22,9 +22,9 @@ export const moviesSwiperSettings = {
   navigation: true,
   effect: "cube",
   keyboard: true,
-  centeredSlides: true,
+  centeredSlides: true,/*
   autoplay: { delay: 7000, pauseOnMouseEnter: true, disableOnInteraction: false },
-  breakpoints: {
+   */breakpoints: {
     1800: {
       slidesPerView: 8
     },

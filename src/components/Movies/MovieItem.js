@@ -24,7 +24,7 @@ const MovieItem = ({ movie }) => {
             return (
               <div className="movie-item__sessions" key={ item._id }>
                 <Link to={ `/room/id/cinemaId=${ item._id }/roomId=${ roomId }/movieId=${ movieId }/sessionId=${ sessionId }` }>
-                  <button className="button-pink">{ date }<br/> { time }</button>
+                  <button className="button-pink">{ newDate(date) } { time }</button>
                 </Link>
               </div>
             );
@@ -32,11 +32,11 @@ const MovieItem = ({ movie }) => {
             <div className="movie-item__sessions">
               {
                 <>
-                  <Link to={ `/room/id/cinemaId=${ movie.cinemas[0]._id }/roomId=${ movie.cinemas[0].session.roomId }/movieId=${ movie.cinemas[0].session.movieId }/sessionId=${ sessionId }` }>
-                    <button className="button-pink some-buttons">{ newDate(date) } { time }</button>
+                  <Link className="some-buttons" to={ `/room/id/cinemaId=${ movie.cinemas[0]._id }/roomId=${ movie.cinemas[0].session.roomId }/movieId=${ movie.cinemas[0].session.movieId }/sessionId=${ sessionId }` }>
+                    <button className="button-pink">{ newDate(date) } { time }</button>
                   </Link>
-                  <Link to="/selectcinema" state={ { movie: movie } }>
-                    <button className="button-pink some-buttons" style={{ fontSize: "2em" }}>...</button>
+                  <Link className="some-buttons-others" to="/selectcinema" state={ { movie: movie } }>
+                    <button className="button-pink" style={{ fontSize: "1.5em" }}>...</button>
                   </Link>
                 </>
               }

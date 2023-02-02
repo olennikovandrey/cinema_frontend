@@ -379,6 +379,8 @@ section.room
             display: flex
             align-items: center
             justify-content: space-between
+            @media only screen and (max-width: 320px)
+              width: 85%
             & .item-seat
               color: #fefefe
               @include adaptiv-font(16, 13)
@@ -396,10 +398,9 @@ section.room
           top: 18px
           @media only screen and (max-width: 768px)
             top: 10px
-            right: 5px
+            right: 10px
           @media only screen and (max-width: 425px)
             top: 5px
-            right: 5px
 
     &__total-price
       display: inline-block

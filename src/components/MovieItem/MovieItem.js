@@ -45,7 +45,7 @@ const MovieItem = () => {
         <div className="crop" style={ { background: `url(${ movieInfo.crop }) no-repeat` } }></div>
         <GoBack scrollValueToChange="450" />
         <div className="sessions-wrapper">
-          { sessions.length >= 3 ?
+          { sessions.length > 3 ?
             <>
               { sessions
                 .slice(0, screenWidth <= 425 ? 1 : screenWidth <= 1024 ? 2 : 3)

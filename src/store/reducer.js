@@ -41,7 +41,7 @@ export const initState = {
   cashedMovies: [],
   randomMovies: [],
   selectedSeats: [],
-  currentCinema: "MovieHD",
+  currentCinema: "Vegas film",
   emailForTickets: "",
   userId: ""
 };

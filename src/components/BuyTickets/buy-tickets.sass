@@ -106,6 +106,8 @@ section.buy-tickets
         @media only screen and (max-width: 768px)
           bottom: 5px
           right: 5px
+        @media only screen and (max-width: 320px)
+          background: url("../../assets/images/buy-tickets/visa.svg") 100% 100% no-repeat, url("../../assets/images/buy-tickets/masterCard.svg") 74% 100% no-repeat, url("../../assets/images/buy-tickets/maestro.svg") 45% 100% no-repeat
 
       &__error
         position: absolute
@@ -136,8 +138,9 @@ section.buy-tickets
   justify-content: flex-start
   @media only screen and (max-width: 768px)
     width: 100%
-    padding: 10px 10px 0
+    padding: 10px
     margin-bottom: 5px
+    max-height: 360px
   & h2
     margin-bottom: 15px
     @include adaptiv-font(24, 16)
@@ -156,7 +159,7 @@ section.buy-tickets
       background-color: #252525
     &::-webkit-scrollbar-thumb
       border-radius: 10px
-      background-color: #f9f9fd
+      background-color: #d40754
     &::-webkit-scrollbar-track
       border-radius: 5px
       background-color: #252525
@@ -182,6 +185,8 @@ section.buy-tickets
         display: flex
         align-items: center
         justify-content: center
+        @media only screen and (max-width: 320px)
+          margin-right: 10px
         & img
           height: 100%
       & .item__description

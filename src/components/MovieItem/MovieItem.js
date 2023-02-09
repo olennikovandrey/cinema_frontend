@@ -21,6 +21,7 @@ const MovieItem = () => {
   const screenWidth = window.innerWidth;
 
   const getMovieData = async id => {
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const url = `${ baseUrl }/movies/id/id=${ id }`;
     const { movie } = await getExactMovieFetch(url);
     const { movieInfo, cinemas} = movie[0];
@@ -28,13 +29,12 @@ const MovieItem = () => {
     setMovie(movie[0]);
     setMovieInfo(movieInfo);
     setSessions(cinemas);
+    setIsLoaded(true);
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   };
 
   useEffect(() => {
-    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     getMovieData(id);
-    setIsLoaded(true);
-    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   }, [id, dispatch]);
 
   return (

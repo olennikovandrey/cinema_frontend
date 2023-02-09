@@ -41,10 +41,12 @@ const UpdateMovie = () => {
 
   const handlerSubmit = async e => {
     e.preventDefault();
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const { message, movies } = await updateMovieFetch(changedMovie);
     setMovies(movies);
     setResponseMessage(message);
     setIsModalOpen(true);
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   };
 
   const onSelectHandler = e => {

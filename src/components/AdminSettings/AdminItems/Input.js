@@ -1,14 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SingleInput = ({ label, required = true, onBlur, placeholder, additionalClassNames = [], inputType = "text" }) => {
+const SingleInput = ({ label, required = true, onBlur, placeholder, additionalClassNames = [], inputType = "text", valid = null, onChangeRegEx = null, isValidChecker }) => {
   const className = ["admin-item__input", ...additionalClassNames].join(" ");
+
   return <div className={ className }>
     <label>{ label } { required && <b>*</b> }</label>
     <input
       type={ inputType }
       onBlur={ onBlur }
       placeholder={ placeholder }
+      data-valid={ valid }
+      onChange={ isValidChecker ? e => isValidChecker(e, onChangeRegEx, valid) : null}
     />
   </div>;
 };
@@ -21,9 +24,9 @@ const Input = ({ inputConfigs }) => {
   return (
     <>
       {
-        inputConfigs.length === 1
-          ? <InputList inputConfigs={ inputConfigs } />
-          : <div className="inputs-group">
+        inputConfigs.length === 1 ?
+          <InputList inputConfigs={ inputConfigs } /> :
+          <div className="inputs-group">
             <InputList
               inputConfigs={ inputConfigs }
               additionalClassNames={ ["inputs-group__input"] }
@@ -46,5 +49,8 @@ SingleInput.propTypes = {
   onBlur: PropTypes.func,
   placeholder: PropTypes.string,
   inputType: PropTypes.string,
+  valid: PropTypes.string,
+  onChangeRegEx: PropTypes.string,
+  isValidChecker: PropTypes.func,
   additionalClassNames: PropTypes.array
 };

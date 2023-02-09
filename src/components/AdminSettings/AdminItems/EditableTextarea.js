@@ -2,7 +2,7 @@ import { createMarkup } from "../../../services/services";
 import React from "react";
 import PropTypes from "prop-types";
 
-const SingleEditableTextarea = ({ label, required = true, onBlur, value, additionalClassNames = [] }) => {
+const SingleEditableTextarea = ({ label, required = true, onBlur, value, additionalClassNames = [], valid = null }) => {
   const className = ["admin-item__input", ...additionalClassNames].join(" ");
   return <div className={ className }>
     <label>{ label } { required && <b>*</b> }</label>
@@ -10,6 +10,7 @@ const SingleEditableTextarea = ({ label, required = true, onBlur, value, additio
       onBlur={ e => onBlur(e) }
       dangerouslySetInnerHTML={ createMarkup(value) }
       contentEditable="true"
+      data-valid={ valid }
     />
   </div>;
 };
@@ -46,5 +47,6 @@ SingleEditableTextarea.propTypes = {
   required: PropTypes.bool,
   onBlur: PropTypes.func,
   value: PropTypes.string,
+  valid: PropTypes.string,
   additionalClassNames: PropTypes.array
 };

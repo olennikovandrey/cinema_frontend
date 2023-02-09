@@ -17,7 +17,7 @@ const ActorFields = ({ setActorsToMainForm }) => {
   return (
     <div className="inputs-group">
       <div className="admin-item__input inputs-group__input">
-        <label>Имя, фамилия актера <b>*</b></label>
+        <label>Имя, фамилия актера</label>
         <input type="text" onChange={ e => setActorData({ ...actorData, name: e.target.value }) } />
       </div>
       <div className="admin-item__input inputs-group__input">

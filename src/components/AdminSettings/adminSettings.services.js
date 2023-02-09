@@ -113,3 +113,17 @@ export const setCorrectDateForInputGroups = (e, stateFn, [field, key]) => {
     }
   }));
 }; //updateSession
+
+export const isValidChecker = (e, regex, valid) => {
+  const expression = new RegExp(regex);
+  const isValid = expression.test(e.target.value);
+  const currentEl = document.querySelector(`[data-valid="${ valid }"]`);
+
+  if (isValid) {
+    currentEl.classList.add("valid");
+    currentEl.classList.remove("invalid");
+  } else {
+    currentEl.classList.add("invalid");
+    currentEl.classList.remove("valid");
+  }
+};

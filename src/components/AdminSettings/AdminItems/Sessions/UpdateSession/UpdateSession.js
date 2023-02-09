@@ -65,6 +65,7 @@ const UpdateSession = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    document.querySelectorAll("input[data-valid]").forEach(item => item.classList.remove("invalid"));
     const ajv = new Ajv({ allErrors: true });
     const validate = ajv.compile(updateSessionSchema);
 
@@ -73,6 +74,7 @@ const UpdateSession = () => {
     } else {
       setResponseMessage("Проверьте правильность введенных Вами данных");
       setIsModalOpen(true);
+      validate.errors.forEach(({ dataPath }) => document.querySelector(`[data-valid="${ dataPath }"]`).classList.add("invalid"));
     }
   };
 
@@ -134,11 +136,14 @@ const UpdateSession = () => {
                   inputConfigs={ [{
                     label: "Дата",
                     inputType: "date",
-                    onBlur: e => setCorrectDateForInputGroups(e, setUpdatedSession, ["session", "date"])
+                    onBlur: e => setCorrectDateForInputGroups(e, setUpdatedSession, ["session", "date"]),
+                    valid: ".session.date"
                   },
                   {
                     label: "Время",
-                    onBlur: e => handleBlurForInputsGroup( e, setUpdatedSession, ["session", "time"] )
+                    placeholder: "14.10",
+                    onBlur: e => handleBlurForInputsGroup( e, setUpdatedSession, ["session", "time"] ),
+                    valid: ".session.time"
                   }] }
                 />
                 <Select

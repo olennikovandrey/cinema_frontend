@@ -2,7 +2,7 @@ import { createMarkup } from "../../../services/services";
 import React from "react";
 import PropTypes from "prop-types";
 
-const SingleEditableInput = ({ label, required = true, onBlur, value, name, additionalClassNames = [] }) => {
+const SingleEditableInput = ({ label, required = true, onBlur, value, name, additionalClassNames = [], valid = null }) => {
   const className = ["admin-item__input", ...additionalClassNames].join(" ");
   return <div className={ className }>
     <label>{ label } { required && <b>*</b> }</label>
@@ -11,6 +11,7 @@ const SingleEditableInput = ({ label, required = true, onBlur, value, name, addi
       onBlur={ onBlur }
       dangerouslySetInnerHTML={ createMarkup(value) }
       contentEditable="true"
+      data-valid={ valid }
     />
   </div>;
 };
@@ -48,5 +49,6 @@ SingleEditableInput.propTypes = {
   onBlur: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.string,
+  valid: PropTypes.string,
   additionalClassNames: PropTypes.array
 };

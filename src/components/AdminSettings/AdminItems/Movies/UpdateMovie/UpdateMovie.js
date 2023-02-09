@@ -6,10 +6,12 @@ import { sortMovies } from "../../../adminSettings.services";
 import { handleChangeForEditableSeveralValues, handleBlurForEditableInput, handleBlurForEditableInputsGroup } from "../../../adminSettings.services";
 import EditableInput from "../../EditableInput";
 import EditableTextarea from "../../EditableTextarea";
+import updateMovieSchema from "../../../../../validation/adminPanel/updateMovieSchema.json";
 import Modal from "../../../../Modal/Modal";
 import Loader from "../../../../Loader/Loader";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Ajv from "ajv";
 
 const UpdateMovie = () => {
   const [movies, setMovies] = useState([]);
@@ -41,12 +43,22 @@ const UpdateMovie = () => {
 
   const handlerSubmit = async e => {
     e.preventDefault();
-    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
-    const { message, movies } = await updateMovieFetch(changedMovie);
-    setMovies(movies);
-    setResponseMessage(message);
-    setIsModalOpen(true);
-    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
+    document.querySelectorAll("[data-valid]").forEach(item => item.classList.remove("invalid"));
+    const ajv = new Ajv({ allErrors: true });
+    const validate = ajv.compile(updateMovieSchema);
+
+    if (validate(changedMovie)) {
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
+      const { message, movies } = await updateMovieFetch(changedMovie);
+      setMovies(movies);
+      setResponseMessage(message);
+      setIsModalOpen(true);
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
+    } else {
+      setResponseMessage("Проверьте правильность введенных Вами данных");
+      setIsModalOpen(true);
+      validate.errors.forEach(({ dataPath }) => document.querySelectorAll(`[data-valid="${ dataPath }"]`).forEach(item => item.classList.add("invalid")));
+    }
   };
 
   const onSelectHandler = e => {
@@ -89,78 +101,102 @@ const UpdateMovie = () => {
                   inputConfigs={ [{
                     label: "Страна производства",
                     value: countryStr,
-                    onBlur: e => handleChangeForEditableSeveralValues(e, setChangedMovie, "country") }] }
+                    onBlur: e => handleChangeForEditableSeveralValues(e, setChangedMovie, "country"),
+                    valid: ".country"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Год выпуска",
                     value: year,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "year") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "year"),
+                    valid: ".year"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Жанр",
                     value: genreStr,
-                    onBlur: e => handleChangeForEditableSeveralValues(e, setChangedMovie, "genre") }] }
+                    onBlur: e => handleChangeForEditableSeveralValues(e, setChangedMovie, "genre"),
+                    valid: ".genre"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Слоган",
                     value: slogan,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "slogan") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "slogan"),
+                    valid: ".slogan"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Режиссер",
                     value: name,
-                    onBlur: e => handleBlurForEditableInputsGroup(e, setChangedMovie, ["producer", "name"]) },
+                    onBlur: e => handleBlurForEditableInputsGroup(e, setChangedMovie, ["producer", "name"]),
+                    valid: ".producer" },
                   {
                     label: "Ссылка на страницу режиссера",
                     value: link,
-                    onBlur: e => handleBlurForEditableInputsGroup(e, setChangedMovie, ["producer", "link"])
+                    onBlur: e => handleBlurForEditableInputsGroup(e, setChangedMovie, ["producer", "link"]),
+                    required: false
                   }] }
                 />
                 <EditableTextarea
                   textareaConfigs={ [{
                     label: "Описание",
                     value: description,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "description") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "description"),
+                    valid: ".description"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Длительность",
                     value: duration,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "duration") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "duration"),
+                    valid: ".duration"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Возраст",
                     value: age,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "age") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "age"),
+                    valid: ".age"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Рейтинг",
                     value: rating,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "rating") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "rating"),
+                    valid: ".rating"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Обложка фильма (изображение)",
                     value: image,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "image") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "image"),
+                    valid: ".image"
+                  }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
                     label: "Кадр из фильма (изображение)",
                     value: crop,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "crop") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "crop"),
+                    valid: ".crop"
+                  }] }
                 />
                 <EditableTextarea
                   textareaConfigs={ [{
                     label: "iframe на Youtube трейлер",
                     value: youtubeIframe,
-                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "youtubeIframe") }] }
+                    onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "youtubeIframe"),
+                    valid: ".youtubeIframe"
+                  }] }
                 />
                 <button type="submit" className="admin-settings-button">Обновить</button>
                 {

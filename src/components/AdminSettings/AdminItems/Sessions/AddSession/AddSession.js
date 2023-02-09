@@ -8,8 +8,11 @@ import Modal from "../../../../Modal/Modal";
 import { getAllCinemasFetch, getAllMoviesFetch } from "../../../adminSettings.api";
 import Select from "../../Select";
 import addSessionSchema from "../../../../../validation/adminPanel/addSessionSchema.json";
+import { CHECK_IS_LOADER_OPEN } from "../../../../../store/actions/action-types";
+import Loader from "../../../../Loader/Loader";
 import React, { useState, useEffect } from "react";
 import Ajv from "ajv";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddSession = () => {
   const [cinemas, setCinemas] = useState([]);
@@ -21,6 +24,8 @@ const AddSession = () => {
   const [responseMessage, setResponseMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const isLoaderOpen = useSelector(state => state.isLoaderOpen);
+  const dispatch = useDispatch();
   const screenWidth = window.innerWidth;
 
   const setCinemaHandler = e => {
@@ -56,6 +61,7 @@ const AddSession = () => {
 
   useEffect(() => {
     async function getAllCinemas() {
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
       const { allCinemas } = await getAllCinemasFetch();
       const movies = await getAllMoviesFetch();
       const sorted = sortMovies(movies);
@@ -74,6 +80,7 @@ const AddSession = () => {
         rows: getCinemasRoom(firstRoomId)
       });
       setIsLoaded(true);
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
     }
     getAllCinemas();
   }, []);
@@ -85,6 +92,7 @@ const AddSession = () => {
 
   return (
     <div className="add-session-wrapper">
+      { isLoaderOpen && <Loader /> }
       { isLoaded &&
         <form className="add-session-form" onSubmit={ e => handleSubmit(e) }>
           <Select

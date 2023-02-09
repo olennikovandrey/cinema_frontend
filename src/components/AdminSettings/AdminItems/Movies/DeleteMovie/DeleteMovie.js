@@ -1,8 +1,9 @@
 import { deleteMovieFetch } from "./deleteMovie.api";
 import { getAllMoviesFetch } from "../../../adminSettings.api";
-import { SET_MOVIES } from "../../../../../store/actions/action-types";
+import { SET_MOVIES, CHECK_IS_LOADER_OPEN } from "../../../../../store/actions/action-types";
 import Modal from "../../../../Modal/Modal";
 import { sortMovies } from "../../../adminSettings.services";
+import Loader from "../../../../Loader/Loader";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,19 +12,24 @@ const DeleteMovie = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const movies = useSelector(state => state.movies);
+  const isLoaderOpen = useSelector(state => state.isLoaderOpen);
   const dispatch = useDispatch();
 
   const deleteMovie = async title => {
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const { message, movies } = await deleteMovieFetch(title);
     setResponseMessage(message);
     dispatch({ type: SET_MOVIES, payload: movies });
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
     setIsModalOpen(true);
   };
 
   useEffect(() => {
     async function getMovies() {
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
       const movies = await getAllMoviesFetch();
       dispatch({ type: SET_MOVIES, payload: movies });
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
     }
     getMovies();
   }, [dispatch]);
@@ -59,9 +65,8 @@ const DeleteMovie = () => {
             })
         }
       </div>
-      {
-        <Modal message={ responseMessage } success={ responseMessage === "Фильм успешно удален" } isModal={ isModalOpen } />
-      }
+      <Modal message={ responseMessage } success={ responseMessage === "Фильм успешно удален" } isModal={ isModalOpen } />
+      { isLoaderOpen && <Loader /> }
     </div>
   );
 };

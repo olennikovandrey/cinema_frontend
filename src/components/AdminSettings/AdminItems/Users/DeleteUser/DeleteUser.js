@@ -3,27 +3,36 @@ import { deleteUserFetch, getAllUsersFetch } from "./deleteUser.api";
 import Modal from "../../../../Modal/Modal";
 import { debounce } from "../../../../../services/services";
 import { userRole } from "../../../../../constants/constants";
+import { CHECK_IS_LOADER_OPEN } from "../../../../../store/actions/action-types";
+import Loader from "../../../../Loader/Loader";
 import React, { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const DeleteUser = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [responseMessage, setResponseMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const isLoaderOpen = useSelector(state => state.isLoaderOpen);
+  const dispatch = useDispatch();
   const debauncedSetSearchValue = useCallback(debounce(setSearchValue), []);
 
   const deleteUser = async email => {
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const { message, users } = await deleteUserFetch(email);
     setResponseMessage(message);
     setAllUsers(users);
     setIsModalOpen(true);
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   };
 
   useEffect(() => {
     async function getUsers() {
       try {
+        dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
         const allUsers = await getAllUsersFetch();
         setAllUsers(allUsers);
+        dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
       } catch (e) {
         setResponseMessage("Что-то не так...", e);
         setIsModalOpen(true);
@@ -61,9 +70,8 @@ const DeleteUser = () => {
             )
         }
       </div>
-      {
-        <Modal message={ responseMessage } success={ responseMessage === "Пользователь удален" } isModal={ isModalOpen } />
-      }
+      { <Modal message={ responseMessage } success={ responseMessage === "Пользователь удален" } isModal={ isModalOpen } /> }
+      { isLoaderOpen && <Loader /> }
     </div>
   );
 };

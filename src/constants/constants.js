@@ -66,7 +66,7 @@ export const selectCinemasSwiperSettings = {
   keyboard: true
 };
 
-/*      http://localhost:4000       */
+/*      localhost:4000    just-cinema.herokuapp.com   */
 export const baseWebSocketUrl = "wss://just-cinema.herokuapp.com";
 export const baseUrl = "https://just-cinema.herokuapp.com";
 

@@ -9,7 +9,9 @@ import { getCinemasRoom } from "../../../adminSettings.constants";
 import Modal from "../../../../Modal/Modal";
 import { VegasFilmRoom } from "../../../../../constants/VegasFilm.room";
 import updateSessionSchema from "../../../../../validation/adminPanel/updateSessionSchema.json";
-import { useSelector } from "react-redux";
+import { CHECK_IS_LOADER_OPEN } from "../../../../../store/actions/action-types";
+import Loader from "../../../../Loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Ajv from "ajv";
 
@@ -25,6 +27,8 @@ const UpdateSession = () => {
     session: { date: "", time: "", movieId: "", roomId: "", rows: VegasFilmRoom }
   });
   const movies = useSelector(state => state.movies);
+  const isLoaderOpen = useSelector(state => state.isLoaderOpen);
+  const dispatch = useDispatch();
 
   const setSessionHandler = e => {
     handleChange(e, setUpdatedSession, "sessionId");
@@ -51,10 +55,12 @@ const UpdateSession = () => {
   };
 
   const updateSessionHandler = async () => {
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const { message, cinemas } = await updateSessionFetch(updatedSession);
     setResponseMessage(message);
     setCinemas(cinemas);
     setIsModalOpen(true);
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   };
 
   const handleSubmit = e => {
@@ -72,6 +78,7 @@ const UpdateSession = () => {
 
   useEffect(() => {
     async function getAllCinemas() {
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
       const { allCinemas } = await getAllCinemasFetch();
       setCinemas(allCinemas);
       setSelectedCinemaId(allCinemas[0]._id);
@@ -88,6 +95,7 @@ const UpdateSession = () => {
 
       const sessions = getSessionsForUpdateSession(allCinemas, movies);
       setSessions(sessions);
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
     }
     getAllCinemas();
   }, []);
@@ -99,6 +107,7 @@ const UpdateSession = () => {
 
   return (
     <div className="update-session-wrapper">
+      { isLoaderOpen && <Loader /> }
       { cinemas &&
         <Select
           label="Выберите кинотеатр из списка"

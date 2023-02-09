@@ -4,7 +4,9 @@ import { getSessionsForDeleteSession } from "../sessions.services";
 import { getAllCinemasFetch } from "../../../adminSettings.api";
 import Select from "../../Select";
 import Modal from "../../../../Modal/Modal";
-import { useSelector } from "react-redux";
+import { CHECK_IS_LOADER_OPEN } from "../../../../../store/actions/action-types";
+import Loader from "../../../../Loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 
 const DeleteSession = () => {
@@ -14,6 +16,8 @@ const DeleteSession = () => {
   const [responseMessage, setResponseMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const movies = useSelector(state => state.movies);
+  const isLoaderOpen = useSelector(state => state.isLoaderOpen);
+  const dispatch = useDispatch();
 
   const setCinemaHandler = cinemaId => {
     setSelectedCinemaId(cinemaId);
@@ -22,22 +26,26 @@ const DeleteSession = () => {
   };
 
   const deleteSessionHandler = async (_id, selectedCinemaId) => {
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const { message, cinemas } = await deleteSessionFetch(_id, selectedCinemaId);
     const sessions = getSessionsForDeleteSession(cinemas, selectedCinemaId, movies);
     setSessions(sessions);
     setResponseMessage(message);
     setCinemas(cinemas);
     setIsModalOpen(true);
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   };
 
   useEffect(() => {
     async function getAllCinemas() {
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
       const { allCinemas } = await getAllCinemasFetch();
       setCinemas(allCinemas);
       setSelectedCinemaId(allCinemas[0]._id);
 
       const sessions = getSessionsForDeleteSession(allCinemas, allCinemas[0]._id, movies);
       setSessions(sessions);
+      dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
     }
     getAllCinemas();
   }, []);
@@ -49,6 +57,7 @@ const DeleteSession = () => {
 
   return (
     <div className="delete-session-wrapper">
+      { isLoaderOpen && <Loader /> }
       { cinemas &&
         <Select
           label="Выберите кинотеатр из списка"

@@ -1,12 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { updateMovieFetch, getAllMoviesFetch } from "./updateMovie.api";
 import { getExactMovieInfo } from "./services";
+import { CHECK_IS_LOADER_OPEN } from "../../../../../store/actions/action-types";
 import { sortMovies } from "../../../adminSettings.services";
 import { handleChangeForEditableSeveralValues, handleBlurForEditableInput, handleBlurForEditableInputsGroup } from "../../../adminSettings.services";
 import EditableInput from "../../EditableInput";
 import EditableTextarea from "../../EditableTextarea";
 import Modal from "../../../../Modal/Modal";
+import Loader from "../../../../Loader/Loader";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const UpdateMovie = () => {
   const [movies, setMovies] = useState([]);
@@ -14,11 +17,26 @@ const UpdateMovie = () => {
   const [changedMovie, setChangedMovie] = useState();
   const [responseMessage, setResponseMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isLoaderOpen = useSelector(state => state.isLoaderOpen);
+  const dispatch = useDispatch();
+
+  const movieDataSetter = (moviesData, searchTitle) => {
+    const currentMovie = moviesData.find(({ movieTitle }) => movieTitle === searchTitle);
+    const movieInfo = currentMovie.movieInfo;
+    const { title, country, year, genre, slogan, producer, description, duration, age, rating, actors, image, youtubeIframe, crop } = movieInfo;
+    setSelectedMovie(searchTitle);
+    setChangedMovie({ ...changedMovie,
+      title, country, year, genre, slogan, producer, description, duration, age, rating, actors, image, youtubeIframe, crop
+    });
+  };
 
   const getMovies = async () =>  {
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: true });
     const moviesData = await getAllMoviesFetch();
+    const firstMovieTitle = sortMovies(moviesData)[0].movieTitle;
     setMovies(moviesData);
-    setSelectedMovie(sortMovies(moviesData)[0].movieTitle);
+    movieDataSetter(moviesData, firstMovieTitle);
+    dispatch({ type: CHECK_IS_LOADER_OPEN, payload: false });
   };
 
   const handlerSubmit = async e => {
@@ -27,6 +45,11 @@ const UpdateMovie = () => {
     setMovies(movies);
     setResponseMessage(message);
     setIsModalOpen(true);
+  };
+
+  const onSelectHandler = e => {
+    const currentMovieTitle = e.target.value;
+    movieDataSetter(movies, currentMovieTitle);
   };
 
   useEffect(() => {
@@ -40,22 +63,19 @@ const UpdateMovie = () => {
 
   return (
     <div className="update-movie-wrapper">
+      { isLoaderOpen && <Loader /> }
       <h3>Выберите фильм из списка</h3>
-      <select onChange={ e => {
-        setSelectedMovie(e.target.value);
-        setChangedMovie({ ...changedMovie, title: e.target.value });
-      }}>
+      <select onChange={ e => onSelectHandler(e)}>
         {
           sortMovies(movies)
             .map(({ movieInfo }) => {
               const { title } = movieInfo;
               return <option key={ title } value={ title }>{ title }</option>;
-            }
-            )
+            })
         }
       </select>
       {
-        selectedMovie && getExactMovieInfo(movies, selectedMovie)
+        getExactMovieInfo(movies, selectedMovie)
           .map(({ movieInfo }) => {
             const { _id, country, year, genre, slogan, producer, description, duration, age, rating, image, crop, youtubeIframe } = movieInfo;
             const countryStr = country.join(", ");
@@ -79,7 +99,7 @@ const UpdateMovie = () => {
                   inputConfigs={ [{
                     label: "Жанр",
                     value: genreStr,
-                    onBlur: e => handleChangeForEditableSeveralValues(e, setChangedMovie, "jenre") }] }
+                    onBlur: e => handleChangeForEditableSeveralValues(e, setChangedMovie, "genre") }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
@@ -124,13 +144,13 @@ const UpdateMovie = () => {
                 />
                 <EditableInput
                   inputConfigs={ [{
-                    label: "Ссылка на обложку фильма",
+                    label: "Обложка фильма (изображение)",
                     value: image,
                     onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "image") }] }
                 />
                 <EditableInput
                   inputConfigs={ [{
-                    label: "Кадр из фильма",
+                    label: "Кадр из фильма (изображение)",
                     value: crop,
                     onBlur: e => handleBlurForEditableInput(e, setChangedMovie, "crop") }] }
                 />
@@ -146,8 +166,7 @@ const UpdateMovie = () => {
                 }
               </form>
             );
-          }
-          )
+          })
       }
     </div>
   );

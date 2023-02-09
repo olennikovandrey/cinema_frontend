@@ -45,16 +45,16 @@ export const handleChangeForEditableSeveralValues = (e, stateFn, path) => {
 export const handleBlurForEditableInputsGroup = (e, stateFn, [movieField, movieFieldKey]) => {
   stateFn(prevState => ({
     ...prevState,
-    [movieField]:  {
-      ...prevState[movieField], [movieFieldKey]: e.target.innerText === "" ? prevState : e.target.innerText
-    }
+    [movieField]: [{
+      ...prevState[movieField][0], [movieFieldKey]: e.target.innerText === "" ? prevState : e.target.innerText
+    }]
   }));
 }; //updateMovie
 
 export const handlerChangeForSelect = (e, stateFn, [movieField, movieFieldKey]) => {
   stateFn(prevState => ({
     ...prevState,
-    [movieField]:  {
+    [movieField]: {
       ...prevState[movieField], [movieFieldKey]: e.target.value.trim()
     }
   }));

@@ -23,8 +23,17 @@ section.movie
   & .sessions-wrapper
     margin-top: 80px
     display: flex
+    @media only screen and (max-width: 768px)
+      flex-wrap: wrap
+      justify-content: space-between
     @media only screen and (max-width: 425px)
       margin-top: 65px
+    & div:last-of-type
+      @media only screen and (max-width: 768px)
+        width: 94%
+        margin-bottom: 0
+      @media only screen and (max-width: 425px)
+        width: 91%
     &__more
       width: 10%
       height: auto
@@ -37,6 +46,10 @@ section.movie
       box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
       border: 1px solid rgba(121, 121, 121, 0.2)
       z-index: 1
+      @media only screen and (max-width: 768px)
+        width: 5%
+      @media only screen and (max-width: 425px)
+        width: 8%
       &:hover
         box-shadow: #d4075435 0px 0px 0px 1px inset
         border: 1px solid #d40754
@@ -57,8 +70,9 @@ section.movie
       background: #00000090
       box-shadow: rgb(255 255 255 / 35%) 0px 0px 0px 1px inset
       border: 1px solid rgba(121, 121, 121, 0.2)
-      &:last-child
-        margin: 0
+      @media only screen and (max-width: 768px)
+        margin: 0 0 5px
+
       &-info
         width: 100%
         margin-bottom: 10px

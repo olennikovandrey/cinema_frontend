@@ -4,7 +4,7 @@ import { getSessionsForUpdateSession } from "../sessions.services";
 import { getAllCinemasFetch } from "../../../adminSettings.api";
 import Select from "../../Select";
 import Input from "../../Input";
-import { setCorrectDateForInputGroups, handleBlurForInputsGroup, handlerChangeForSelect, handleChange, handlerChangeForSecondValue } from "../../../adminSettings.services";
+import { setCorrectDateForInputGroups, handleBlurForInputsGroup, handlerChangeForSelect, handleChange, handlerChangeForSecondValue, sortMovies } from "../../../adminSettings.services";
 import { getCinemasRoom } from "../../../adminSettings.constants";
 import Modal from "../../../../Modal/Modal";
 import { VegasFilmRoom } from "../../../../../constants/VegasFilm.room";
@@ -27,6 +27,7 @@ const UpdateSession = () => {
     session: { date: "", time: "", movieId: "", roomId: "", rows: VegasFilmRoom }
   });
   const movies = useSelector(state => state.movies);
+  const sortedMovies = sortMovies(movies);
   const isLoaderOpen = useSelector(state => state.isLoaderOpen);
   const dispatch = useDispatch();
 
@@ -149,7 +150,7 @@ const UpdateSession = () => {
                 <Select
                   label="Выберите фильм"
                   required={ false }
-                  optionValues={ movies.map(item => item.movieInfo) }
+                  optionValues={ sortedMovies.map(item => item.movieInfo) }
                   defaultValue={ "" }
                   stateFunc={ e => handlerChangeForSelect(e, setUpdatedSession, ["session", "movieId"]) }
                   name="movieId"

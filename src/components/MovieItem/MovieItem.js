@@ -73,9 +73,7 @@ const MovieItem = () => {
           }
         </div>
         <div className="description">
-          <div className="description__image">
-            <img src={ movieInfo.image } alt={ movieInfo.title } />
-          </div>
+          <img className="description__image" src={ movieInfo.image } alt={ movieInfo.title } />
           <div className="description__title-container">
             <h1 className="description__title">{ movieInfo.title } </h1>
             <p className="description__age"> { movieInfo.age }</p>
